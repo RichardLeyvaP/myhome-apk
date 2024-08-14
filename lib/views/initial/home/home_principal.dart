@@ -172,7 +172,7 @@ Widget searchWidget(setState) {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 32, 32, 32),
-                              fontSize: 17.0,
+                              fontSize: 14.0,
                             ),
                           ),
                           TextSpan(
@@ -180,7 +180,7 @@ Widget searchWidget(setState) {
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(200, 37, 37, 37),
-                              fontSize: 15.0,
+                              fontSize: 12.0,
                             ),
                           ),
                         ],
@@ -316,7 +316,7 @@ Column cardMenuUp(IconData icon, String labelText, int value, bool visibility) {
           },
           child: Icon(
             icon,
-            size: 35,
+            size: 30,
             color: const Color.fromARGB(120, 0, 0, 0),
           )),
       Text(
