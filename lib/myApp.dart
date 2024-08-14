@@ -25,7 +25,7 @@ class Myapp extends StatelessWidget {
       ],
       supportedLocales: TranslationManager.supportedLocales,
       debugShowCheckedModeBanner: false,
-      theme: themeDataProfessional(),
+      theme: themeDataInitialSmall(),
       // theme: ThemeData.light(),
       //darkTheme: ThemeData.dark(),
       // themeMode: cLogin.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
@@ -33,16 +33,123 @@ class Myapp extends StatelessWidget {
     );
   }
 
-  ThemeData themeDataProfessional() {
+  ThemeData themeDataInitialSmall() {
     print('themeDataProfessional');
     return ThemeData(
-      //fontFamily: 'BebasNeue',
-      appBarTheme: AppBarTheme(
-        toolbarHeight: 120, // Cambia este valor según tus necesidades
+      // Configurar la fuente globalmente
+      fontFamily: 'Roboto',
+
+      // Colores principales de la aplicación
+      primaryColor: Colors.blue, // Color principal
+      // Configuración del esquema de colores
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        primary: Colors.blue, // Color primario
+        secondary: Colors.orange, // Color secundario
+        surface: Colors.white, //este es el background
       ),
-      textTheme: GoogleFonts.poppinsTextTheme(),
+
+      // Configuración del AppBar
+      appBarTheme: const AppBarTheme(
+        toolbarHeight: 120, // Altura del AppBar
+        backgroundColor: Colors.blue, // Color de fondo del AppBar
+        titleTextStyle: TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white, // Color del texto en el AppBar
+        ),
+      ),
+
+      // Configuración global de los textos
+      textTheme: const TextTheme(
+        //todo los que se están utilizando actualmente
+        bodyMedium: TextStyle(
+          //este es el que tiene el texto por defecto
+          fontSize: 12.0,
+          fontWeight: FontWeight.normal,
+          color: Colors.black, // Otro estilo de texto para el cuerpo
+        ),
+        titleLarge: TextStyle(
+          fontSize: 46.0, // Tamaño grande para el número
+          fontWeight: FontWeight.w900, // Estilo más negrita
+        ),
+        titleMedium: TextStyle(
+          color: Colors.black, // Texto en negro
+          fontSize: 12.0, // Tamaño de la fuente ajustable
+          fontWeight: FontWeight.w500,
+        ),
+        titleSmall: TextStyle(
+          color: Colors.black, // Texto en negro
+          fontSize: 10.0, // Tamaño de la fuente ajustable
+          fontWeight: FontWeight.w500,
+        ),
+        /*
+        displayLarge: TextStyle(
+          fontSize: 12.0,
+          fontWeight: FontWeight.w300,
+          color: Colors.black, // Color para los titulares grandes
+        ),
+        displayMedium: TextStyle(
+          fontSize: 28.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.black, // Color para los titulares medianos
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.normal,
+          color: Colors.black, // Color para el texto del cuerpo
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.normal,
+          color: Colors.black, // Otro estilo de texto para el cuerpo
+        ),
+        labelLarge: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white, // Color del texto en los botones
+        ),*/
+      ).apply(
+        fontFamily: 'Roboto', // Aplicar fuente a todo el texto
+      ),
+
+      // Configuración de los botones elevados
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+          foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+          textStyle: WidgetStateProperty.all<TextStyle>(
+            const TextStyle(
+              fontSize: 12.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+
+      // Configuración global de los campos de texto
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0), // Esquinas redondeadas
+        ),
+        hintStyle: const TextStyle(
+          fontSize: 12.0,
+          color: Colors.grey, // Color del hintText
+          fontWeight: FontWeight.normal,
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue, // Color del borde cuando está enfocado
+          ),
+        ),
+      ),
     );
   }
+}
+
+class AppColors {
+  //declarra mas colores para utilizar en la apk
+  static const Color customColor1 = Color(0xFFFFA726); // Naranja
+  static const Color customColor2 = Color(0xFF66BB6A); // Verde
 }
 
 final GoRouter _appRouter1 = GoRouter(

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/Components/avatarMultiples.dart';
+import 'package:myhome/Components/showDialogComp.dart';
 import 'package:myhome/views/blocs/01-simple_cubit/username_cubit.dart';
+import 'package:myhome/views/pageMenu/filesPage.dart';
+import 'package:myhome/views/pageMenu/financePage.dart';
+import 'package:myhome/views/pageMenu/healthPage.dart';
+import 'package:myhome/views/pageMenu/productPage.dart';
+import 'package:myhome/views/pageMenu/wishesPage.dart';
 import 'package:provider/provider.dart';
+
+import '../../pageMenu/tasksPage.dart';
 //COLORES
 // color gris de fondo ... Colors.white
 
@@ -20,6 +28,40 @@ final ThemeData themeData = ThemeData(useMaterial3: true, brightness: isDark ? B
 
 class _HomePrincipalState extends State<HomePrincipal> {
   //esto es para el mapa
+  // Controlador de PageView
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  ScrollController _scrollController = ScrollController();
+
+  // Función para cambiar de página
+  void _onButtonPressed(int pageIndex) {
+    _pageController.jumpToPage(pageIndex);
+  }
+
+  void _onPageChanged(int index) {
+    _fetchDataForPage(index);
+    setState(() {
+      _currentPage = index;
+    });
+    // Desplazar la Row para que el botón correspondiente esté visible
+    double targetScrollOffset = (index * 75.0); // Ajusta este valor al tamaño de tus botones
+    _scrollController.animateTo(
+      targetScrollOffset,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    // Aquí puedes hacer una llamada a la API según la página
+  }
+
+  Future<void> _fetchDataForPage(int pageIndex) async {
+    // Lógica para llamar a la API dependiendo de la página
+    print('Fetching data for page $pageIndex');
+    // Aquí iría tu lógica de llamada a la API
+    showLoadingDialog(context, indicatorColor: Colors.white, message: 'Cargando...');
+    await Future.delayed(const Duration(milliseconds: 1000));
+    Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -52,33 +94,25 @@ class _HomePrincipalState extends State<HomePrincipal> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: cardMenu(Icons.content_cut, 'SERVICIOS', 'sds', 'sd', 0.0),
+                    child: cardMenu(_scrollController, _currentPage, _onButtonPressed, Icons.content_cut, 'SERVICIOS',
+                        'sds', 'sd', 0.0),
                   ),
                 ]),
               ),
               Expanded(
-                flex: 70,
-                child: SingleChildScrollView(
-                  child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    // Text(usernameCubit.state),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: cardContentHome('Compras en el Supermecado', Icons.content_cut, 'SERVICIOS', 'sds', 'sd',
-                          12.0, Colors.blue, 2, 8, 12, const Color.fromARGB(40, 133, 175, 209)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: cardContentHome('Richard', Icons.content_cut, 'SERVICIOS', 'sds', 'sd', 12.0, Colors.red,
-                          2, 10, 12, const Color.fromARGB(100, 221, 220, 220)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: cardContentHome('Cumpleaños de Clara', Icons.content_cut, 'SERVICIOS', 'sds', 'sd', 12.0,
-                          const Color.fromARGB(255, 61, 189, 93), 2, 10, 12, const Color.fromARGB(100, 221, 220, 220)),
-                    ),
-                  ]),
-                ),
-              ),
+                  flex: 70,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: _onPageChanged,
+                    children: const [
+                      WishesPage(),
+                      FinancePage(),
+                      HealthPage(),
+                      TasksWidget(),
+                      ProductPage(),
+                      FilesPage(),
+                    ],
+                  )),
             ],
           ),
         ),
@@ -87,7 +121,7 @@ class _HomePrincipalState extends State<HomePrincipal> {
   }
 }
 
-Widget appBarWidget(IconData icon, IconData icon2) {
+Widget appBarWidget(IconData icon1, IconData icon2) {
   return Card(
     color: Colors.transparent,
     elevation: 0,
@@ -117,7 +151,7 @@ Widget appBarWidget(IconData icon, IconData icon2) {
               ),
               Row(
                 children: [
-                  IconButton(onPressed: () {}, icon: Badge(isLabelVisible: true, child: Icon(icon))),
+                  IconButton(onPressed: () {}, icon: Badge(isLabelVisible: true, child: Icon(icon1))),
                   IconButton(onPressed: () {}, icon: Icon(icon2)),
                 ],
               ),
@@ -211,83 +245,44 @@ Widget searchWidget(setState) {
       });
     },
   );
-
-  // SearchAnchor(
-  //   viewBackgroundColor: Colors.white,
-  //   isFullScreen: false,
-  //   builder: (BuildContext context, SearchController controller) {
-  //     return SearchBar(
-  //       backgroundColor: const WidgetStatePropertyAll(
-  //           Color.fromARGB(255, 230, 228, 228)),
-  //       controller: controller,
-  //       padding: const WidgetStatePropertyAll<EdgeInsets>(
-  //           EdgeInsets.all(0.0)), // Eliminar padding externo
-  //       leading: const Padding(
-  //         padding: EdgeInsets.all(4), // Eliminar padding interno
-  //         child: CircleAvatar(
-  //           radius: 24, // Ajusta el tamaño del avatar según sea necesario
-  //           backgroundColor: Color.fromARGB(255, 211, 92, 92),
-  //           child: Icon(
-  //             Icons.search,
-  //             color: Colors.white,
-  //             size: 24, // Tamaño del icono dentro del avatar
-  //           ),
-  //         ),
-  //       ),
-  //       hintText:
-  //           '¿Qué deseas hacer?\nCrear una receta, chat, planificar tareas...',
-  //     );
-  //   },
-  //   suggestionsBuilder:
-  //       (BuildContext context, SearchController controller) {
-  //     return List<ListTile>.generate(5, (int index) {
-  //       final String item = 'buscar $index';
-  //       return ListTile(
-  //         title: Text(item),
-  //         onTap: () {
-  //           setState(() {
-  //             controller.closeView(item);
-  //           });
-  //         },
-  //       );
-  //     });
-  //   },
-  // ));
 }
 
-Widget cardMenu(IconData icon, String labelText, String labelTime, String labelPrice, double edgeInsets) {
+Widget cardMenu(_scrollController, _currentPage, _onButtonPressed, IconData icon, String labelText, String labelTime,
+    String labelPrice, double edgeInsets) {
   return Card(
     color: Colors.transparent,
     elevation: 0,
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      controller: _scrollController,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: const EdgeInsets.only(), //el primero 0 margen
-            child: cardMenuUp(MdiIcons.autoFix, 'Deseos', 1, false),
+            child: cardMenuUp(_onButtonPressed, MdiIcons.autoFix, 'Deseos', 0, _currentPage == 0),
           ),
           Padding(
             padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(MdiIcons.finance, 'Finanzas', 2, false),
+            child: cardMenuUp(_onButtonPressed, MdiIcons.finance, 'Finanzas', 1, _currentPage == 1),
           ),
           Padding(
             padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(MdiIcons.hospitalBoxOutline, 'Salud', 3, false),
+            child: cardMenuUp(_onButtonPressed, MdiIcons.hospitalBoxOutline, 'Salud', 2, _currentPage == 2),
           ),
           Padding(
             padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(MdiIcons.calendarWeekendOutline, 'Tareas', 4, true),
+            child: cardMenuUp(_onButtonPressed, MdiIcons.calendarWeekendOutline, 'Tareas', 3, _currentPage == 3),
             //cardMenuUp(MdiIcons.clipboardEditOutline, 'Tareas', 4, false),
           ),
           Padding(
             padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(MdiIcons.tagOutline, 'Productos', 5, false),
+            child: cardMenuUp(_onButtonPressed, MdiIcons.tagOutline, 'Productos', 4, _currentPage == 4),
           ),
           Padding(
             padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(MdiIcons.folderStarOutline, 'Archivos', 7, false), //el ultimo sejo margen
+            child: cardMenuUp(
+                _onButtonPressed, MdiIcons.folderStarOutline, 'Archivos', 5, _currentPage == 5), //el ultimo sejo margen
           ),
         ],
       ),
@@ -295,7 +290,7 @@ Widget cardMenu(IconData icon, String labelText, String labelTime, String labelP
   );
 }
 
-Column cardMenuUp(IconData icon, String labelText, int value, bool visibility) {
+Column cardMenuUp(_onButtonPressed, IconData icon, String labelText, int value, bool visibility) {
   return Column(
     children: [
       ElevatedButton(
@@ -312,17 +307,22 @@ Column cardMenuUp(IconData icon, String labelText, int value, bool visibility) {
             // Añadir más propiedades de estilo aquí
           ),
           onPressed: () async {
+            _onButtonPressed(value);
+
             //  cNavig.setSelectMenu(value);
           },
           child: Icon(
             icon,
             size: 30,
-            color: const Color.fromARGB(120, 0, 0, 0),
+            color: visibility ? const Color.fromARGB(180, 0, 0, 0) : const Color.fromARGB(120, 0, 0, 0),
           )),
       Text(
         labelText,
-        style: const TextStyle(
-            height: 0.1, fontSize: 12, color: Color.fromARGB(120, 0, 0, 0), fontWeight: FontWeight.w800),
+        style: TextStyle(
+            height: 0.1,
+            fontSize: 12,
+            color: visibility ? Color.fromARGB(180, 0, 0, 0) : Color.fromARGB(120, 0, 0, 0),
+            fontWeight: FontWeight.w800),
       ),
       const SizedBox(
         height: 8,
@@ -336,252 +336,5 @@ Column cardMenuUp(IconData icon, String labelText, int value, bool visibility) {
         ),
       )
     ],
-  );
-}
-
-Widget cardContentHome(String title, IconData icon, String labelText, String labelTime, String labelPrice,
-    double edgeInsets, Color colorBotoom, double paddingT, double paddingRL, double radiusCont, Color colorItem) {
-  return Card(
-    color: Colors.transparent,
-    elevation: 0,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          width: double.infinity, // Ocupa el 100% del ancho disponible
-          decoration: BoxDecoration(
-            color: Colors.white, // Color de fondo del contenedor
-            borderRadius: BorderRadius.circular(radiusCont + 2), // Esquinas redondeadas
-            border: Border.all(
-              color: colorBotoom.withOpacity(0.28), // Color del borde
-              width: 2.0, // Grosor del borde
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: colorBotoom.withOpacity(0.4), // Sombra roja
-                spreadRadius: 0, // Asegura que la sombra esté en el borde
-                blurRadius: 10, // Difumina la sombra
-                offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-              ),
-            ],
-          ),
-          child: Container(
-            width: double.infinity, // Ocupa el 100% del ancho disponible
-            //padding: const EdgeInsets.all(8.0), // Espaciado interno opcional
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(radiusCont + 2), // Esquinas redondeadas
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: paddingT, right: paddingRL, left: paddingRL),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, // Alinea los elementos a la izquierda
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 52, 61, 78), // Texto en negro
-                              fontSize: 12.0, // Tamaño de la fuente ajustable
-                              fontWeight: FontWeight.bold, // Opcional: estilo de texto en negrita
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                MdiIcons.clock, // Icono de reloj
-                                color: colorBotoom, // Color azul para el icono
-                              ),
-                              const SizedBox(width: 4.0), // Espacio entre el icono y el texto
-                              Text(
-                                '10:00',
-                                style: TextStyle(
-                                    color: colorBotoom, // Texto en azul
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold // Tamaño de la fuente ajustable
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4.0), // Espacio entre la fila superior y el contenido inferior
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start, // Alinea los elementos en la parte superior
-                        children: [
-                          Container(
-                            width: 110,
-                            //padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: colorItem, // Color de fondo gris claro
-                              borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  'Lunes',
-                                  style: TextStyle(
-                                    height: 0.5,
-                                    color: Colors.black, // Texto en negro
-                                    fontSize: 12.0, // Tamaño más pequeño para el mes
-                                  ),
-                                ),
-                                Text(
-                                  '22',
-                                  style: TextStyle(
-                                    // fontFamily: 'Rakkas',
-                                    fontFamily: 'Roboto',
-                                    color: colorBotoom, // Texto en negro
-                                    fontSize: 46.0, // Tamaño grande para el número
-                                    fontWeight: FontWeight.w900, // Estilo más negrita
-                                  ),
-                                ),
-                                const Text(
-                                  'Julio',
-                                  style: TextStyle(
-                                    height: 0.5,
-                                    color: Colors.black, // Texto en negro
-                                    fontSize: 12.0, // Tamaño más pequeño para el mes
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 14,
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10.0), // Margen de 10px entre los dos bloques
-                          Container(
-                            width: 2,
-                            height: 108, //tamaño del separador
-                            color: const Color.fromARGB(155, 134, 134, 134),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, // Alinea los textos a la izquierda
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4.0), //
-                                decoration: BoxDecoration(
-                                  color: colorItem, // Color de fondo gris claro
-                                  borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
-                                ),
-                                child: const Row(
-                                  children: [
-                                    Icon(Icons.list, color: Colors.black), // Icono de lista
-                                    SizedBox(width: 4.0), // Espacio entre el icono y el texto
-                                    Text(
-                                      'Listas de compras',
-                                      style: TextStyle(
-                                        color: Colors.black, // Texto en negro
-                                        fontSize: 10.0, // Tamaño de la fuente ajustable
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    Text('  '),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 6.0), // Espacio entre las filas de texto
-                              Container(
-                                padding: const EdgeInsets.all(4.0),
-                                decoration: BoxDecoration(
-                                  color: colorItem, // Color de fondo gris claro
-                                  borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.attach_money, color: colorBotoom), // Icono de dinero
-                                    const SizedBox(width: 4.0), // Espacio entre el icono y el texto
-                                    Text(
-                                      '1.346.00',
-                                      style: TextStyle(
-                                        color: colorBotoom, // Texto en azul
-                                        fontSize: 10.0, // Tamaño de la fuente ajustable
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text('  '),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 6.0), // Espacio entre las filas de texto
-                              Container(
-                                padding: const EdgeInsets.all(4.0),
-                                decoration: BoxDecoration(
-                                  color: colorItem, // Color de fondo gris claro
-                                  borderRadius: BorderRadius.circular(15.0), // Bordes redondeados
-                                ),
-                                child: const Row(
-                                  children: [
-                                    Icon(Icons.support_agent, color: Colors.red), // Icono de dinero
-                                    SizedBox(width: 4.0), // Espacio entre el icono y el texto
-                                    Text(
-                                      'Sugerencias',
-                                      style: TextStyle(
-                                          color: Colors.red, // Texto en azul
-                                          fontSize: 10.0, // Tamaño de la fuente ajustable
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text('  '),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Container(
-                  width: double.infinity, // Ocupa el 100% del ancho disponible
-                  height: 60,
-                  // Espaciado interno opcional
-                  decoration: BoxDecoration(
-                    color: colorBotoom,
-                    border: Border.all(
-                      color: colorBotoom, // Color del borde
-                      //width: 2.0, // Grosor del borde
-                    ),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(radiusCont),
-                        bottomRight: Radius.circular(radiusCont)), // Esquinas redondeadas
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            MdiIcons.cartOutline,
-                            color: colorBotoom,
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                        child: AvatarMultiple(), // Reemplaza el segundo CircleAvatar con tu widget
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
-      ],
-    ),
   );
 }
