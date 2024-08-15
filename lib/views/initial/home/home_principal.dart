@@ -75,6 +75,8 @@ class _HomePrincipalState extends State<HomePrincipal> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    print('alto de mi telefono es :$screenHeight');
     final usernameCubit = context.watch<UsernameCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,8 +85,8 @@ class _HomePrincipalState extends State<HomePrincipal> {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
             children: [
-              Expanded(
-                flex: 22,
+              SizedBox(
+                height: 195,
                 child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   // Text(usernameCubit.state),
                   appBarWidget(MdiIcons.bellOutline, MdiIcons.messageOutline),
@@ -99,20 +101,20 @@ class _HomePrincipalState extends State<HomePrincipal> {
                   ),
                 ]),
               ),
-              Expanded(
-                  flex: 70,
+              Flexible(
+                  //flex: 70,
                   child: PageView(
-                    controller: _pageController,
-                    onPageChanged: _onPageChanged,
-                    children: const [
-                      WishesPage(),
-                      FinancePage(),
-                      HealthPage(),
-                      TasksWidget(),
-                      ProductPage(),
-                      FilesPage(),
-                    ],
-                  )),
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                children: const [
+                  WishesPage(),
+                  FinancePage(),
+                  HealthPage(),
+                  TasksWidget(),
+                  ProductPage(),
+                  FilesPage(),
+                ],
+              )),
             ],
           ),
         ),
