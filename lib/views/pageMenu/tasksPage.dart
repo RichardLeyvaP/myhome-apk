@@ -13,14 +13,14 @@ class TasksWidget extends StatelessWidget {
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         // Text(usernameCubit.state),
         Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 0), //el primero que no tenga margen
           child: cardContentHome(context, 'Compras en el Supermecado', Icons.content_cut, 'SERVICIOS', 'sds', 'sd',
               12.0, Colors.blue, 2, 8, 12, const Color.fromARGB(40, 133, 175, 209)),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: cardContentHome(context, 'Richard', Icons.content_cut, 'SERVICIOS', 'sds', 'sd', 12.0, Colors.red, 2,
-              10, 12, const Color.fromARGB(100, 221, 220, 220)),
+          child: cardContentHome(context, 'Consulta Médica', Icons.content_cut, 'SERVICIOS', 'sds', 'sd', 12.0,
+              Colors.red, 2, 10, 12, const Color.fromARGB(100, 221, 220, 220)),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),

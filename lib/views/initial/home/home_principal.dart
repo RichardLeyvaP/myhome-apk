@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -26,12 +28,13 @@ bool isDark = false;
 String search = '';
 final ThemeData themeData = ThemeData(useMaterial3: true, brightness: isDark ? Brightness.dark : Brightness.light);
 
-class _HomePrincipalState extends State<HomePrincipal> {
+class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProviderStateMixin {
   //esto es para el mapa
   // Controlador de PageView
   final PageController _pageController = PageController();
   int _currentPage = 0;
   ScrollController _scrollController = ScrollController();
+  late TabController _tabController;
 
   // Función para cambiar de página
   void _onButtonPressed(int pageIndex) {
@@ -62,15 +65,35 @@ class _HomePrincipalState extends State<HomePrincipal> {
     Navigator.of(context).pop();
   }
 
+  List<IconData> _tabIcons = [
+    MdiIcons.creationOutline, // Deseos
+    MdiIcons.finance, // Finanzas
+    MdiIcons.hospitalBoxOutline, // Salud
+    MdiIcons.calendarWeekendOutline, //tareas
+    MdiIcons.tagOutline, //Productos
+    MdiIcons.folderStarOutline, //Archivos
+  ];
+  final List<String> _tabTexts = ['Deseos', 'Finanzas', 'Salud', 'Tareas', 'Productos', 'Archivos'];
+
   @override
   void initState() {
     super.initState();
     // _getLocation();
+    _tabController = TabController(length: 6, vsync: this, initialIndex: 3);
+    _tabController.addListener(() {
+      setState(() {});
+    });
     SchedulerBinding.instance.addPostFrameCallback((_) {
       //  cLogin.toggleTheme();
       // Aquí puedes poner la lógica que necesitas ejecutar después de que el widget haya sido renderizado
       print("Widget renderizado completamente");
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,36 +114,144 @@ class _HomePrincipalState extends State<HomePrincipal> {
                   // Text(usernameCubit.state),
                   appBarWidget(MdiIcons.bellOutline, MdiIcons.messageOutline),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 6),
                     child: searchWidget(setState),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: cardMenu(_scrollController, _currentPage, _onButtonPressed, Icons.content_cut, 'SERVICIOS',
-                        'sds', 'sd', 0.0),
+                    padding: const EdgeInsets.only(top: 18),
+                    child: cardMenu(_tabController),
                   ),
                 ]),
               ),
               Flexible(
-                  //flex: 70,
-                  child: PageView(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                children: const [
-                  WishesPage(),
-                  FinancePage(),
-                  HealthPage(),
-                  TasksWidget(),
-                  ProductPage(),
-                  FilesPage(),
-                ],
-              )),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    WishesPage(),
+                    FinancePage(),
+                    HealthPage(),
+                    TasksWidget(),
+                    ProductPage(),
+                    FilesPage(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: StatefulBuilder(
+        builder: (context, setState) {
+          return InkWell(
+            onTap: () {
+              dialogComponet(context, _tabTexts[_tabController.index]);
+            },
+            child: CircleAvatar(
+              child: Icon(
+                _tabIcons[_tabController.index], // Icono que corresponde al Tab seleccionado
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
+}
+
+Future<dynamic> dialogComponet(BuildContext context, String name) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ), //this right here
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 93, 137, 233),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text(
+                      name,
+                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 150,
+              child: Column(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 16, right: 16, bottom: 10),
+                      child: Text('Cargar formulario de: $name')),
+                  //
+
+                  ButtonBar(
+                    alignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(vertical: 0, horizontal: 18.0),
+                              ),
+                              backgroundColor: WidgetStateProperty.all<Color>(Color(0xFF4470F3))),
+                          onPressed: () async {
+                            if (1 == 1) //codigo 200
+                            {
+                              //mando notificacion al barbero
+                              //quiere decir que el qr esta bloquedo hasta que acepten o rechacen
+
+                              print('solicitud enviada correctamente');
+                            }
+                            //manadar un mensaje si la solicitud se envio bien
+
+                            Navigator.pop(context);
+                            // Cerrar el primer modal
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                MdiIcons.check,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                'Aceptar  ',
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+                              ),
+                            ],
+                          )),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    },
+  );
 }
 
 Widget appBarWidget(IconData icon1, IconData icon2) {
@@ -249,94 +380,55 @@ Widget searchWidget(setState) {
   );
 }
 
-Widget cardMenu(_scrollController, _currentPage, _onButtonPressed, IconData icon, String labelText, String labelTime,
-    String labelPrice, double edgeInsets) {
-  return Card(
+Widget cardMenu(_tabController) {
+  return Container(
     color: Colors.transparent,
-    elevation: 0,
-    child: SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      controller: _scrollController,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(), //el primero 0 margen
-            child: cardMenuUp(_onButtonPressed, MdiIcons.autoFix, 'Deseos', 0, _currentPage == 0),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(_onButtonPressed, MdiIcons.finance, 'Finanzas', 1, _currentPage == 1),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(_onButtonPressed, MdiIcons.hospitalBoxOutline, 'Salud', 2, _currentPage == 2),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(_onButtonPressed, MdiIcons.calendarWeekendOutline, 'Tareas', 3, _currentPage == 3),
-            //cardMenuUp(MdiIcons.clipboardEditOutline, 'Tareas', 4, false),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(_onButtonPressed, MdiIcons.tagOutline, 'Productos', 4, _currentPage == 4),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: edgeInsets, right: edgeInsets),
-            child: cardMenuUp(
-                _onButtonPressed, MdiIcons.folderStarOutline, 'Archivos', 5, _currentPage == 5), //el ultimo sejo margen
-          ),
-        ],
-      ),
+    child: TabBar(
+      isScrollable: true, // Permite que el TabBar sea desplazable si hay muchas pestañas
+      tabAlignment: TabAlignment.start,
+      indicatorColor: const Color.fromARGB(255, 211, 92, 92), // Cambia el color de la barra inferior
+      controller: _tabController,
+      tabs: [
+        Tab(
+          child: cardMenuUp(MdiIcons.creationOutline, 'Deseos', _tabController.index == 0),
+        ),
+        Tab(
+          child: cardMenuUp(MdiIcons.finance, 'Finanzas', _tabController.index == 1),
+        ),
+        Tab(
+          child: cardMenuUp(MdiIcons.hospitalBoxOutline, 'Salud', _tabController.index == 2),
+        ),
+        Tab(
+          child: cardMenuUp(MdiIcons.calendarWeekendOutline, 'Tareas', _tabController.index == 3),
+        ),
+        Tab(
+          child: cardMenuUp(MdiIcons.tagOutline, 'Productos', _tabController.index == 4),
+        ),
+        Tab(
+          child: cardMenuUp(MdiIcons.folderStarOutline, 'Archivos', _tabController.index == 5),
+        ),
+      ],
     ),
   );
 }
 
-Column cardMenuUp(_onButtonPressed, IconData icon, String labelText, int value, bool visibility) {
+Column cardMenuUp(IconData icon, String labelText, bool isSelected) {
   return Column(
     children: [
-      ElevatedButton(
-          style: ButtonStyle(
-            elevation: const WidgetStatePropertyAll(0),
-            // padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-            //   const EdgeInsets.symmetric(
-            //       vertical: 16.0, horizontal: 0.0), // Ajusta el padding
-            // ),
-            backgroundColor: WidgetStateProperty.all<Color>(
-              Colors.white,
-            ),
-
-            // Añadir más propiedades de estilo aquí
-          ),
-          onPressed: () async {
-            _onButtonPressed(value);
-
-            //  cNavig.setSelectMenu(value);
-          },
-          child: Icon(
-            icon,
-            size: 30,
-            color: visibility ? const Color.fromARGB(180, 0, 0, 0) : const Color.fromARGB(120, 0, 0, 0),
-          )),
+      Icon(
+        icon,
+        size: 30,
+        color: isSelected ? Colors.black : const Color.fromARGB(120, 0, 0, 0),
+      ),
+      SizedBox(height: 6), // Aumenta la separación
       Text(
         labelText,
         style: TextStyle(
             height: 0.1,
             fontSize: 12,
-            color: visibility ? Color.fromARGB(180, 0, 0, 0) : Color.fromARGB(120, 0, 0, 0),
+            color: isSelected ? Colors.black : const Color.fromARGB(120, 0, 0, 0),
             fontWeight: FontWeight.w800),
       ),
-      const SizedBox(
-        height: 8,
-      ),
-      Visibility(
-        visible: visibility,
-        child: Container(
-          height: 3,
-          width: 64,
-          color: const Color.fromARGB(255, 211, 92, 92),
-        ),
-      )
     ],
   );
 }
