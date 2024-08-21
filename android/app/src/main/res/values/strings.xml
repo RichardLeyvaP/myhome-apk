@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">huoonAuth</string>
+<string name="facebook_app_id">1580670975848108</string>
+<string name="fb_login_protocol_scheme">fb1580670975848108</string>
+<string name="facebook_client_token">b7cf63bd1148f91e7484b7ef04cb4519</string>
+</resources>

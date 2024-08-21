@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058321481200",
+    "project_id": "huoonauthg",
+    "storage_bucket": "huoonauthg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058321481200:android:cc1c4b9b5e4e6754717135",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdy6cz4m7-Sa1R1v1a1akW8NRHdvhEyOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

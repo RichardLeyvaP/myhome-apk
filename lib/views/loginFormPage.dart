@@ -1,12 +1,17 @@
 // ignore_for_file: file_names, depend_on_referenced_packages
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myhome/Controllers/login.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:myhome/myApp.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:myhome/services/authFacebook_service.dart';
+import 'package:myhome/services/authGoogle_service.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginFormPage extends StatefulWidget {
   LoginFormPage({super.key});
@@ -16,6 +21,13 @@ class LoginFormPage extends StatefulWidget {
 }
 
 class _LoginFormPageState extends State<LoginFormPage> {
+  @override
+  void initState() {
+    print('llegando a la pagina de loginFb');
+    super.initState();
+    //  _checkingIfLogget();
+  }
+
   final TextEditingController _passController = TextEditingController();
 
   final TextEditingController _usserController = TextEditingController();
@@ -57,8 +69,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                         topRight: Radius.circular(35),
                       )),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 60, left: 16, right: 16),
+                    padding: const EdgeInsets.only(top: 60, left: 16, right: 16),
                     child: GetBuilder<LoginController>(builder: (_) {
                       return Column(
                         children: [
@@ -67,21 +78,18 @@ class _LoginFormPageState extends State<LoginFormPage> {
                             decoration: InputDecoration(
                               hintText: 'Usuario',
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    15.0), // Color del borde
+                                borderRadius: BorderRadius.circular(15.0), // Color del borde
                               ),
                               prefixIcon: const Icon(
                                 Icons.person,
                                 color: Color.fromARGB(90, 0, 0, 0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.orange, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.orange, width: 2.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.orange, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.orange, width: 2.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -96,8 +104,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                             decoration: InputDecoration(
                               //labelText: 'Pass',
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    15.0), // Color del borde
+                                borderRadius: BorderRadius.circular(15.0), // Color del borde
                               ),
 
                               hintText: 'Contraseña', // Este es el placeholder
@@ -106,20 +113,16 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                 color: Color.fromARGB(90, 0, 0, 0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.orange, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.orange, width: 2.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.orange, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.orange, width: 2.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                  _.obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                  _.obscureText ? Icons.visibility : Icons.visibility_off,
                                   color: Colors.grey,
                                 ),
                                 onPressed: _.togglePasswordVisibility,
@@ -128,8 +131,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                               filled: true,
 
                               labelStyle: const TextStyle(
-                                color: Color.fromARGB(176, 0, 0,
-                                    0), // Cambia el color del texto aquí
+                                color: Color.fromARGB(176, 0, 0, 0), // Cambia el color del texto aquí
                               ),
                             ),
                           ),
@@ -153,21 +155,15 @@ class _LoginFormPageState extends State<LoginFormPage> {
                               Expanded(
                                 child: ElevatedButton(
                                     style: ButtonStyle(
-                                      padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
+                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                                         const EdgeInsets.symmetric(
-                                            vertical: 20.0,
-                                            horizontal:
-                                                60.0), // Ajusta el padding
+                                            vertical: 20.0, horizontal: 60.0), // Ajusta el padding
                                       ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.black),
+                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
                                       // Añadir más propiedades de estilo aquí
                                     ),
                                     onPressed: () async {
-                                      if (_usserController.text.isEmpty ||
-                                          _passController.text.isEmpty) {
+                                      if (_usserController.text.isEmpty || _passController.text.isEmpty) {
                                         _passController.text = '';
                                         _usserController.text = '';
                                         //mostrar snackbar error aqui
@@ -176,9 +172,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                       } else {
                                         await _.getIsLoading(true);
 
-                                        Future.delayed(
-                                            const Duration(seconds: 1),
-                                            () async {
+                                        Future.delayed(const Duration(seconds: 1), () async {
                                           _.getIsLoading(false);
                                           // Espera a que la navegación a la nueva página se complete
                                           userCubit.goHome();
@@ -219,17 +213,63 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                         : const Text(
                                             'LOGIN',
                                             style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w800),
+                                                fontSize: 12, color: Colors.white, fontWeight: FontWeight.w800),
                                           )),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 40),
+
                           SizedBox(
-                            height: 10,
+                            width: double.infinity, // Ocupa todo el ancho disponible
+                            height: 50,
+                            child: SignInButton(
+                              Buttons.google,
+                              text: "Entrar con Google",
+                              onPressed: () {
+                                loginWithGoogle(context);
+                                // Tu lógica de inicio de sesión
+                              },
+                            ),
                           ),
-                          InkWell(
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity, // Ocupa todo el ancho disponible
+                            height: 50,
+                            child: SignInButton(
+                              Buttons.facebook,
+                              text: "Entrar con facebook",
+                              onPressed: () {
+                                loginFb(setState, context);
+                                // Tu lógica de inicio de sesión
+                              },
+                            ),
+                          )
+                          // ElevatedButton.icon(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Colors.white,
+                          //     foregroundColor: Colors.black, // Color del texto e ícono de Google
+                          //     side: const BorderSide(color: Colors.black), // Borde del botón
+                          //     minimumSize: const Size(double.infinity, 50),
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(8),
+                          //     ),
+                          //   ),
+                          //   icon: const FaIcon(
+                          //     FontAwesomeIcons.google,
+                          //     color: Colors.red, // Color del ícono de Google
+                          //   ),
+                          //   label: const Text(
+                          //     'Entrar con Google',
+                          //     style: TextStyle(fontWeight: FontWeight.bold),
+                          //   ),
+                          //   onPressed: () {
+                          //     // Acción al presionar el botón de Google
+                          //     loginWithGoogle();
+                          //   },
+                          // ),
+
+                          /* InkWell(
                             onTap: () {
                               userCubit.goAuthCheck();
                             },
@@ -239,7 +279,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                               width: 80,
                               height: 60,
                             ),
-                          ),
+                          ),*/
                         ],
                       );
                     }),

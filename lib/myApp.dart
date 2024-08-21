@@ -8,6 +8,7 @@ import 'package:myhome/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myhome/views/loginFb.dart';
 
 //todo este es el que me falta optimizar
 class Myapp extends StatelessWidget {
@@ -158,13 +159,28 @@ final GoRouter _appRouter1 = GoRouter(
       path: '/',
       redirect: (context, state) => '/LoginFormPage',
     ),
+    // GoRoute(
+    //   path: '/',
+    //   redirect: (context, state) => '/LoginFormPage',
+    // ),
+    GoRoute(
+      path: '/LoginFbPage',
+      builder: (context, state) => LoginFbPage(),
+    ),
     GoRoute(
       path: '/LoginFormPage',
       builder: (context, state) => LoginFormPage(),
     ),
     GoRoute(
       path: '/HomePrincipal',
-      builder: (context, state) => HomePrincipal(),
+      builder: (context, state) {
+        final Map<String, dynamic> extra = state.extra as Map<String, dynamic>? ?? {};
+        return HomePrincipal(
+          name: extra['name'] ?? '',
+          email: extra['email'] ?? '',
+          avatarUrl: extra['avatarUrl'] ?? '',
+        );
+      },
     ),
     GoRoute(
       path: '/LoadingPage',
@@ -194,6 +210,16 @@ class RoutesCubit extends Cubit<GoRouter> {
   void goHome() {
     print('navegando con cubit');
     state.go('/HomePrincipal');
+  }
+
+  void goHomeFb({required name, required email, required avatarUrl}) {
+    print('Navegando con cubit');
+    // Navega a la ruta '/HomePrincipal' pasando los datos como argumentos
+    state.go('/HomePrincipal', extra: {
+      'name': name,
+      'email': email,
+      'avatarUrl': avatarUrl,
+    });
   }
 
   void goAuthCheck() {

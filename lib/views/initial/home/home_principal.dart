@@ -18,7 +18,10 @@ import '../../pageMenu/tasksPage.dart';
 // color gris de fondo ... Colors.white
 
 class HomePrincipal extends StatefulWidget {
-  const HomePrincipal({super.key});
+  final String name;
+  final String email;
+  final String avatarUrl;
+  const HomePrincipal({super.key, required this.name, required this.email, required this.avatarUrl});
 
   @override
   State<HomePrincipal> createState() => _HomePrincipalState();
@@ -98,6 +101,9 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    print('llegando a Pagina-Principal:${widget.name}');
+    print('llegando a Pagina-Principal:${widget.avatarUrl}');
+    print('llegando a Pagina-Principal:${widget.email}');
     double screenHeight = MediaQuery.of(context).size.height;
     print('alto de mi telefono es :$screenHeight');
     final usernameCubit = context.watch<UsernameCubit>();
@@ -112,7 +118,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
                 height: 195,
                 child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   // Text(usernameCubit.state),
-                  appBarWidget(MdiIcons.bellOutline, MdiIcons.messageOutline),
+                  appBarWidget(MdiIcons.bellOutline, MdiIcons.messageOutline, widget.avatarUrl, widget.name),
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: searchWidget(setState),
@@ -254,7 +260,7 @@ Future<dynamic> dialogComponet(BuildContext context, String name) {
   );
 }
 
-Widget appBarWidget(IconData icon1, IconData icon2) {
+Widget appBarWidget(IconData icon1, IconData icon2, String avatar, String name) {
   return Card(
     color: Colors.transparent,
     elevation: 0,
@@ -268,7 +274,7 @@ Widget appBarWidget(IconData icon1, IconData icon2) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,6 +284,14 @@ Widget appBarWidget(IconData icon1, IconData icon2) {
                         style: TextStyle(
                             color: Color.fromARGB(255, 211, 92, 92), fontSize: 24, fontWeight: FontWeight.w900),
                       ),
+                      Text(
+                        name,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 211, 92, 92),
+                            height: 0.1,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ],
@@ -286,6 +300,10 @@ Widget appBarWidget(IconData icon1, IconData icon2) {
                 children: [
                   IconButton(onPressed: () {}, icon: Badge(isLabelVisible: true, child: Icon(icon1))),
                   IconButton(onPressed: () {}, icon: Icon(icon2)),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(avatar),
+                    backgroundColor: Colors.transparent, // Opcional: color de fondo si la imagen no se carga
+                  )
                 ],
               ),
             ],

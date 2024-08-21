@@ -1,5 +1,6 @@
 // ignore_for_file: unused_element, depend_on_referenced_packages
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myhome/app_initializer.dart';
 import 'package:myhome/dependency_injection.dart';
@@ -21,11 +22,10 @@ void main() async {
     await TranslationManager.loadDefaultTranslations();
     // Cargar las traducciones antes de iniciar la aplicación
     //await _requestPermissions();
-
+    // await Firebase.initializeApp();
     runApp(
       MultiProvider(
-        providers:
-            providers, //esto es para la autenticacion por la huella dactilar
+        providers: providers, //esto es para la autenticacion por la huella dactilar
         child: const BlocsProviders(),
       ),
     );
