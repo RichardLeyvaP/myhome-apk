@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/Components/showDialogComp.dart';
 import 'package:myhome/views/blocs/01-simple_cubit/username_cubit.dart';
@@ -150,7 +151,14 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
         builder: (context, setState) {
           return InkWell(
             onTap: () {
-              dialogComponet(context, _tabTexts[_tabController.index]);
+              print('inde = ${_tabController.index}');
+              if (_tabController.index == 3) {
+                print('inde =.... ${_tabController.index}');
+                GoRouter.of(context).go(
+                  '/TaskCreation',
+                );
+              }
+              //  dialogComponet(context, _tabTexts[_tabController.index]);
             },
             child: CircleAvatar(
               child: Icon(

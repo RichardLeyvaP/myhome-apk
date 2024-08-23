@@ -8,6 +8,7 @@ import 'package:myhome/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myhome/views/initial/Task/TaskCreationPage.dart';
 import 'package:myhome/views/loginFb.dart';
 
 //todo este es el que me falta optimizar
@@ -193,6 +194,10 @@ final GoRouter _appRouter1 = GoRouter(
     GoRoute(
       path: '/AuthCheck',
       builder: (context, state) => const AuthCheck(),
+    ),
+    GoRoute(
+      path: '/TaskCreation',
+      builder: (context, state) => TaskCreation(),
     ),
     // Puedes agregar más rutas aquí
   ],
