@@ -1,181 +1,226 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/ui/Components/avatarMultiples.dart';
-import 'package:myhome/ui/pages/initial/Task/selectDays/calendar.dart';
+import 'package:myhome/ui/pages/initial/Task/selectDays/utils.dart';
+import 'package:myhome/ui/pages/pageMenu/widget/cardTasksW.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-class TasksWidget extends StatelessWidget {
-  const TasksWidget({
-    super.key,
-  });
+class TasksWidget extends StatefulWidget {
+  const TasksWidget({super.key});
+
+  @override
+  _TasksWidgetState createState() => _TasksWidgetState();
+}
+
+class _TasksWidgetState extends State<TasksWidget> {
+  int selectedDay = DateTime.now().day;
+  CalendarFormat _calendarFormat = CalendarFormat.week;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+
+  List<Widget> _events = [];
+
+  void _updateEvents() {
+    // Aquí puedes personalizar qué eventos se muestran dependiendo del día
+    Future.delayed(Duration(seconds: 3));
+    if (isSameDay(_selectedDay, DateTime(2024, 8, 29))) {
+      _events = [
+        CardTasks(
+          title: 'Compras en el Supermecado',
+          icon: MdiIcons.cartOutline,
+          date: '2024-08-29',
+          details: 'sd',
+          schedule: '10:00 - 12:00',
+          iconSize: 12.0,
+          iconColor: Colors.blue,
+        ),
+        CardTasks(
+          title: 'Reunión de trabajo',
+          icon: MdiIcons.briefcaseOutline,
+          date: '2024-08-29',
+          details: 'Duración: 2h',
+          schedule: '10:40 - 11:25',
+          iconSize: 12.0,
+          iconColor: Colors.purple,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Cita con dentista',
+          icon: MdiIcons.toothOutline,
+          date: '2024-08-29',
+          details: 'Duración: 1h',
+          schedule: '14:00 - 16:00',
+          iconSize: 12.0,
+          iconColor: Colors.teal,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Clases de yoga',
+          icon: MdiIcons.yoga,
+          date: '2024-08-29',
+          details: 'Duración: 1h',
+          schedule: '08:00 - 09:00',
+          iconSize: 12.0,
+          iconColor: Colors.orange,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Viaje al aeropuerto',
+          icon: MdiIcons.airplaneTakeoff,
+          date: '2024-08-29',
+          details: 'Duración: 3h',
+          schedule: '16:00 - 16:40',
+          iconSize: 12.0,
+          iconColor: Colors.blue,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Cena con amigos',
+          icon: MdiIcons.silverwareForkKnife,
+          date: '2024-08-29',
+          details: 'Duración: 2h',
+          schedule: '10:40 - 12:10',
+          iconSize: 12.0,
+          iconColor: Colors.green,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Entrenamiento en el gimnasio',
+          icon: MdiIcons.dumbbell,
+          date: '2024-08-29',
+          details: 'Duración: 1.5h',
+          schedule: '20:00 - 21:00',
+          iconSize: 12.0,
+          iconColor: Colors.redAccent,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Estudio de matemáticas',
+          icon: MdiIcons.calculator,
+          date: '2024-08-29',
+          details: 'Duración: 2h',
+          schedule: '06:00 - 10:00',
+          iconSize: 12.0,
+          iconColor: Colors.indigo,
+          padding: 8.0,
+        ),
+      ];
+    } else if (isSameDay(_selectedDay, DateTime(2024, 8, 30))) {
+      _events = [
+        CardTasks(
+          title: 'Videollamada familiar',
+          icon: MdiIcons.videoOutline,
+          date: '2024-08-31',
+          details: 'Duración: 1h',
+          schedule: '18:00 - 18:30',
+          iconSize: 12.0,
+          iconColor: Colors.cyan,
+          padding: 8.0,
+        ),
+      ];
+    } else if (isSameDay(_selectedDay, DateTime(2024, 8, 28))) {
+      _events = [
+        CardTasks(
+          title: 'Cumpleaños de Clara',
+          icon: MdiIcons.cakeVariantOutline,
+          date: '2024-08-28',
+          details: 'sd',
+          schedule: '15:00 - 17:00',
+          iconSize: 12.0,
+          iconColor: const Color.fromARGB(255, 61, 189, 93),
+          padding: 8.0,
+        ),
+      ];
+    } else if (isSameDay(_selectedDay, DateTime(2024, 8, 31))) {
+      _events = [
+        CardTasks(
+          title: 'Partido de fútbol',
+          icon: MdiIcons.soccer,
+          date: '2024-08-31',
+          details: 'Duración: 1.5h',
+          schedule: '10:00 - 12:00',
+          iconSize: 12.0,
+          iconColor: Colors.amber,
+          padding: 8.0,
+        ),
+        CardTasks(
+          title: 'Visita al museo',
+          icon: MdiIcons.artstation,
+          date: '2024-08-31',
+          details: 'Duración: 2h',
+          schedule: '14:00 - 13:00',
+          iconSize: 12.0,
+          iconColor: Colors.brown,
+          padding: 8.0,
+        ),
+      ];
+    } else {
+      _events = [
+        const Column(
+          children: [
+            SizedBox(
+              height: 180,
+            ),
+            Center(child: Text('No hay tareas para este día')),
+          ],
+        ),
+      ];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializamos el primer día con algún contenido
+    _selectedDay = DateTime.now();
+    _updateEvents();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        // Text(usernameCubit.state),
-        HorizontalCalendar(),
-        Padding(
-          padding: const EdgeInsets.only(top: 6), //el primero que no tenga margen
-          child: cardContentHome(context, 'Compras en el Supermecado', MdiIcons.cartOutline, 'SERVICIOS', 'sds', 'sd',
-              12.0, Colors.blue, 8, 14, const Color.fromARGB(40, 133, 175, 209)),
+    return Column(
+      children: [
+        // El calendario permanece fijo en la parte superior
+        TableCalendar(
+          locale: 'es_ES',
+          firstDay: kFirstDay,
+          lastDay: kLastDay,
+          focusedDay: _focusedDay,
+          calendarFormat: _calendarFormat,
+          selectedDayPredicate: (day) {
+            return isSameDay(_selectedDay, day);
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            if (!isSameDay(_selectedDay, selectedDay)) {
+              print('calendario seleccion:${DateFormat('yyyy-MM-dd').format(selectedDay)}');
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+                _updateEvents();
+              });
+            }
+          },
+          onFormatChanged: (format) {
+            if (_calendarFormat != format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            }
+          },
+          onPageChanged: (focusedDay) {
+            _focusedDay = focusedDay;
+          },
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: cardContentHome(context, 'Consulta Médica', MdiIcons.hospitalBoxOutline, 'SERVICIOS', 'sds', 'sd',
-              12.0, Colors.red, 8, 14, const Color.fromARGB(100, 221, 220, 220)),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: cardContentHome(context, 'Cumpleaños de Clara', MdiIcons.cakeVariantOutline, 'SERVICIOS', 'sds', 'sd',
-              12.0, const Color.fromARGB(255, 61, 189, 93), 8, 14, const Color.fromARGB(100, 221, 220, 220)),
-        ),
-      ]),
-    );
-  }
-}
-
-Widget cardContentHome(context, String title, IconData icon, String labelText, String labelTime, String labelPrice,
-    double edgeInsets, Color colorBotoom, double paddingT, double radiusCont, Color colorItem) {
-  return Card(
-    color: Colors.transparent,
-    elevation: 0,
-    child: Container(
-      width: double.infinity, // Ocupa el 100% del ancho disponible
-      decoration: BoxDecoration(
-        color: Colors.white, // Color de fondo del contenedor
-        borderRadius: BorderRadius.circular(radiusCont), // Esquinas redondeadas
-        border: Border.all(
-          color: const Color.fromARGB(40, 158, 158, 158).withOpacity(0.28), // Color del borde
-          width: 2.0, // Grosor del borde
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromARGB(120, 158, 158, 158).withOpacity(0.4), // Sombra roja
-            spreadRadius: 0, // Asegura que la sombra esté en el borde
-            blurRadius: 6, // Difumina la sombra
-            offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
+        // El contenido debajo del calendario es desplazable
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: _events, // Lista de eventos
+            ),
           ),
-        ],
-      ),
-      child: Container(
-        width: double.infinity, // Ocupa el 100% del ancho disponible
-        //padding: const EdgeInsets.all(8.0), // Espaciado interno opcional
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(radiusCont), // Esquinas redondeadas
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(top: paddingT, right: paddingT, left: paddingT, bottom: paddingT),
-          child: Row(
-            children: [
-              Container(
-                  width: 70, // Ancho fijo
-                  // height: 100, // Ajusta la altura según sea necesario
-
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          //padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            color: colorBotoom.withOpacity(0.3), // Color de fondo gris claro
-                            borderRadius: BorderRadius.circular(20.0), // Bordes redondeados
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Icon(
-                                icon,
-                                color: colorBotoom,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-              Expanded(
-                child: Container(
-                  //height: 100, // Ajusta la altura según sea necesario
-
-                  child: Center(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, // Alinea los textos a la izquierda
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            title,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                // Cambia alguna propiedad aqui
-                                ),
-                          ),
-                          Text(
-                            '10:00 - 12:00',
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                // Cambia alguna propiedad aqui
-                                ),
-                          ), // Icono de lista
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              botonCartTask(Colors.red, Icon(MdiIcons.robotAngryOutline)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              botonCartTask(Colors.blue, Icon(MdiIcons.listBoxOutline)),
-                            ],
-                          ),
-                          Expanded(
-                            child: AvatarMultiple(), // Reemplaza el segundo CircleAvatar con tu widget
-                          ),
-                        ],
-                      )
-                    ],
-                  )),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Container botonCartTask(Color colorBotoom, Icon icon) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.white, // Color de fondo del contenedor
-      borderRadius: BorderRadius.circular(12), // Esquinas redondeadas
-      border: Border.all(
-        color: colorBotoom.withOpacity(0.28), // Color del borde
-        width: 2.0, // Grosor del borde
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: colorBotoom.withOpacity(0.4), // Sombra roja
-          spreadRadius: 0, // Asegura que la sombra esté en el borde
-          blurRadius: 10, // Difumina la sombra
-          offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
         ),
       ],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: icon,
-    ),
-  );
+    );
+  }
 }

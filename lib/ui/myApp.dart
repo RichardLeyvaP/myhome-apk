@@ -11,6 +11,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myhome/ui/pages/initial/Task/TaskCreationPage.dart';
 import 'package:myhome/ui/pages/loginFb.dart';
 
+//FUENTE POPINS
+//FUENTE del LOGOTIPO Balo 2
+
 //todo este es el que me falta optimizar
 class Myapp extends StatelessWidget {
   Myapp({super.key});

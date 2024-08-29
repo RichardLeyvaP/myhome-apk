@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/ui/Components/showDialogComp.dart';
@@ -69,7 +66,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
     Navigator.of(context).pop();
   }
 
-  List<IconData> _tabIcons = [
+  final List<IconData> _tabIcons = [
     MdiIcons.creationOutline, // Deseos
     MdiIcons.finance, // Finanzas
     MdiIcons.hospitalBoxOutline, // Salud
@@ -133,7 +130,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
               Flexible(
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [
+                  children: [
                     WishesPage(),
                     FinancePage(),
                     HealthPage(),
