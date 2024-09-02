@@ -10,9 +10,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myhome/ui/pages/initial/Task/TaskCreationPage.dart';
 import 'package:myhome/ui/pages/loginFb.dart';
+import 'package:myhome/ui/util/utils_class_apk.dart';
 
 //FUENTE POPINS
-//FUENTE del LOGOTIPO Balo 2
+//FUENTE del LOGOTIPO Balo 2 // const Color.fromARGB(255, 218, 113, 113)--casi-rojo
 
 //todo este es el que me falta optimizar
 class Myapp extends StatelessWidget {
@@ -41,23 +42,22 @@ class Myapp extends StatelessWidget {
   ThemeData themeDataInitialSmall() {
     print('themeDataProfessional');
     return ThemeData(
-      // Configurar la fuente globalmente
-      fontFamily: 'Roboto',
+      // Usa la fuente global para todo el proyecto
+      fontFamily: StyleGlobalApk.globalTextStyle.fontFamily,
 
       // Colores principales de la aplicación
-      primaryColor: Colors.blue, // Color principal
-      // Configuración del esquema de colores
+      primaryColor: const Color.fromARGB(255, 67, 162, 240), // Color principal
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: Colors.blue, // Color primario
         secondary: Colors.orange, // Color secundario
-        surface: Colors.white, //este es el background
+        surface: Colors.white, // Este es el fondo
       ),
 
       // Configuración del AppBar
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         toolbarHeight: 120, // Altura del AppBar
         backgroundColor: Colors.blue, // Color de fondo del AppBar
-        titleTextStyle: TextStyle(
+        titleTextStyle: StyleGlobalApk.globalTextStyle.copyWith(
           fontSize: 24.0,
           fontWeight: FontWeight.bold,
           color: Colors.white, // Color del texto en el AppBar
@@ -65,56 +65,34 @@ class Myapp extends StatelessWidget {
       ),
 
       // Configuración global de los textos
-      textTheme: const TextTheme(
-        //todo los que se están utilizando actualmente
-        bodyMedium: TextStyle(
-          //este es el que tiene el texto por defecto
+      textTheme: TextTheme(
+        bodyMedium: StyleGlobalApk.globalTextStyle.copyWith(
           fontSize: 12.0,
           fontWeight: FontWeight.normal,
-          color: Colors.black, // Otro estilo de texto para el cuerpo
+          color: Colors.black,
         ),
-        titleLarge: TextStyle(
-          fontSize: 46.0, // Tamaño grande para el número
-          fontWeight: FontWeight.w900, // Estilo más negrita
-        ),
-        titleMedium: TextStyle(
-          color: Colors.black, // Texto en negro
-          fontSize: 12.0, // Tamaño de la fuente ajustable
+        titleLarge: StyleGlobalApk.globalTextStyle.copyWith(
+          fontSize: 46.0,
           fontWeight: FontWeight.w900,
+          color: Colors.black,
         ),
-        titleSmall: TextStyle(
-          color: Colors.black, // Texto en negro
-          fontSize: 10.0, // Tamaño de la fuente ajustable
-          fontWeight: FontWeight.w500,
-        ),
-        /*
-        displayLarge: TextStyle(
+        titleMedium: StyleGlobalApk.globalTextStyle.copyWith(
           fontSize: 12.0,
-          fontWeight: FontWeight.w300,
-          color: Colors.black, // Color para los titulares grandes
+          fontWeight: FontWeight.w900,
+          color: Colors.black,
         ),
-        displayMedium: TextStyle(
-          fontSize: 28.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.black, // Color para los titulares medianos
+        titleSmall: StyleGlobalApk.globalTextStyle.copyWith(
+          fontSize: 10.0,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
         ),
-        bodyLarge: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.normal,
-          color: Colors.black, // Color para el texto del cuerpo
+
+        // Aquí usas una fuente diferente para `displayMedium`
+        displayMedium: StyleGlobalApk.getStyleTitleApk().copyWith(
+          color: StyleGlobalApk.getCindicador(),
+          fontSize: 24,
+          fontWeight: FontWeight.w800,
         ),
-        bodyMedium: TextStyle(
-          fontSize: 14.0,
-          fontWeight: FontWeight.normal,
-          color: Colors.black, // Otro estilo de texto para el cuerpo
-        ),
-        labelLarge: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.white, // Color del texto en los botones
-        ),*/
-      ).apply(
-        fontFamily: 'Roboto', // Aplicar fuente a todo el texto
       ),
 
       // Configuración de los botones elevados
@@ -123,7 +101,7 @@ class Myapp extends StatelessWidget {
           backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
           foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
           textStyle: WidgetStateProperty.all<TextStyle>(
-            const TextStyle(
+            StyleGlobalApk.globalTextStyle.copyWith(
               fontSize: 12.0,
               fontWeight: FontWeight.bold,
             ),
@@ -136,7 +114,7 @@ class Myapp extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0), // Esquinas redondeadas
         ),
-        hintStyle: const TextStyle(
+        hintStyle: StyleGlobalApk.globalTextStyle.copyWith(
           fontSize: 12.0,
           color: Colors.grey, // Color del hintText
           fontWeight: FontWeight.normal,

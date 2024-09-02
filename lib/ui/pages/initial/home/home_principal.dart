@@ -113,10 +113,11 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
           child: Column(
             children: [
               SizedBox(
-                height: 195,
+                height: 170,
                 child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   // Text(usernameCubit.state),
-                  appBarWidget(MdiIcons.bellOutline, MdiIcons.messageOutline, widget.avatarUrl, widget.name, 'huoon'),
+                  appBarWidget(
+                      context, MdiIcons.bellOutline, MdiIcons.messageOutline, widget.avatarUrl, widget.name, 'huoon'),
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: searchWidget(setState),
@@ -265,7 +266,7 @@ Future<dynamic> dialogComponet(BuildContext context, String name) {
   );
 }
 
-Widget appBarWidget(IconData icon1, IconData icon2, String avatar, String name, String nameApp) {
+Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, String name, String nameApp) {
   return Card(
     color: Colors.transparent,
     elevation: 0,
@@ -286,8 +287,9 @@ Widget appBarWidget(IconData icon1, IconData icon2, String avatar, String name, 
                     children: [
                       Text(
                         nameApp,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 211, 92, 92), fontSize: 24, fontWeight: FontWeight.w900),
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            // Cambia alguna propiedad aqui
+                            ),
                       ),
                       Text(
                         name,
@@ -331,20 +333,24 @@ Widget searchWidget(setState) {
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.red.withOpacity(0.2),
+              color: Colors.red.withOpacity(0.3),
               blurRadius: 8.0,
               spreadRadius: 2.0,
             ),
           ],
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 22,
-              backgroundColor: Color.fromARGB(255, 211, 92, 92),
-              child: Icon(
-                Icons.search,
-                color: Colors.white,
+            CircleAvatar(
+              radius: 16,
+              backgroundColor: const Color.fromARGB(255, 218, 113, 113),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 3),
+                child: Icon(
+                  MdiIcons.robot,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(width: 8.0),
@@ -360,17 +366,17 @@ Widget searchWidget(setState) {
                           TextSpan(
                             text: 'Qué deseas hacer?\n',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 32, 32, 32),
-                              fontSize: 14.0,
-                            ),
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 32, 32, 32),
+                                fontSize: 13.0,
+                                height: 1),
                           ),
                           TextSpan(
                             text: 'Planificar Tareas - Recordatorios - Chat',
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(200, 37, 37, 37),
-                              fontSize: 12.0,
+                              fontSize: 11.0,
                             ),
                           ),
                         ],
@@ -406,29 +412,33 @@ Widget searchWidget(setState) {
 Widget cardMenu(_tabController) {
   return Container(
     color: Colors.transparent,
+    //alignment: Alignment.center, // Alinea el TabBar en el centro horizontalmente
     child: TabBar(
       isScrollable: true, // Permite que el TabBar sea desplazable si hay muchas pestañas
       tabAlignment: TabAlignment.start,
-      indicatorColor: const Color.fromARGB(255, 211, 92, 92), // Cambia el color de la barra inferior
+      indicatorColor: const Color.fromARGB(255, 218, 113, 113), // Cambia el color de la barra inferior
       controller: _tabController,
+      indicatorPadding: const EdgeInsets.only(bottom: 2.0), // Ajusta el indicador para que esté más cerca del icono
+      labelPadding: EdgeInsets.symmetric(horizontal: 11.0), // Ajusta el padding horizontal
+
       tabs: [
         Tab(
-          child: cardMenuUp(MdiIcons.creationOutline, 'Deseos', _tabController.index == 0),
+          child: cardMenuUp(MdiIcons.creationOutline, 'Deseos', _tabController.index == 0), //Deseos
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.finance, 'Finanzas', _tabController.index == 1),
+          child: cardMenuUp(MdiIcons.finance, 'Finanzas', _tabController.index == 1), //Finanzas
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.hospitalBoxOutline, 'Salud', _tabController.index == 2),
+          child: cardMenuUp(MdiIcons.hospitalBoxOutline, 'Salud', _tabController.index == 2), //Salud
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.calendarWeekendOutline, 'Tareas', _tabController.index == 3),
+          child: cardMenuUp(MdiIcons.calendarWeekendOutline, 'Tareas', _tabController.index == 3), //Tareas
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.tagOutline, 'Productos', _tabController.index == 4),
+          child: cardMenuUp(MdiIcons.tagOutline, 'Productos', _tabController.index == 4), //Productos
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.folderStarOutline, 'Archivos', _tabController.index == 5),
+          child: cardMenuUp(MdiIcons.folderStarOutline, 'Archivos', _tabController.index == 5), //Archivos
         ),
       ],
     ),
@@ -440,18 +450,15 @@ Column cardMenuUp(IconData icon, String labelText, bool isSelected) {
     children: [
       Icon(
         icon,
-        size: 30,
-        color: isSelected ? Colors.black : const Color.fromARGB(120, 0, 0, 0),
+        //size: 30,
+        color: isSelected ? Colors.black : const Color.fromARGB(255, 122, 122, 122),
       ),
       SizedBox(height: 6), // Aumenta la separación
-      Text(
-        labelText,
-        style: TextStyle(
-            height: 0.1,
-            fontSize: 12,
-            color: isSelected ? Colors.black : const Color.fromARGB(120, 0, 0, 0),
-            fontWeight: FontWeight.w800),
-      ),
+      Text(labelText,
+          style: isSelected
+              ? TextStyle(height: 1, fontSize: 10, color: Colors.black, fontWeight: FontWeight.w800)
+              : TextStyle(
+                  fontWeight: FontWeight.w400, color: const Color.fromARGB(200, 0, 0, 0), fontSize: 10.0, height: 1)),
     ],
   );
 }

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/ui/pages/initial/Task/selectDays/utils.dart';
 import 'package:myhome/ui/pages/pageMenu/widget/cardTasksW.dart';
+import 'package:myhome/ui/util/utils_class_apk.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TasksWidget extends StatefulWidget {
@@ -201,6 +202,38 @@ class _TasksWidgetState extends State<TasksWidget> {
               });
             }
           },
+          headerStyle: HeaderStyle(
+            //estilo de texto de Septiembre del 2024
+            formatButtonVisible: true, // Ocultar el botón de formato si no lo necesitas
+
+            formatButtonTextStyle: const TextStyle(
+              fontSize: 14.0,
+              color: Colors.black, // Cambiar el color del texto
+              fontWeight: FontWeight.bold,
+            ),
+            formatButtonDecoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.red.withOpacity(0.3),
+                  blurRadius: 8.0,
+                  spreadRadius: 2.0,
+                ),
+              ],
+            ),
+            titleTextStyle: const TextStyle(
+              fontSize: 12.0, // Cambia el tamaño de la letra aquí
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Cambia el color del texto
+            ),
+            titleCentered: false,
+            headerMargin: EdgeInsets.only(bottom: 0), // Ajusta el margen inferior
+          ),
+          daysOfWeekStyle: const DaysOfWeekStyle(
+            weekdayStyle: TextStyle(fontSize: 12.0), // Tamaño del texto de los días de la semana
+            weekendStyle: TextStyle(fontSize: 12.0), // Tamaño del texto del fin de semana
+          ),
           onFormatChanged: (format) {
             if (_calendarFormat != format) {
               setState(() {
@@ -211,6 +244,38 @@ class _TasksWidgetState extends State<TasksWidget> {
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
           },
+          calendarBuilders: CalendarBuilders(
+            selectedBuilder: (context, date, events) {
+              return Container(
+                margin: const EdgeInsets.all(6.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: StyleGlobalApk.getCprimary(), // Color del borde
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(22.0), // Bordes redondeados
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Sombra
+                      spreadRadius: 2,
+                      blurRadius: 4,
+                      offset: Offset(0, 2), // Posición de la sombra
+                    ),
+                  ],
+                  color: Colors.white, // Fondo blanco
+                ),
+                child: Center(
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle(
+                      color: StyleGlobalApk.getCindicador(), // Color del texto en el día seleccionado
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
         // El contenido debajo del calendario es desplazable
         Expanded(

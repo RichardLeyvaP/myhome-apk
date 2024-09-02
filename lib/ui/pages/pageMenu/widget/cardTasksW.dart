@@ -35,7 +35,7 @@ class CardTasks extends StatelessWidget {
         width: double.infinity, // Ocupa el 100% del ancho disponible
         decoration: BoxDecoration(
           color: Colors.white, // Color de fondo del contenedor
-          borderRadius: BorderRadius.circular(radius ?? 15), // Esquinas redondeadas
+          borderRadius: BorderRadius.circular(radius ?? 26), // Esquinas redondeadas
           border: Border.all(
             color: const Color.fromARGB(40, 158, 158, 158).withOpacity(0.28), // Color del borde
             width: 2.0, // Grosor del borde
@@ -54,7 +54,7 @@ class CardTasks extends StatelessWidget {
           //padding: const EdgeInsets.all(8.0), // Espaciado interno opcional
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(radius ?? 15), // Esquinas redondeadas
+            borderRadius: BorderRadius.circular(radius ?? 26), // Esquinas redondeadas
           ),
           child: Padding(
             padding: EdgeInsets.all(padding ?? 8),
@@ -73,7 +73,7 @@ class CardTasks extends StatelessWidget {
                             //padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
                               color: iconColor.withOpacity(0.3), // Color de fondo gris claro
-                              borderRadius: BorderRadius.circular(20.0), // Bordes redondeados
+                              borderRadius: BorderRadius.circular(22.0), // Bordes redondeados
                             ),
                             child: Column(
                               children: [
@@ -123,11 +123,14 @@ class CardTasks extends StatelessWidget {
                           children: [
                             Row(
                               children: [
+                                //aqui caben maxiomo 4, idela que fueran 3
                                 botonCartTask(
                                   Colors.red,
                                   MdiIcons.robotAngryOutline,
                                 ),
                                 botonCartTask(Colors.blue, MdiIcons.listBoxOutline),
+                                botonCartTask(const Color.fromARGB(255, 145, 243, 33), null),
+                                //botonCartTask(const Color.fromARGB(255, 184, 127, 22), null),
                               ],
                             ),
                             const Expanded(
@@ -148,13 +151,13 @@ class CardTasks extends StatelessWidget {
   }
 }
 
-Padding botonCartTask(Color colorBotoom, IconData icon) {
+Padding botonCartTask(Color colorBotoom, IconData? icon) {
   return Padding(
     padding: const EdgeInsets.only(top: 6, bottom: 6, right: 3, left: 3),
     child: Container(
       decoration: BoxDecoration(
         color: Colors.white, // Color de fondo del contenedor
-        borderRadius: BorderRadius.circular(12), // Esquinas redondeadas
+        borderRadius: BorderRadius.circular(16), // Esquinas redondeadas
         border: Border.all(
           color: colorBotoom.withOpacity(0.28), // Color del borde
           width: 2.0, // Grosor del borde
@@ -169,12 +172,16 @@ Padding botonCartTask(Color colorBotoom, IconData icon) {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: Icon(
-          icon,
-          size: 30,
-        ),
-      ),
+          padding: const EdgeInsets.all(6.0),
+          child: icon != null
+              ? Icon(
+                  icon,
+                  size: 25,
+                )
+              : Container(
+                  height: 25,
+                  width: 25,
+                )),
     ),
   );
 }
