@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:myhome/ui/Routes/index.dart';
 
 class AppInitializer {
   static Future<void> initializeApp() async {
@@ -14,7 +13,5 @@ class AppInitializer {
     _registerControllers();
   }
 
-  static void _registerControllers() {
-    Get.put(LoginController());
-  }
+  static void _registerControllers() {}
 }

@@ -131,7 +131,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
               Flexible(
                 child: TabBarView(
                   controller: _tabController,
-                  children: [
+                  children: const [
                     WishesPage(),
                     FinancePage(),
                     HealthPage(),

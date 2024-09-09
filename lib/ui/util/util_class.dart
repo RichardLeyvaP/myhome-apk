@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'package:myhome/domain/Controllers/login.controller.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-final LoginController cLogin = Get.find<LoginController>(); // Obtén la instancia de LoginController
 
 class TranslationManager {
   static late Locale _locale;

@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-class PokeApi {
+import 'package:myhome/ui/pages/env.dart';
+
+class LoginApi {
   get http => null;
 
-  Future<void> getPokemon() async {
-    final String api = 'https://pokeapi.co/api/v2/';
-    final String Enpoint = 'pokemon/ditto';
+  Future<void> getUser() async {
+    final String api = '${Env.apiEndpoint}';
+    final String Enpoint = 'login-apk';
     try {
       print('resp- entrando a loginWithGoogle');
       final url = Uri.parse('$api$Enpoint'); // URL de tu API

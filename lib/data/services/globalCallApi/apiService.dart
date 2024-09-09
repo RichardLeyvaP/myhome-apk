@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl;
+  String? baseUrl;
   String? token;
 
-  ApiService({required this.baseUrl, this.token});
+  ApiService({this.baseUrl, this.token});
 
   // Método general para iniciar sesión
   Future<Map<String, dynamic>> login({
@@ -36,11 +36,14 @@ class ApiService {
 
   // Método POST
   Future<dynamic> post(String endpoint, {required Map<String, dynamic> body}) async {
+    print('aqui estoy entrando-al metodo-post44');
+    print('aqui estoy entrando-al metodo-post44-$endpoint');
     final response = await http.post(
-      Uri.parse('$baseUrl$endpoint'),
+      Uri.parse('$endpoint'),
       headers: _headers(),
       body: jsonEncode(body),
     );
+    print('aqui estoy entrando-al metodo-post-${response.body}');
     return _processResponse(response);
   }
 
@@ -80,16 +83,8 @@ class ApiService {
       case 200:
         // Código 200 OK: La solicitud se realizó correctamente y se obtuvo una respuesta
         return jsonDecode(response.body);
-
-      case 201:
-        // Código 201 Created: La solicitud se realizó correctamente y se creó un nuevo recurso
-        print('Recurso creado exitosamente.');
+      case 401:
         return jsonDecode(response.body);
-
-      case 204:
-        // Código 204 No Content: La solicitud se realizó correctamente pero no hay contenido para devolver
-        print('La solicitud se realizó correctamente, pero no hay contenido.');
-        return null;
 
       default:
         // Otros códigos de estado: Manejo de errores
@@ -99,27 +94,18 @@ class ApiService {
 
   // Método para iniciar sesión con usuario y contraseña
   Future<Map<String, dynamic>> loginWithCredentials(String username, String password) async {
-    final endpoint = '/login-apk'; // Asegúrate de que este endpoint sea correcto
+    print('aqui estoy entrando... 1');
+    final endpoint = 'http://10.0.2.2:8000/api/login-apk';
     final body = {
       'email': username,
       'password': password,
     };
-
+    print('aqui estoy entrando... 2');
     try {
       // Realiza la solicitud POST
-      final response = await post(endpoint, body: body);
 
       // Procesa la respuesta
-      final data = _processResponse(response);
-
-      // Si necesitas asignar el token aquí, asegúrate de hacerlo de manera segura
-      if (data.containsKey('token')) {
-        token = data['token'];
-      } else {
-        throw Exception('El token no está presente en la respuesta');
-      }
-
-      return data;
+      return await post(endpoint, body: body);
     } catch (e) {
       // Manejo de errores específico para el login
       print('Error en el login: $e');
@@ -183,5 +169,9 @@ class ApiService {
       print('Error en el login con Facebook: $e');
       throw Exception('Error en el login con Facebook');
     }
+  }
+
+  logout() {
+    //implementar el logout
   }
 }

@@ -65,7 +65,7 @@ Future<bool> signOutFromGoogle() async {
 
 Future<void> _sendTokenToApi(String idToken) async {
   final response = await http.post(
-    Uri.parse('https://tu-api.com/api/auth/google-login'),
+    Uri.parse('http://10.0.2.2:8000/api/auth/google-login'),
     body: {
       'id_token': idToken,
     },

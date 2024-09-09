@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:myhome/domain/Controllers/login.controller.dart';
 import 'package:myhome/ui/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +18,6 @@ class MyLoadingPage extends StatefulWidget {
 }
 
 class _MyLoadingPageState extends State<MyLoadingPage> {
-  final LoginController cLogin = Get.find<LoginController>();
   @override
   void initState() {
     super.initState();
@@ -27,38 +25,7 @@ class _MyLoadingPageState extends State<MyLoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (cLogin.usserMssQr == 1) {
-        Timer(Duration(seconds: 3), () async {
-          //no ha leido correctamente el qr
-          print('no ha leido correctamente el qr');
-          cLogin.setUsserMssQr(-99);
-        });
-      } else if (cLogin.usserMssQr == 0) {
-        Timer(Duration(seconds: 3), () async {
-          //no coincide correctamente el qr
-          print('no coincide correctamente el qr');
-        });
-        cLogin.setUsserMssQr(-99);
-      }
-      // Iniciar un temporizador de 2 segundos
-      Timer(const Duration(seconds: 2), () async {
-//VERIFICAR QUE ESTE td este bien
-
-        if (cLogin.chargeUser == "Opcion1") {
-          // Navegar a la nueva página
-
-          Get.offAllNamed('/PagePdf');
-        } else if (cLogin.chargeUser == "Opcion2") {
-          Get.offAllNamed('/PagePdf');
-        } else {
-          Get.offAllNamed('/LoginFormPage');
-        }
-        // } else {
-        //   Get.offAllNamed('/LoginFormPage');
-        // }
-      });
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
     //
 
     return Scaffold(

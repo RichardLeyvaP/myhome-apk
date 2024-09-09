@@ -5,7 +5,10 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myhome/data/repository/auth_repository.dart';
+import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/dependency_injection/app_initializer.dart';
+import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
 import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/dependency_injection/providers.dart';
 import 'package:myhome/ui/util/util_class.dart';
@@ -68,6 +71,10 @@ class BlocsProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RoutesCubit(),
+          //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(authRepository: AuthRepository(authService: ApiService())),
           //por defecto es true y solo lo llama cuando lo necesita
         ),
       ],

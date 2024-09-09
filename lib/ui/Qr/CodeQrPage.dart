@@ -3,8 +3,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:myhome/domain/Controllers/login.controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,8 +20,6 @@ class _QRViewPageState extends State<QRViewPage> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
-  final LoginController cLogin = Get.find<LoginController>();
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -188,9 +184,6 @@ class _QRViewPageState extends State<QRViewPage> {
                           style: TextStyle(
                             fontSize: 2,
                             fontWeight: FontWeight.w800,
-                            color: cLogin.page == 'nothing' || cLogin.page == '/PagePdf'
-                                ? const Color.fromARGB(255, 43, 44, 49)
-                                : Colors.white,
                           )),
                     ),
                 ],
@@ -230,9 +223,9 @@ class _QRViewPageState extends State<QRViewPage> {
       });
 
       // Procesar el código QR
-      bool qrProcessed = await cLogin.qrReading(result!.code);
+      // bool qrProcessed = await cLogin.qrReading(result!.code);
 
-      if (qrProcessed == true) {
+      /*   if (qrProcessed == true) {
         subscription?.cancel();
         print('probando codQ SI TODO COINCIDIO:$qrProcessed');
         Get.offAllNamed('/LoadingPage');
@@ -242,7 +235,7 @@ class _QRViewPageState extends State<QRViewPage> {
         subscription?.cancel();
         print('probando codQ NO COINCIDE:$qrProcessed');
         Get.offAllNamed('/LoginFormPage');
-      }
+      }*/
     });
   }
 
