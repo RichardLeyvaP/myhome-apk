@@ -50,58 +50,49 @@ class CardTasks extends StatelessWidget {
           ],
         ),
         child: Container(
+          height: 90,
           width: double.infinity, // Ocupa el 100% del ancho disponible
           //padding: const EdgeInsets.all(8.0), // Espaciado interno opcional
           decoration: BoxDecoration(
-            color: Colors.white,
+            // color: Colors.red,
             borderRadius: BorderRadius.circular(radius ?? 26), // Esquinas redondeadas
           ),
           child: Padding(
-            padding: EdgeInsets.all(padding ?? 8),
-            child: Row(
-              children: [
-                Container(
-                    width: 70, // Ancho fijo
-                    // height: 100, // Ajusta la altura según sea necesario
+            padding: EdgeInsets.all(padding ?? 6),
+            child: Container(
+              decoration: BoxDecoration(
+                  //  color: const Color.fromARGB(111, 173, 173, 171),
+                  // border: Border(bottom: BorderSide(width: 2, color: Colors.red)), // Esquinas redondeadas
+                  ),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: iconColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(radius ?? 26), // Esquinas redondeadas
+                    ),
+
+                    width: 75, // Ancho fijo
+                    //color: Colors.blue,
+                    height: double.infinity, // Ajusta la altura según sea necesario
 
                     child: Center(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            //padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              color: iconColor.withOpacity(0.3), // Color de fondo gris claro
-                              borderRadius: BorderRadius.circular(22.0), // Bordes redondeados
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Icon(
-                                  icon,
-                                  color: iconColor,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
+                      child: Icon(
+                        icon,
+                        color: iconColor,
                       ),
-                    )),
-                Expanded(
-                  child: Container(
-                    //height: 100, // Ajusta la altura según sea necesario
-
-                    child: Center(
-                        child: Column(
+                    ),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start, // Alinea los textos a la izquierda
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -119,6 +110,7 @@ class CardTasks extends StatelessWidget {
                           ],
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
@@ -139,10 +131,10 @@ class CardTasks extends StatelessWidget {
                           ],
                         )
                       ],
-                    )),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -153,7 +145,7 @@ class CardTasks extends StatelessWidget {
 
 Padding botonCartTask(Color colorBotoom, IconData? icon) {
   return Padding(
-    padding: const EdgeInsets.only(top: 6, bottom: 6, right: 3, left: 3),
+    padding: const EdgeInsets.only(top: 0, bottom: 2, right: 3, left: 3),
     child: Container(
       decoration: BoxDecoration(
         color: Colors.white, // Color de fondo del contenedor

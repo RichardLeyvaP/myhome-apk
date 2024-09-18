@@ -1,0 +1,58 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'tasks_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
+      tasks: (json['tasks'] as List<dynamic>)
+          .map((e) => TaskElement.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
+    <String, dynamic>{
+      'tasks': instance.tasks,
+    };
+
+_$TaskElementImpl _$$TaskElementImplFromJson(Map<String, dynamic> json) =>
+    _$TaskElementImpl(
+      id: (json['id'] as num).toInt(),
+      title: json['title'] as String,
+      description: json['description'] as String,
+      startDate: json['startDate'] as String,
+      endDate: json['endDate'] as String,
+      priorityId: (json['priorityId'] as num).toInt(),
+      statusId: (json['statusId'] as num).toInt(),
+      categoryId: (json['categoryId'] as num).toInt(),
+      recurrence: json['recurrence'] as String,
+      estimatedTime: (json['estimatedTime'] as num).toInt(),
+      comments: json['comments'] as String?,
+      attachments: json['attachments'] as String?,
+      geoLocation: json['geoLocation'] as String,
+      parentId: (json['parentId'] as num?)?.toInt(),
+      children: (json['children'] as List<dynamic>)
+          .map((e) => TaskElement.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$TaskElementImplToJson(_$TaskElementImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'startDate': instance.startDate,
+      'endDate': instance.endDate,
+      'priorityId': instance.priorityId,
+      'statusId': instance.statusId,
+      'categoryId': instance.categoryId,
+      'recurrence': instance.recurrence,
+      'estimatedTime': instance.estimatedTime,
+      'comments': instance.comments,
+      'attachments': instance.attachments,
+      'geoLocation': instance.geoLocation,
+      'parentId': instance.parentId,
+      'children': instance.children,
+    };

@@ -4,9 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:myhome/data/repository/tasks_repository.dart';
+import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_event.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_state.dart'; // Asegúrate de que esté correctamente importado
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
 import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/data/services/authFacebook_service.dart';
 import 'package:myhome/data/services/authGoogle_service.dart';
@@ -49,7 +54,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
         } else if (state is LoginSuccess) {
           // Navega a la página de inicio o realiza alguna acción
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('${state.user.userName}')),
+            SnackBar(content: Text('Bienvenido ${state.user.userName}')),
           );
           GoRouter.of(context).go(
             '/HomePrincipal',
@@ -59,6 +64,12 @@ class _LoginFormPageState extends State<LoginFormPage> {
               'avatarUrl': '',
             },
           );
+          // String date = '2024-09-09'; // La fecha puede ser dinámica
+          DateTime selectedDay = DateTime.now();
+          //String date = '2024-09-09'; // La fecha puede ser dinámica
+          String date = DateFormat('yyyy-MM-dd').format(selectedDay);
+          context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+
           //Navigator.of(context).pushReplacementNamed('/home');
         } else if (state is LoginFailure) {
           // Muestra un mensaje de error
@@ -72,27 +83,40 @@ class _LoginFormPageState extends State<LoginFormPage> {
         child: Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(
-            toolbarHeight: 30.0,
+            toolbarHeight: 10.0,
             backgroundColor: Colors.black,
             elevation: 0,
           ),
           body: Column(
             children: [
-              const Expanded(
+              Expanded(
                   flex: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image(
-                        image: NetworkImage(
-                            'https://img.freepik.com/foto-gratis/villa-lujo-piscina-espectacular-diseno-contemporaneo-arte-digital-bienes-raices-hogar-casa-propiedad-ge_1258-150749.jpg'),
-                        // width: 350,
-                        // height: 600,
+                      BlocProvider(
+                        create: (context) => TasksBloc(tasksRepository: TasksRepository(authService: ApiService())),
+                        child: InkWell(
+                          onTap: () {
+                            DateTime selectedDay = DateTime.now();
+                            //String date = '2024-09-09'; // La fecha puede ser dinámica
+                            String date = DateFormat('yyyy-MM-dd').format(selectedDay);
+
+                            context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+                          },
+                          child: Text(
+                            'Huoon',
+                            style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  color: Colors.white,
+                                  // Cambia alguna propiedad aqui
+                                ),
+                          ),
+                        ),
                       ),
                     ],
                   )),
               Expanded(
-                  flex: 10,
+                  flex: 12,
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white, //todo
@@ -166,16 +190,16 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                     print('se está trabajndo en ese modulo');
                                   },
                                   child: const Text('Olvidé mi contraseña'))),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               Expanded(
                                 child: ElevatedButton(
                                     style: ButtonStyle(
-                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                        const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                        const EdgeInsets.symmetric(vertical: 14.0, horizontal: 40.0),
                                       ),
-                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                      backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
                                     ),
                                     onPressed: () async {
                                       if (_usserController.text.isEmpty || _passController.text.isEmpty) {
@@ -198,10 +222,10 @@ class _LoginFormPageState extends State<LoginFormPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 12),
                           SizedBox(
                             width: double.infinity,
-                            height: 50,
+                            height: 40,
                             child: SignInButton(
                               Buttons.google,
                               text: "Entrar con Google",
@@ -210,10 +234,10 @@ class _LoginFormPageState extends State<LoginFormPage> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
                           SizedBox(
                             width: double.infinity,
-                            height: 50,
+                            height: 40,
                             child: SignInButton(
                               Buttons.facebook,
                               text: "Entrar con facebook",

@@ -1,4 +1,4 @@
-import 'package:myhome/data/models/login_model.dart';
+import 'package:myhome/data/models/login/login_model.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

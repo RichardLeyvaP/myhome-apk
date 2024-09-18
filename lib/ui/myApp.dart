@@ -4,11 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myhome/ui/Routes/pages_routes.dart';
+import 'package:myhome/ui/pages/rol-admin/product/productCreationPage.dart';
 import 'package:myhome/ui/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myhome/ui/pages/initial/Task/TaskCreationPage.dart';
+import 'package:myhome/ui/pages/rol-admin/Task/TaskCreationPage.dart';
 import 'package:myhome/ui/pages/loginFb.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
 
@@ -176,9 +177,16 @@ final GoRouter _appRouter1 = GoRouter(
       path: '/AuthCheck',
       builder: (context, state) => const AuthCheck(),
     ),
+    //Rutas referentes a Insertar
     GoRoute(
+      //insertar tareas
       path: '/TaskCreation',
       builder: (context, state) => TaskCreation(),
+    ),
+    GoRoute(
+      //insertar productos
+      path: '/ProductCreation',
+      builder: (context, state) => ProductCreation(),
     ),
     // Puedes agregar más rutas aquí
   ],

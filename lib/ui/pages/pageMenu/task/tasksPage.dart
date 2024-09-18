@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/ui/pages/initial/Task/selectDays/utils.dart';
-import 'package:myhome/ui/pages/pageMenu/widget/cardTasksW.dart';
+import 'package:myhome/data/models/tasks/tasks_model.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
+import 'package:myhome/ui/pages/pageMenu/task/widget/cardTasksW.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -19,8 +24,21 @@ class _TasksWidgetState extends State<TasksWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  List<Widget> _events = [];
+  String formatDate(String dateString) {
+    final date = DateTime.parse(dateString);
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
 
+  String extractTime(String dateTimeString) {
+    // Convierte el string a un objeto DateTime
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    // Usa DateFormat para extraer solo la hora
+    return DateFormat('HH:mm:ss').format(dateTime);
+  }
+
+/*
+   List<Widget> _events = [];
   void _updateEvents() {
     // Aquí puedes personalizar qué eventos se muestran dependiendo del día
     Future.delayed(Duration(seconds: 3));
@@ -168,13 +186,16 @@ class _TasksWidgetState extends State<TasksWidget> {
       ];
     }
   }
-
+*/
   @override
   void initState() {
     super.initState();
     // Inicializamos el primer día con algún contenido
     _selectedDay = DateTime.now();
-    _updateEvents();
+    String date = DateFormat('yyyy-MM-dd').format(_selectedDay!);
+    context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+
+    //_updateEvents();
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
@@ -196,9 +217,12 @@ class _TasksWidgetState extends State<TasksWidget> {
             if (!isSameDay(_selectedDay, selectedDay)) {
               print('calendario seleccion:${DateFormat('yyyy-MM-dd').format(selectedDay)}');
               setState(() {
+                String date = DateFormat('yyyy-MM-dd').format(selectedDay);
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                _updateEvents();
+                //  String date = '2024-09-09'; // La fecha puede ser dinámica
+                context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+                //  _updateEvents();
               });
             }
           },
@@ -277,12 +301,53 @@ class _TasksWidgetState extends State<TasksWidget> {
             },
           ),
         ),
-        // El contenido debajo del calendario es desplazable
+
+        //todo el que estaba estatico
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: _events, // Lista de eventos
-            ),
+          child: BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, state) {
+              if (state is TasksLoading) {
+                // Mostrar un indicador de carga mientras se obtienen las tareas
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: StyleGlobalApk.getCprimary(),
+                ));
+              } else if (state is TasksFailure) {
+                // Mostrar un mensaje de error en caso de falla
+                return Center(child: Text('Error: ${state.error}'));
+              } else if (state is TasksEmpty) {
+                // Mostrar mensaje si no hay tareas para ese día
+                return Column(
+                  children: [
+                    SizedBox(height: 180),
+                    Center(child: Text('${state.message}')),
+                  ],
+                );
+              } else if (state is TasksSuccess) {
+                List<TaskElement> tasks = state.tasks.tasks; // Asegúrate que sea una lista de tareas
+
+                // Construir la lista de `CardTasks` dependiendo de la longitud de las tareas
+                return SingleChildScrollView(
+                  child: Column(
+                    children: tasks.map((task) {
+                      return CardTasks(
+                        title: task.title, // Aquí usas el título de la tarea
+                        icon: MdiIcons.cakeVariantOutline, // Puedes cambiar el ícono
+                        date: formatDate(task.startDate), // Aquí usas la fecha de inicio de la tarea
+                        details: task.description, // Descripción de la tarea
+                        schedule: '${extractTime(task.startDate)} - ${extractTime(task.endDate)}', // Horario
+                        iconSize: 12.0,
+                        iconColor: const Color.fromARGB(255, 61, 189, 93),
+                        padding: 8.0,
+                      );
+                    }).toList(),
+                  ),
+                );
+              } else {
+                // Retorna un widget vacío en caso de que no coincida ningún estado
+                return const SizedBox.shrink();
+              }
+            },
           ),
         ),
       ],

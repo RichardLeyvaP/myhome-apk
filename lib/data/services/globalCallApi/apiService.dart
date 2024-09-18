@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -28,7 +29,7 @@ class ApiService {
   // Método GET
   Future<dynamic> get(String endpoint) async {
     final response = await http.get(
-      Uri.parse('$baseUrl$endpoint'),
+      Uri.parse(endpoint),
       headers: _headers(),
     );
     return _processResponse(response);
@@ -36,15 +37,30 @@ class ApiService {
 
   // Método POST
   Future<dynamic> post(String endpoint, {required Map<String, dynamic> body}) async {
-    print('aqui estoy entrando-al metodo-post44');
     print('aqui estoy entrando-al metodo-post44-$endpoint');
-    final response = await http.post(
-      Uri.parse('$endpoint'),
-      headers: _headers(),
-      body: jsonEncode(body),
-    );
-    print('aqui estoy entrando-al metodo-post-${response.body}');
-    return _processResponse(response);
+    try {
+      final response = await http.post(
+        Uri.parse(endpoint),
+        headers: _headers(),
+        body: jsonEncode(body),
+      );
+      print('aqui estoy entrando-al metodo-post-task-response.statusCode${response.statusCode}');
+      print('aqui estoy entrando-al metodo-post-${response.body}');
+      return _processResponse(response);
+    } on SocketException catch (e) {
+      print('Error de red (SocketException): $e');
+      throw Exception('Error de red: No se pudo conectar al servidor.');
+    } on HttpException catch (e) {
+      print('Error HTTP (HttpException): $e');
+      throw Exception('Error HTTP: La solicitud al servidor falló.');
+    } on FormatException catch (e) {
+      print('Error de formato (FormatException): $e');
+      throw Exception('Error de formato: La respuesta no tiene un formato esperado.');
+    } catch (e, stacktrace) {
+      print('Error general (Exception): $e');
+      print('Stacktrace: $stacktrace');
+      throw Exception('Error desconocido: $e');
+    }
   }
 
   // Método PUT
@@ -79,12 +95,23 @@ class ApiService {
 
 // Método para procesar la respuesta
   dynamic _processResponse(http.Response response) {
+    print('dando click en la imagen-5:${response.statusCode})');
+    //  print('dando click en la imagen-5:${jsonDecode(response.body)})');
+
     switch (response.statusCode) {
       case 200:
         // Código 200 OK: La solicitud se realizó correctamente y se obtuvo una respuesta
         return jsonDecode(response.body);
+      case 201: //es que insertó
+        // Código 200 OK: La solicitud se realizó correctamente y se obtuvo una respuesta
+        return jsonDecode(response.body);
+      case 204:
+        // Código 204 OK: La solicitud se realizó correctamente y se obtuvo una respuesta vacia
+        return 'No hay resultados';
       case 401:
         return jsonDecode(response.body);
+      case 404:
+        return 'No encontró la dirección statusCode:404';
 
       default:
         // Otros códigos de estado: Manejo de errores

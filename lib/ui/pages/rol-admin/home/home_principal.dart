@@ -3,15 +3,13 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/ui/Components/showDialogComp.dart';
-import 'package:myhome/domain/blocs/01-simple_cubit/username_cubit.dart';
 import 'package:myhome/ui/pages/pageMenu/filesPage.dart';
 import 'package:myhome/ui/pages/pageMenu/financePage.dart';
 import 'package:myhome/ui/pages/pageMenu/healthPage.dart';
-import 'package:myhome/ui/pages/pageMenu/productPage.dart';
+import 'package:myhome/ui/pages/pageMenu/product/productPage.dart';
 import 'package:myhome/ui/pages/pageMenu/wishesPage.dart';
-import 'package:provider/provider.dart';
 
-import '../../pageMenu/tasksPage.dart';
+import '../../pageMenu/task/tasksPage.dart';
 //COLORES
 // color gris de fondo ... Colors.white
 
@@ -104,7 +102,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
     print('llegando a Pagina-Principal:${widget.email}');
     double screenHeight = MediaQuery.of(context).size.height;
     print('alto de mi telefono es :$screenHeight');
-    final usernameCubit = context.watch<UsernameCubit>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -151,9 +149,16 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
             onTap: () {
               print('inde = ${_tabController.index}');
               if (_tabController.index == 3) {
+                //agregar tareas
                 print('inde =.... ${_tabController.index}');
                 GoRouter.of(context).go(
                   '/TaskCreation',
+                );
+              } else if (_tabController.index == 4) {
+                //agregar productos
+                print('inde =.... ${_tabController.index}');
+                GoRouter.of(context).go(
+                  '/ProductCreation',
                 );
               }
               //  dialogComponet(context, _tabTexts[_tabController.index]);
@@ -416,10 +421,11 @@ Widget cardMenu(_tabController) {
     child: TabBar(
       isScrollable: true, // Permite que el TabBar sea desplazable si hay muchas pestañas
       tabAlignment: TabAlignment.start,
-      indicatorColor: const Color.fromARGB(255, 218, 113, 113), // Cambia el color de la barra inferior
+      indicatorColor: Colors.black, // Cambia el color de la barra inferior
       controller: _tabController,
-      indicatorPadding: const EdgeInsets.only(bottom: 2.0), // Ajusta el indicador para que esté más cerca del icono
-      labelPadding: EdgeInsets.symmetric(horizontal: 11.0), // Ajusta el padding horizontal
+      // indicatorPadding: const EdgeInsets.only(bottom: 0), // Ajusta el indicador para que esté más cerca del icono
+      labelPadding: EdgeInsets.symmetric(horizontal: 10.0), // Ajusta el padding horizontal
+      indicatorWeight: 1,
 
       tabs: [
         Tab(
@@ -450,15 +456,45 @@ Column cardMenuUp(IconData icon, String labelText, bool isSelected) {
     children: [
       Icon(
         icon,
-        //size: 30,
-        color: isSelected ? Colors.black : const Color.fromARGB(255, 122, 122, 122),
+        //size: isSelected ? 30 : 28, // Tamaño del icono cambia levemente si está seleccionado
+        color: isSelected
+            ? Colors.black // Color vibrante cuando está seleccionado
+            : const Color.fromARGB(255, 122, 122, 122), // Color más apagado cuando no está seleccionado
+        shadows: isSelected
+            ? [
+                Shadow(
+                  offset: Offset(0, 2), // Posición de la sombra
+                  blurRadius: 4.0, // Desenfoque de la sombra
+                  color: Colors.black.withOpacity(0.2), // Sombra para mayor profundidad
+                ),
+              ]
+            : null, // Sin sombra cuando no está seleccionado
       ),
+
       SizedBox(height: 6), // Aumenta la separación
-      Text(labelText,
-          style: isSelected
-              ? TextStyle(height: 1, fontSize: 10, color: Colors.black, fontWeight: FontWeight.w800)
-              : TextStyle(
-                  fontWeight: FontWeight.w400, color: const Color.fromARGB(200, 0, 0, 0), fontSize: 10.0, height: 1)),
+      Text(
+        labelText,
+        style: isSelected
+            ? TextStyle(
+                height: 1,
+                fontSize: 11,
+                color: Colors.black, // Color vibrante cuando está seleccionado
+                fontWeight: FontWeight.w800,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 1), // Posición de la sombra
+                    blurRadius: 2.0, // Desenfoque de la sombra
+                    color: Colors.black.withOpacity(0.2), // Sombra suave para dar profundidad
+                  ),
+                ],
+              )
+            : TextStyle(
+                fontSize: 11,
+                height: 1,
+                color: Colors.grey.shade700, // Color más claro cuando no está seleccionado
+                fontWeight: FontWeight.w400,
+              ),
+      ),
     ],
   );
 }

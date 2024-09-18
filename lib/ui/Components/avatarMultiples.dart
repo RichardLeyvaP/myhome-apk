@@ -14,7 +14,7 @@ class AvatarMultiple extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(0.0),
       child: AvatarStack(
         height: 40,
         settings: settings,

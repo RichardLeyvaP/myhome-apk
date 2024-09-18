@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myhome/data/models/login_model.dart';
+import 'package:myhome/data/models/login/login_model.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 import 'package:myhome/data/repository/auth_repository.dart'; // Ejemplo del repositorio

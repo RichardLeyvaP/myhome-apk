@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:provider/provider.dart';
 
-class PriorityPage extends StatefulWidget {
+class CategoryPage extends StatefulWidget {
   @override
-  _PriorityPageState createState() => _PriorityPageState();
+  _CategoryPageState createState() => _CategoryPageState();
   final PageController pageController;
 
-  PriorityPage({required this.pageController});
+  CategoryPage({required this.pageController});
 }
 
-class _PriorityPageState extends State<PriorityPage> {
+class _CategoryPageState extends State<CategoryPage> {
   int selectedLevel = 0; // Para seleccionar el nivel
   Color colorBotoom = const Color.fromARGB(255, 61, 189, 93);
   Color colorBotoomSel = const Color.fromARGB(255, 199, 64, 59);
@@ -18,7 +21,7 @@ class _PriorityPageState extends State<PriorityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prioridad'),
+        title: Text('Categoría de la tarea'),
       ),
       floatingActionButton: SafeArea(
         child: Padding(
@@ -63,7 +66,7 @@ class _PriorityPageState extends State<PriorityPage> {
                     ),
                   ],
                 ),
-                child: Center(child: Text("Alta")),
+                child: Center(child: Text("Limpieza")),
               ),
             ),
             SizedBox(height: 20),
@@ -96,7 +99,7 @@ class _PriorityPageState extends State<PriorityPage> {
                     ),
                   ],
                 ),
-                child: Center(child: Text("Media")),
+                child: Center(child: Text("Compra")),
               ),
             ),
             SizedBox(height: 20),
@@ -129,7 +132,40 @@ class _PriorityPageState extends State<PriorityPage> {
                     ),
                   ],
                 ),
-                child: Center(child: Text("Normal")),
+                child: Center(child: Text("Mantenimiento")),
+              ),
+            ),
+            SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedLevel = 4;
+                });
+              },
+              child: Container(
+                height: 80,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Color de fondo del contenedor
+                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
+                  border: Border.all(
+                    color: selectedLevel == 4
+                        ? colorBotoomSel.withOpacity(0.8)
+                        : colorBotoom.withOpacity(0.4), // Color del borde
+                    width: 2.0, // Grosor del borde
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: selectedLevel == 4
+                          ? colorBotoomSel.withOpacity(0.4)
+                          : colorBotoom.withOpacity(0.4), // Sombra roja
+                      spreadRadius: 0, // Asegura que la sombra esté en el borde
+                      blurRadius: 10, // Difumina la sombra
+                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
+                    ),
+                  ],
+                ),
+                child: Center(child: Text("Cocina")),
               ),
             ),
             Spacer(),
@@ -147,11 +183,7 @@ class _PriorityPageState extends State<PriorityPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Acción para continuar
-                    widget.pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
+                    _onSubmit();
                   },
                   child: Text("Siguiente"),
                 ),
@@ -160,6 +192,42 @@ class _PriorityPageState extends State<PriorityPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _onSubmit() {
+    // Cierra el teclado si está abierto
+    FocusScope.of(context).unfocus();
+    // Enviar el evento al BLoC
+
+    //todo ahora esta fijo
+    //mandar la categoria
+    context.read<TasksBloc>().add(
+          const TaskCategoryUpdated(1),
+        );
+
+    final taskState = Provider.of<TasksBloc>(context, listen: false).state;
+
+    // Verificamos si el estado es TaskDataUpdated
+    if (taskState is TaskUpdated) {
+      final taskTitle = taskState.taskElement.title;
+      final taskDescription = taskState.taskElement.description;
+      final taskPriority = taskState.taskElement.priorityId;
+      final taskStatus = taskState.taskElement.statusId;
+      final taskCategory = taskState.taskElement.categoryId;
+
+      // Mostramos los datos en la consola
+      print('consultando estados-taskTitle: $taskTitle');
+      print('consultando estados-taskDescription: $taskDescription');
+      print('consultando estados-taskPriority: $taskPriority');
+      print('consultando estados-taskStatus: $taskStatus');
+      print('consultando estados-taskCategory: $taskCategory');
+    }
+
+    // Navegar a la siguiente página
+    widget.pageController.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 }

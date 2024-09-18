@@ -1,4 +1,4 @@
-export '../pages/initial/home/home_principal.dart';
+export '../pages/rol-admin/home/home_principal.dart';
 export '../pages/loginFormPage.dart';
 export '../pages/page404.dart';
 export '../Qr/CodeQrPage.dart';

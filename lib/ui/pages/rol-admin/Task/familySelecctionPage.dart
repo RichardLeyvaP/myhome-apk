@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:provider/provider.dart';
 
 class FamilySelectionPage extends StatefulWidget {
   @override
@@ -104,36 +109,26 @@ class _FamilySelectionPageState extends State<FamilySelectionPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('TAREA CREADA CORRECTAMENTE'),
-
-                          duration: Duration(seconds: 2), // Duración del SnackBar
-                          action: SnackBarAction(
-                            label: 'Aceptar',
-                            onPressed: () {
-                              // Acción a realizar si se presiona el botón
-                            },
-                          ),
-                        ),
-                      );
-                      Future.delayed(const Duration(seconds: 2), () {
-                        GoRouter.of(context).go(
-                          '/HomePrincipal',
-                          extra: {
-                            'name': '',
-                            'email': '',
-                            'avatarUrl': '',
-                          },
-                        );
-                      });
+                      _onSubmit();
                     },
-                    child: Text("Finalizar"),
+                    child: Text("Siguiente"),
                   ),
                 ],
               ),
             ],
           ),
         ));
+  }
+
+  void _onSubmit() {
+    // Cierra el teclado si está abierto
+    FocusScope.of(context).unfocus();
+    // Enviar el evento al BLoC
+
+    // Navegar a la siguiente página
+    widget.pageController.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 }
