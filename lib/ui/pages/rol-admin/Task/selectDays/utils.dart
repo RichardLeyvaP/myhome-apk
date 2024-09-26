@@ -3,6 +3,8 @@
 
 import 'dart:collection';
 
+import 'package:intl/intl.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -156,3 +158,67 @@ class _QuantitySelectorState extends State<QuantitySelector> {
 
 //******************* */
 //selccionador de cantidades
+
+//******************* */
+//sdevuelve un color entrado un String "FF3DBD5D"
+Color getColorConvert(String colorString) {
+  return Color(int.parse(colorString, radix: 16));
+}
+//******************* */
+//sdevuelve un color entrado un String "FF3DBD5D"
+
+//******************* */
+// Convierte el string a un objeto DateTime
+String extractTime(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+
+  // Usa DateFormat para extraer solo la hora
+  return DateFormat('HH:mm').format(dateTime);
+}
+//******************* */
+
+//******************* */
+// Convierte el string a un objeto DateTime
+String formatDate(String dateString) {
+  final date = DateTime.parse(dateString);
+  return DateFormat('yyyy-MM-dd').format(date);
+}
+//******************* */
+//******************* */
+// Convierte el string a un objeto DateTime
+
+IconData getIconFromString(String iconName) {
+  switch (iconName) {
+    case 'MdiIcons.broom': // Limpiar la Casa
+      return MdiIcons.broom;
+    case 'MdiIcons.wrench': // Mantenimiento
+      return MdiIcons.wrench;
+    case 'MdiIcons.silverwareForkKnife': // Cocina
+      return MdiIcons.silverwareForkKnife;
+    case 'MdiIcons.formatPaint': // Pintura
+      return MdiIcons.formatPaint;
+    case 'MdiIcons.cakeVariant': // Cumpleaños
+      return MdiIcons.cakeVariant;
+    case 'MdiIcons.cart': // Mercado
+      return MdiIcons.cart;
+    case 'MdiIcons.washingMachine': // Lavandería
+      return MdiIcons.washingMachine;
+    //
+    //*****ESTOS SON PARA LA PRIORIDAD******/
+    case 'Normal':
+      return MdiIcons.calendarCheck; // Icono representando tareas completadas de manera tranquila
+    case 'Media':
+      return MdiIcons.alertCircleOutline; // Alerta moderada, para indicar atención sin urgencia
+    case 'Alta':
+      return MdiIcons.alertOctagonOutline; // Icono de advertencia fuerte para indicar prioridad alta
+    //*****ESTOS SON PARA LA PRIORIDAD******/
+    //
+    default:
+      return MdiIcons.alertCircleOutline; // Icono por defecto
+  }
+}
+
+
+
+//******************* */
+

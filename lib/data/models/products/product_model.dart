@@ -17,9 +17,12 @@ class ProductElement with _$ProductElement {
   const factory ProductElement({
     String? name,
     int? categoryId,
+    String? nameCategory,
     int? statusId,
+    String? nameStatus,
     int? quantity,
     String? unitPrice,
+    String? totalPrice,
     String? purchaseDate,
     DateTime? expirationDate,
     String? purchasePlace,

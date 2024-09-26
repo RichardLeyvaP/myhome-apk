@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/products/product_model.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
 import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
@@ -40,102 +42,66 @@ class _StatusPageState extends State<StatusPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedState = 1;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedState == 1
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedState == 1
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Uso")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedState = 2;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedState == 2
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedState == 2
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Consumido")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedState = 3;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedState == 3
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedState == 3
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Agotado")),
+            Expanded(
+              child: BlocBuilder<CategoriesPrioritiesBloc, CategoriesPrioritiesState>(
+                builder: (context, state) {
+                  if (state is CategoriesLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is CategoriesStatusSuccess) {
+                    return ListView.builder(
+                      itemCount: state.status.length,
+                      itemBuilder: (context, index) {
+                        final status = state.status[index]; // Cada objeto `Status`.
+                        return GestureDetector(
+                          onTap: () {
+                            // Disparamos el evento para actualizar el estado seleccionado.
+                            context.read<CategoriesPrioritiesBloc>().add(StatusSelectedEvent(status.id));
+                          },
+                          child: Container(
+                            height: 80,
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 8), // Agrega un margen entre los contenedores.
+                            decoration: BoxDecoration(
+                              color: Colors.white, // Color de fondo del contenedor.
+                              borderRadius: BorderRadius.circular(10), // Esquinas redondeadas.
+                              border: Border.all(
+                                color: state.selectedStatusId == status.id
+                                    ? colorBotoomSel.withOpacity(0.8)
+                                    : colorBotoom.withOpacity(0.4), // Color del borde según selección.
+                                width: 2.0, // Grosor del borde.
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: state.selectedStatusId == status.id
+                                      ? colorBotoomSel.withOpacity(0.4)
+                                      : colorBotoom.withOpacity(0.4), // Sombra según selección.
+                                  spreadRadius: 0, // Asegura que la sombra esté en el borde.
+                                  blurRadius: 10, // Difumina la sombra.
+                                  offset: Offset(0, 0), // Posiciona la sombra en las 4 partes.
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                status.title, // Mostrar el `title` de cada `status`.
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: state.selectedStatusId == status.id
+                                      ? Colors.red
+                                      : Colors.black, // Color de texto según selección.
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (state is CategoriesFailure) {
+                    return Center(child: Text('Error: ${state.error}'));
+                  }
+                  return Container(); // Estado por defecto.
+                },
               ),
             ),
             Spacer(),

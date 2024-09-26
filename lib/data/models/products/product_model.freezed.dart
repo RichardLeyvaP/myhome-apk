@@ -175,9 +175,12 @@ ProductElement _$ProductElementFromJson(Map<String, dynamic> json) {
 mixin _$ProductElement {
   String? get name => throw _privateConstructorUsedError;
   int? get categoryId => throw _privateConstructorUsedError;
+  String? get nameCategory => throw _privateConstructorUsedError;
   int? get statusId => throw _privateConstructorUsedError;
+  String? get nameStatus => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   String? get unitPrice => throw _privateConstructorUsedError;
+  String? get totalPrice => throw _privateConstructorUsedError;
   String? get purchaseDate => throw _privateConstructorUsedError;
   DateTime? get expirationDate => throw _privateConstructorUsedError;
   String? get purchasePlace => throw _privateConstructorUsedError;
@@ -204,9 +207,12 @@ abstract class $ProductElementCopyWith<$Res> {
   $Res call(
       {String? name,
       int? categoryId,
+      String? nameCategory,
       int? statusId,
+      String? nameStatus,
       int? quantity,
       String? unitPrice,
+      String? totalPrice,
       String? purchaseDate,
       DateTime? expirationDate,
       String? purchasePlace,
@@ -232,9 +238,12 @@ class _$ProductElementCopyWithImpl<$Res, $Val extends ProductElement>
   $Res call({
     Object? name = freezed,
     Object? categoryId = freezed,
+    Object? nameCategory = freezed,
     Object? statusId = freezed,
+    Object? nameStatus = freezed,
     Object? quantity = freezed,
     Object? unitPrice = freezed,
+    Object? totalPrice = freezed,
     Object? purchaseDate = freezed,
     Object? expirationDate = freezed,
     Object? purchasePlace = freezed,
@@ -251,10 +260,18 @@ class _$ProductElementCopyWithImpl<$Res, $Val extends ProductElement>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
+      nameCategory: freezed == nameCategory
+          ? _value.nameCategory
+          : nameCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
       statusId: freezed == statusId
           ? _value.statusId
           : statusId // ignore: cast_nullable_to_non_nullable
               as int?,
+      nameStatus: freezed == nameStatus
+          ? _value.nameStatus
+          : nameStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -262,6 +279,10 @@ class _$ProductElementCopyWithImpl<$Res, $Val extends ProductElement>
       unitPrice: freezed == unitPrice
           ? _value.unitPrice
           : unitPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalPrice: freezed == totalPrice
+          ? _value.totalPrice
+          : totalPrice // ignore: cast_nullable_to_non_nullable
               as String?,
       purchaseDate: freezed == purchaseDate
           ? _value.purchaseDate
@@ -302,9 +323,12 @@ abstract class _$$ProductElementImplCopyWith<$Res>
   $Res call(
       {String? name,
       int? categoryId,
+      String? nameCategory,
       int? statusId,
+      String? nameStatus,
       int? quantity,
       String? unitPrice,
+      String? totalPrice,
       String? purchaseDate,
       DateTime? expirationDate,
       String? purchasePlace,
@@ -328,9 +352,12 @@ class __$$ProductElementImplCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? categoryId = freezed,
+    Object? nameCategory = freezed,
     Object? statusId = freezed,
+    Object? nameStatus = freezed,
     Object? quantity = freezed,
     Object? unitPrice = freezed,
+    Object? totalPrice = freezed,
     Object? purchaseDate = freezed,
     Object? expirationDate = freezed,
     Object? purchasePlace = freezed,
@@ -347,10 +374,18 @@ class __$$ProductElementImplCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
+      nameCategory: freezed == nameCategory
+          ? _value.nameCategory
+          : nameCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
       statusId: freezed == statusId
           ? _value.statusId
           : statusId // ignore: cast_nullable_to_non_nullable
               as int?,
+      nameStatus: freezed == nameStatus
+          ? _value.nameStatus
+          : nameStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -358,6 +393,10 @@ class __$$ProductElementImplCopyWithImpl<$Res>
       unitPrice: freezed == unitPrice
           ? _value.unitPrice
           : unitPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalPrice: freezed == totalPrice
+          ? _value.totalPrice
+          : totalPrice // ignore: cast_nullable_to_non_nullable
               as String?,
       purchaseDate: freezed == purchaseDate
           ? _value.purchaseDate
@@ -393,9 +432,12 @@ class _$ProductElementImpl implements _ProductElement {
   const _$ProductElementImpl(
       {this.name,
       this.categoryId,
+      this.nameCategory,
       this.statusId,
+      this.nameStatus,
       this.quantity,
       this.unitPrice,
+      this.totalPrice,
       this.purchaseDate,
       this.expirationDate,
       this.purchasePlace,
@@ -411,11 +453,17 @@ class _$ProductElementImpl implements _ProductElement {
   @override
   final int? categoryId;
   @override
+  final String? nameCategory;
+  @override
   final int? statusId;
+  @override
+  final String? nameStatus;
   @override
   final int? quantity;
   @override
   final String? unitPrice;
+  @override
+  final String? totalPrice;
   @override
   final String? purchaseDate;
   @override
@@ -431,7 +479,7 @@ class _$ProductElementImpl implements _ProductElement {
 
   @override
   String toString() {
-    return 'ProductElement(name: $name, categoryId: $categoryId, statusId: $statusId, quantity: $quantity, unitPrice: $unitPrice, purchaseDate: $purchaseDate, expirationDate: $expirationDate, purchasePlace: $purchasePlace, brand: $brand, additionalNotes: $additionalNotes, image: $image)';
+    return 'ProductElement(name: $name, categoryId: $categoryId, nameCategory: $nameCategory, statusId: $statusId, nameStatus: $nameStatus, quantity: $quantity, unitPrice: $unitPrice, totalPrice: $totalPrice, purchaseDate: $purchaseDate, expirationDate: $expirationDate, purchasePlace: $purchasePlace, brand: $brand, additionalNotes: $additionalNotes, image: $image)';
   }
 
   @override
@@ -442,12 +490,18 @@ class _$ProductElementImpl implements _ProductElement {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
+            (identical(other.nameCategory, nameCategory) ||
+                other.nameCategory == nameCategory) &&
             (identical(other.statusId, statusId) ||
                 other.statusId == statusId) &&
+            (identical(other.nameStatus, nameStatus) ||
+                other.nameStatus == nameStatus) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.unitPrice, unitPrice) ||
                 other.unitPrice == unitPrice) &&
+            (identical(other.totalPrice, totalPrice) ||
+                other.totalPrice == totalPrice) &&
             (identical(other.purchaseDate, purchaseDate) ||
                 other.purchaseDate == purchaseDate) &&
             (identical(other.expirationDate, expirationDate) ||
@@ -466,9 +520,12 @@ class _$ProductElementImpl implements _ProductElement {
       runtimeType,
       name,
       categoryId,
+      nameCategory,
       statusId,
+      nameStatus,
       quantity,
       unitPrice,
+      totalPrice,
       purchaseDate,
       expirationDate,
       purchasePlace,
@@ -497,9 +554,12 @@ abstract class _ProductElement implements ProductElement {
   const factory _ProductElement(
       {final String? name,
       final int? categoryId,
+      final String? nameCategory,
       final int? statusId,
+      final String? nameStatus,
       final int? quantity,
       final String? unitPrice,
+      final String? totalPrice,
       final String? purchaseDate,
       final DateTime? expirationDate,
       final String? purchasePlace,
@@ -515,11 +575,17 @@ abstract class _ProductElement implements ProductElement {
   @override
   int? get categoryId;
   @override
+  String? get nameCategory;
+  @override
   int? get statusId;
+  @override
+  String? get nameStatus;
   @override
   int? get quantity;
   @override
   String? get unitPrice;
+  @override
+  String? get totalPrice;
   @override
   String? get purchaseDate;
   @override

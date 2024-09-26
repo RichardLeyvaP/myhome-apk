@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/products/product_model.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
+import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/category_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,20 +24,6 @@ class _StartProductPageState extends State<StartProductPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  List<Category> categories = [
-    Category(title: 'Deportes', icon: Icons.sports_basketball, id: 1),
-    Category(title: 'Cocina', icon: Icons.kitchen, id: 2),
-    Category(title: 'Tecnología', icon: Icons.computer, id: 3),
-    Category(title: 'Arte', icon: Icons.brush, id: 4),
-    Category(title: 'Música', icon: Icons.music_note, id: 5),
-    Category(title: 'Viajes', icon: Icons.flight, id: 6),
-    Category(title: 'Deportes2', icon: Icons.sports_basketball, id: 7),
-    Category(title: 'Cocina3', icon: Icons.kitchen, id: 8),
-    Category(title: 'Tecnología5', icon: Icons.computer, id: 9),
-    Category(title: 'Arte4', icon: Icons.brush, id: 10),
-    Category(title: 'Música3', icon: Icons.music_note, id: 11),
-    Category(title: 'Viajes4', icon: Icons.flight, id: 12),
-  ];
   final TextEditingController priceController = TextEditingController();
   final int initialQuantity = 1;
 
@@ -172,6 +160,7 @@ class _StartProductPageState extends State<StartProductPage> {
 
 // Dispara el evento para insertar el producto
     context.read<ProductsBloc>().add(ProductUpdated(productElement));
+    context.read<CategoriesPrioritiesBloc>().add(CategoriesRequested());
     //context.read<ProductsBloc>().add(ProductSubmitted(productElement));//este mando a insertar a la db
 
     // ScaffoldMessenger.of(context).showSnackBar(

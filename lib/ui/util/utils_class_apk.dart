@@ -21,7 +21,7 @@ class StyleGlobalApk {
   //
   //colores
   static Color colorPrimary = const Color.fromARGB(255, 67, 162, 240);
-  static Color colorIndicator = const Color.fromARGB(255, 218, 113, 113);
+  static Color colorIndicator = const Color.fromRGBO(255, 73, 73, 1.0);
 
   static Color getCindicador() {
     return colorIndicator;

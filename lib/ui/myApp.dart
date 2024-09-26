@@ -78,7 +78,7 @@ class Myapp extends StatelessWidget {
           color: Colors.black,
         ),
         titleMedium: StyleGlobalApk.globalTextStyle.copyWith(
-          fontSize: 12.0,
+          fontSize: 16.0,
           fontWeight: FontWeight.w900,
           color: Colors.black,
         ),

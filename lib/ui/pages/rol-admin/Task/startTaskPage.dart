@@ -48,6 +48,7 @@ class _StartTaskPageState extends State<StartTaskPage> {
                 controller: _titleController,
                 textCapitalization: TextCapitalization.sentences,
                 textInputAction: TextInputAction.next,
+                maxLength: 30, // Limita el texto a 30 caracteres
                 decoration: InputDecoration(
                   labelText: 'Título',
                   border: OutlineInputBorder(

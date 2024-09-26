@@ -18,6 +18,7 @@ class TasksRepository {
       // Verificamos si response es un JSON válido
       if (response is Map<String, dynamic>) {
         // Deserializamos la respuesta a nuestro modelo TaskResponse
+        print('dando click en la imagen-3:$response');
         final taskResponse = Task.fromJson(response);
         // Retornamos el modelo deserializado
         print('dando click en la imagen-3:$taskResponse');

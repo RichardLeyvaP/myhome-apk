@@ -22,9 +22,12 @@ _$ProductElementImpl _$$ProductElementImplFromJson(Map<String, dynamic> json) =>
     _$ProductElementImpl(
       name: json['name'] as String?,
       categoryId: (json['categoryId'] as num?)?.toInt(),
+      nameCategory: json['nameCategory'] as String?,
       statusId: (json['statusId'] as num?)?.toInt(),
+      nameStatus: json['nameStatus'] as String?,
       quantity: (json['quantity'] as num?)?.toInt(),
       unitPrice: json['unitPrice'] as String?,
+      totalPrice: json['totalPrice'] as String?,
       purchaseDate: json['purchaseDate'] as String?,
       expirationDate: json['expirationDate'] == null
           ? null
@@ -40,9 +43,12 @@ Map<String, dynamic> _$$ProductElementImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'categoryId': instance.categoryId,
+      'nameCategory': instance.nameCategory,
       'statusId': instance.statusId,
+      'nameStatus': instance.nameStatus,
       'quantity': instance.quantity,
       'unitPrice': instance.unitPrice,
+      'totalPrice': instance.totalPrice,
       'purchaseDate': instance.purchaseDate,
       'expirationDate': instance.expirationDate?.toIso8601String(),
       'purchasePlace': instance.purchasePlace,

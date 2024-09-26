@@ -5,6 +5,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
 import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
 import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/modelos/category_model.dart';
+import 'package:myhome/ui/Components/category_widget.dart';
 import 'package:provider/provider.dart';
 
 class PriorityPage extends StatefulWidget {
@@ -19,6 +21,22 @@ class _PriorityPageState extends State<PriorityPage> {
   int selectedLevel = 0; // Para seleccionar el nivel
   Color colorBotoom = const Color.fromARGB(255, 61, 189, 93);
   Color colorBotoomSel = const Color.fromARGB(255, 199, 64, 59);
+
+  List<Category> categories = [
+    Category(title: 'Deportes', icon: Icons.sports_basketball, id: 1),
+    Category(title: 'Cocina', icon: Icons.kitchen, id: 2),
+    Category(title: 'Tecnología', icon: Icons.computer, id: 3),
+    Category(title: 'Arte', icon: Icons.brush, id: 4),
+    Category(title: 'Música', icon: Icons.music_note, id: 5),
+    Category(title: 'Viajes', icon: Icons.flight, id: 6),
+    Category(title: 'Deportes2', icon: Icons.sports_basketball, id: 7),
+    Category(title: 'Cocina3', icon: Icons.kitchen, id: 8),
+    Category(title: 'Tecnología5', icon: Icons.shop, id: 9),
+    Category(title: 'Arte4', icon: Icons.brush, id: 10),
+    Category(title: 'Música3', icon: Icons.music_note, id: 11),
+    Category(title: 'Viajes4', icon: Icons.flight, id: 12),
+  ];
+  List<int> arrayCategory = [1]; // Inicializamos la cantidad seleccionada
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,6 +154,21 @@ class _PriorityPageState extends State<PriorityPage> {
                 ),
                 child: Center(child: Text("Normal")),
               ),
+            ),
+            SizedBox(height: 20),
+            CategoryWidget(
+              categories: categories,
+              titleWidget: 'Categoría',
+              selectMultiple: false,
+              onSelectionChanged: (selectedCategories) {
+                setState(() {
+                  arrayCategory = selectedCategories
+                      .asMap()
+                      .entries
+                      .map((entry) => selectedCategories[entry.key].id) // Mapea los IDs de las categorías
+                      .toList();
+                });
+              },
             ),
             Spacer(),
             Row(

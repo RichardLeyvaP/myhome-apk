@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/additionalDataPage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/categoryPage.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/dateTimePage.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/familySelecctionPage.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/priorityPage.dart';
@@ -32,8 +31,6 @@ class _TaskCreationState extends State<TaskCreation> {
           FamilySelectionPage(pageController: _pageController),
           //4 Página
           StatusPage(pageController: _pageController),
-          //5 Página
-          CategoryPage(pageController: _pageController),
           //6 Página
           RecurrencePage(pageController: _pageController),
           //7 Página

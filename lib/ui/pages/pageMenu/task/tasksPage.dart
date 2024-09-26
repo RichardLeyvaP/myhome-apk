@@ -24,19 +24,6 @@ class _TasksWidgetState extends State<TasksWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  String formatDate(String dateString) {
-    final date = DateTime.parse(dateString);
-    return DateFormat('yyyy-MM-dd').format(date);
-  }
-
-  String extractTime(String dateTimeString) {
-    // Convierte el string a un objeto DateTime
-    DateTime dateTime = DateTime.parse(dateTimeString);
-
-    // Usa DateFormat para extraer solo la hora
-    return DateFormat('HH:mm:ss').format(dateTime);
-  }
-
 /*
    List<Widget> _events = [];
   void _updateEvents() {
@@ -226,27 +213,17 @@ class _TasksWidgetState extends State<TasksWidget> {
               });
             }
           },
-          headerStyle: HeaderStyle(
+          headerStyle: const HeaderStyle(
             //estilo de texto de Septiembre del 2024
             formatButtonVisible: true, // Ocultar el botón de formato si no lo necesitas
 
-            formatButtonTextStyle: const TextStyle(
-              fontSize: 14.0,
+            formatButtonTextStyle: TextStyle(
+              fontSize: 11.0,
               color: Colors.black, // Cambiar el color del texto
               fontWeight: FontWeight.bold,
             ),
-            formatButtonDecoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.red.withOpacity(0.3),
-                  blurRadius: 8.0,
-                  spreadRadius: 2.0,
-                ),
-              ],
-            ),
-            titleTextStyle: const TextStyle(
+
+            titleTextStyle: TextStyle(
               fontSize: 12.0, // Cambia el tamaño de la letra aquí
               fontWeight: FontWeight.bold,
               color: Colors.black, // Cambia el color del texto
@@ -268,37 +245,15 @@ class _TasksWidgetState extends State<TasksWidget> {
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
           },
-          calendarBuilders: CalendarBuilders(
-            selectedBuilder: (context, date, events) {
-              return Container(
-                margin: const EdgeInsets.all(6.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: StyleGlobalApk.getCprimary(), // Color del borde
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(22.0), // Bordes redondeados
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Sombra
-                      spreadRadius: 2,
-                      blurRadius: 4,
-                      offset: Offset(0, 2), // Posición de la sombra
-                    ),
-                  ],
-                  color: Colors.white, // Fondo blanco
-                ),
-                child: Center(
-                  child: Text(
-                    '${date.day}',
-                    style: TextStyle(
-                      color: StyleGlobalApk.getCindicador(), // Color del texto en el día seleccionado
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              );
-            },
+          calendarStyle: CalendarStyle(
+            todayDecoration: BoxDecoration(
+              color: StyleGlobalApk.colorIndicator.withOpacity(0.5), // Color para el día de hoy
+              shape: BoxShape.circle,
+            ),
+            selectedDecoration: BoxDecoration(
+              color: StyleGlobalApk.colorIndicator, // Color para el día de hoy
+              shape: BoxShape.circle,
+            ),
           ),
         ),
 
@@ -319,8 +274,8 @@ class _TasksWidgetState extends State<TasksWidget> {
                 // Mostrar mensaje si no hay tareas para ese día
                 return Column(
                   children: [
-                    SizedBox(height: 180),
-                    Center(child: Text('${state.message}')),
+                    const SizedBox(height: 180),
+                    Center(child: Text(state.message)),
                   ],
                 );
               } else if (state is TasksSuccess) {
@@ -332,13 +287,21 @@ class _TasksWidgetState extends State<TasksWidget> {
                     children: tasks.map((task) {
                       return CardTasks(
                         title: task.title, // Aquí usas el título de la tarea
-                        icon: MdiIcons.cakeVariantOutline, // Puedes cambiar el ícono
+                        namePriority: task.namePriority,
+                        iconPriority:
+                            getIconFromString(task.namePriority), //dado el nombre de la prioridad devuelve el icon
+                        colorPriority: getColorConvert(task.colorPriority),
+                        icon: getIconFromString(task.iconCategory), // Puedes cambiar el ícono
+                        // icon: MdiIcons.cakeVariantOutline, // Puedes cambiar el ícono
                         date: formatDate(task.startDate), // Aquí usas la fecha de inicio de la tarea
                         details: task.description, // Descripción de la tarea
+                        location: task.geoLocation,
                         schedule: '${extractTime(task.startDate)} - ${extractTime(task.endDate)}', // Horario
                         iconSize: 12.0,
-                        iconColor: const Color.fromARGB(255, 61, 189, 93),
+                        iconColor: getColorConvert(task.colorPriority),
+                        //iconColor: Color(int.parse(task.colorPriority, radix: 16)),
                         padding: 8.0,
+                        // radius: 30,
                       );
                     }).toList(),
                   ),

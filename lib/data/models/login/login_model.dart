@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'login_model.freezed.dart';
-// optional: Since our Person class is serializable, we must add this line.
-// But if Person was not serializable, we could skip it.
 part 'login_model.g.dart';
+//  factory Login.fromJson(Map<String, Object?> json) => _$LoginFromJson(json);
 
 @freezed
 class Login with _$Login {

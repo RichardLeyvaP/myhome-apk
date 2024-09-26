@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/products/product_model.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
+import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/category_widget.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:provider/provider.dart';
@@ -34,13 +36,13 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
     Category(title: 'Música3', icon: Icons.music_note, id: 11),
     Category(title: 'Viajes4', icon: Icons.flight, id: 12),
   ];
+  List<int> arrayCategory = [1]; // Inicializamos la cantidad seleccionada
+
   final TextEditingController _priceController = TextEditingController();
   final int initialQuantity = 1;
   final TextEditingController _marcaController = TextEditingController();
 
   int selectedQuantity = 1;
-
-  List<int> arrayCategory = [1]; // Inicializamos la cantidad seleccionada
 
   @override
   Widget build(BuildContext context) {
@@ -95,18 +97,33 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
               },
             ),
             SizedBox(height: 20),
-            CategoryWidget(
-              categories: categories,
-              titleWidget: 'Categoría',
-              selectMultiple: false,
-              onSelectionChanged: (selectedCategories) {
-                setState(() {
-                  arrayCategory = selectedCategories
-                      .asMap()
-                      .entries
-                      .map((entry) => selectedCategories[entry.key].id) // Mapea los IDs de las categorías
-                      .toList();
-                });
+            BlocBuilder<CategoriesPrioritiesBloc, CategoriesPrioritiesState>(
+              builder: (context, state) {
+                if (state is CategoriesLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is CategoriesStatusSuccess) {
+                  // Aquí pasamos la lista de categorías al CategoryWidget
+                  return CategoryWidget(
+                    categories: state.categories,
+                    titleWidget: 'Categorías',
+                    selectedCategoryId: state.selectedCategoryId,
+                    selectMultiple: false,
+                    onSelectionChanged: (selectedCategories) {
+                      setState(() {
+                        arrayCategory = selectedCategories
+                            .asMap()
+                            .entries
+                            .map((entry) => selectedCategories[entry.key].id) // Mapea los IDs de las categorías
+                            .toList();
+                      });
+                      // Maneja la selección de categorías
+                      // Por ejemplo, puedes guardar las categorías seleccionadas en un estado
+                    },
+                  );
+                } else if (state is CategoriesFailure) {
+                  return Center(child: Text('Error: ${state.error}'));
+                }
+                return Container(); // Estado por defecto
               },
             ),
             SizedBox(height: 20),
@@ -171,7 +188,7 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
     FocusScope.of(context).unfocus();
     // Enviar el evento al BLoC
     print('object-test-_marcaController.text:${_marcaController.text}');
-    print('object-test-arrayCategory:$arrayCategory');
+    print('object-test-arrayCategory:${arrayCategory[0]}');
     print('object-test-_priceController.text:${_priceController.text}');
     print('object-test-selectedQuantity:$selectedQuantity');
 

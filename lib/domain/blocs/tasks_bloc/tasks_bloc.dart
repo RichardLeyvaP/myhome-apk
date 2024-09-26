@@ -15,6 +15,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     startDate: '',
     endDate: '',
     priorityId: 0,
+    namePriority: '',
     statusId: 0,
     categoryId: 0,
     recurrence: '',
@@ -22,6 +23,8 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     comments: '',
     attachments: '',
     geoLocation: '',
+    colorPriority: '',
+    iconCategory: '',
     parentId: null,
     children: [],
   );

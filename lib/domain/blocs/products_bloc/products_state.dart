@@ -24,6 +24,18 @@ class ProductEmpty extends ProductState {
   List<Object> get props => [message];
 }
 
+class ProductCountState extends ProductState {
+  final int quantity;
+
+  const ProductCountState({this.quantity = 1}); // Inicializamos con 1
+
+  ProductCountState copyWith({int? quantity}) {
+    return ProductCountState(
+      quantity: quantity ?? this.quantity,
+    );
+  }
+}
+
 // Estado de éxito cuando se recuperan las tareas
 class ProductSuccess extends ProductState {
   final Product product;

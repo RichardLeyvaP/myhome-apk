@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
-import 'package:provider/provider.dart';
 
 class FamilySelectionPage extends StatefulWidget {
   @override
@@ -19,6 +13,7 @@ class _FamilySelectionPageState extends State<FamilySelectionPage> {
   List<String> selectedFamilies = [];
 
   final List<String> families = ['Papá', 'Mamá', 'Hermano', 'Tío', 'Abuelo'];
+  final List<String> familiesName = ['Richard Leyva', 'Raciel Leyva', 'Yennis Leyva', 'Pacho Pérez', 'Nerza de León'];
 
   void toggleSelection(String family) {
     setState(() {
@@ -32,7 +27,7 @@ class _FamilySelectionPageState extends State<FamilySelectionPage> {
 
   Color colorBotoom = const Color.fromARGB(255, 61, 189, 93);
   Color colorBotoomSel = const Color.fromARGB(255, 199, 64, 59);
-
+  int i = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +53,7 @@ class _FamilySelectionPageState extends State<FamilySelectionPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: families.map((family) {
                       bool isSelected = selectedFamilies.contains(family);
+
                       return GestureDetector(
                         onTap: () => toggleSelection(family),
                         child: Container(
@@ -80,14 +76,36 @@ class _FamilySelectionPageState extends State<FamilySelectionPage> {
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Text(
-                              family,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://tse4.mm.bing.net/th?id=OIP.IGNf7GuQaCqz_RPq5wCkPgHaLH&pid=Api&P=0&h=180'),
                               ),
-                            ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    family,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    familiesName[0],
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );

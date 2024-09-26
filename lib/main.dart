@@ -11,6 +11,7 @@ import 'package:myhome/data/repository/tasks_repository.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/dependency_injection/app_initializer.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
 import 'package:myhome/ui/myApp.dart';
@@ -81,6 +82,11 @@ class BlocsProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ProductsBloc(productsRepository: ProductsRepository(authService: ApiService())),
+          //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoriesPrioritiesBloc(productsRepository: ProductsRepository(authService: ApiService())),
           //por defecto es true y solo lo llama cuando lo necesita
         ),
       ],

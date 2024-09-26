@@ -27,6 +27,12 @@ class ProductSubmitted extends ProductsEvent {
 }
 
 // Evento para enviar la tarea final
+
+class IncreaseProductQuantity extends ProductsEvent {}
+
+class DecreaseProductQuantity extends ProductsEvent {}
+
+// Evento para enviar la tarea final
 class ProductUpdated extends ProductsEvent {
   final ProductElement productElement;
 

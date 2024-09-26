@@ -296,14 +296,6 @@ Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, Stri
                             // Cambia alguna propiedad aqui
                             ),
                       ),
-                      Text(
-                        name,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 211, 92, 92),
-                            height: 0.1,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700),
-                      ),
                     ],
                   ),
                 ],
@@ -312,10 +304,10 @@ Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, Stri
                 children: [
                   IconButton(onPressed: () {}, icon: Badge(isLabelVisible: true, child: Icon(icon1))),
                   IconButton(onPressed: () {}, icon: Icon(icon2)),
-                  CircleAvatar(
+                  /* CircleAvatar(//avatar del usuario que entra a la apk
                     backgroundImage: NetworkImage(avatar),
                     backgroundColor: Colors.transparent, // Opcional: color de fondo si la imagen no se carga
-                  )
+                  )*/
                 ],
               ),
             ],

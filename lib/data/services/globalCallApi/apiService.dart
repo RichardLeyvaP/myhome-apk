@@ -97,6 +97,7 @@ class ApiService {
   dynamic _processResponse(http.Response response) {
     print('dando click en la imagen-5:${response.statusCode})');
     //  print('dando click en la imagen-5:${jsonDecode(response.body)})');
+    print('entrando a * - : getCategoriesPriority-3:${response.statusCode}');
 
     switch (response.statusCode) {
       case 200:
