@@ -175,6 +175,7 @@ ProductElement _$ProductElementFromJson(Map<String, dynamic> json) {
 mixin _$ProductElement {
   String? get name => throw _privateConstructorUsedError;
   int? get categoryId => throw _privateConstructorUsedError;
+  int? get count => throw _privateConstructorUsedError;
   String? get nameCategory => throw _privateConstructorUsedError;
   int? get statusId => throw _privateConstructorUsedError;
   String? get nameStatus => throw _privateConstructorUsedError;
@@ -207,6 +208,7 @@ abstract class $ProductElementCopyWith<$Res> {
   $Res call(
       {String? name,
       int? categoryId,
+      int? count,
       String? nameCategory,
       int? statusId,
       String? nameStatus,
@@ -238,6 +240,7 @@ class _$ProductElementCopyWithImpl<$Res, $Val extends ProductElement>
   $Res call({
     Object? name = freezed,
     Object? categoryId = freezed,
+    Object? count = freezed,
     Object? nameCategory = freezed,
     Object? statusId = freezed,
     Object? nameStatus = freezed,
@@ -259,6 +262,10 @@ class _$ProductElementCopyWithImpl<$Res, $Val extends ProductElement>
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
               as int?,
       nameCategory: freezed == nameCategory
           ? _value.nameCategory
@@ -323,6 +330,7 @@ abstract class _$$ProductElementImplCopyWith<$Res>
   $Res call(
       {String? name,
       int? categoryId,
+      int? count,
       String? nameCategory,
       int? statusId,
       String? nameStatus,
@@ -352,6 +360,7 @@ class __$$ProductElementImplCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? categoryId = freezed,
+    Object? count = freezed,
     Object? nameCategory = freezed,
     Object? statusId = freezed,
     Object? nameStatus = freezed,
@@ -373,6 +382,10 @@ class __$$ProductElementImplCopyWithImpl<$Res>
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
               as int?,
       nameCategory: freezed == nameCategory
           ? _value.nameCategory
@@ -432,6 +445,7 @@ class _$ProductElementImpl implements _ProductElement {
   const _$ProductElementImpl(
       {this.name,
       this.categoryId,
+      this.count,
       this.nameCategory,
       this.statusId,
       this.nameStatus,
@@ -452,6 +466,8 @@ class _$ProductElementImpl implements _ProductElement {
   final String? name;
   @override
   final int? categoryId;
+  @override
+  final int? count;
   @override
   final String? nameCategory;
   @override
@@ -479,7 +495,7 @@ class _$ProductElementImpl implements _ProductElement {
 
   @override
   String toString() {
-    return 'ProductElement(name: $name, categoryId: $categoryId, nameCategory: $nameCategory, statusId: $statusId, nameStatus: $nameStatus, quantity: $quantity, unitPrice: $unitPrice, totalPrice: $totalPrice, purchaseDate: $purchaseDate, expirationDate: $expirationDate, purchasePlace: $purchasePlace, brand: $brand, additionalNotes: $additionalNotes, image: $image)';
+    return 'ProductElement(name: $name, categoryId: $categoryId, count: $count, nameCategory: $nameCategory, statusId: $statusId, nameStatus: $nameStatus, quantity: $quantity, unitPrice: $unitPrice, totalPrice: $totalPrice, purchaseDate: $purchaseDate, expirationDate: $expirationDate, purchasePlace: $purchasePlace, brand: $brand, additionalNotes: $additionalNotes, image: $image)';
   }
 
   @override
@@ -490,6 +506,7 @@ class _$ProductElementImpl implements _ProductElement {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
+            (identical(other.count, count) || other.count == count) &&
             (identical(other.nameCategory, nameCategory) ||
                 other.nameCategory == nameCategory) &&
             (identical(other.statusId, statusId) ||
@@ -520,6 +537,7 @@ class _$ProductElementImpl implements _ProductElement {
       runtimeType,
       name,
       categoryId,
+      count,
       nameCategory,
       statusId,
       nameStatus,
@@ -554,6 +572,7 @@ abstract class _ProductElement implements ProductElement {
   const factory _ProductElement(
       {final String? name,
       final int? categoryId,
+      final int? count,
       final String? nameCategory,
       final int? statusId,
       final String? nameStatus,
@@ -574,6 +593,8 @@ abstract class _ProductElement implements ProductElement {
   String? get name;
   @override
   int? get categoryId;
+  @override
+  int? get count;
   @override
   String? get nameCategory;
   @override

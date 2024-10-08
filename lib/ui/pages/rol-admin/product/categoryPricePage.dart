@@ -62,48 +62,48 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
       body: // Segunda Página
           Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            TextFormField(
-              controller: _marcaController,
-              textCapitalization: TextCapitalization.sentences,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: 'Marca',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
-                    width: 2.0,
+        child: BlocBuilder<CategoriesPrioritiesBloc, CategoriesPrioritiesState>(
+          builder: (context, state) {
+            if (state is CategoriesLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is CategoriesStatusSuccess) {
+              selectedQuantity = state.quantityProduct ?? 1; // Valor por defecto en caso de null
+              return Column(
+                children: [
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _marcaController,
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: 'Marca',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.blue, // Borde azul cuando toma foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'El título es requerido';
+                      }
+                      return null;
+                    },
                   ),
-                  borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.blue, // Borde azul cuando toma foco
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                ),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'El título es requerido';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 20),
-            BlocBuilder<CategoriesPrioritiesBloc, CategoriesPrioritiesState>(
-              builder: (context, state) {
-                if (state is CategoriesLoading) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is CategoriesStatusSuccess) {
-                  // Aquí pasamos la lista de categorías al CategoryWidget
-                  return CategoryWidget(
+                  SizedBox(height: 20),
+                  CategoryWidget(
                     categories: state.categories,
                     titleWidget: 'Categorías',
                     selectedCategoryId: state.selectedCategoryId,
@@ -119,65 +119,69 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
                       // Maneja la selección de categorías
                       // Por ejemplo, puedes guardar las categorías seleccionadas en un estado
                     },
-                  );
-                } else if (state is CategoriesFailure) {
-                  return Center(child: Text('Error: ${state.error}'));
-                }
-                return Container(); // Estado por defecto
-              },
-            ),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                // Usamos Expanded para que el TextField tome el espacio disponible
-                Expanded(
-                  child: TextFormField(
-                    controller: _priceController,
-                    onChanged: (value) {},
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Precio',
-                      prefixIcon: Icon(Icons.attach_money),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
-                ),
-                SizedBox(width: 10), // Espacio entre los dos widgets
-                QuantitySelector(
-                  initialQuantity: selectedQuantity,
-                  onQuantityChanged: (newQuantity) {
-                    // Actualizamos el estado con la cantidad seleccionada
-                    setState(() {
-                      selectedQuantity = newQuantity;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    widget.pageController.previousPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Text("Regresar"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _onSubmit();
-                  },
-                  child: Text("Siguiente"),
-                ),
-              ],
-            ),
-          ],
+                  // Estado por defecto
+
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      // Usamos Expanded para que el TextField tome el espacio disponible
+                      Expanded(
+                        child: TextFormField(
+                          controller: _priceController,
+                          onChanged: (value) {},
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Precio',
+                            prefixIcon: Icon(Icons.attach_money),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10), // Espacio entre los dos widgets
+                      QuantitySelector(
+                        initialQuantity: selectedQuantity,
+                        onQuantityChanged: (newQuantity) {
+                          // Actualizas el estado del BLoC aquí si es necesario
+                          setState(() {
+                            selectedQuantity = newQuantity;
+                            print('object-test- *******-$selectedQuantity');
+                          });
+                          context.read<CategoriesPrioritiesBloc>().add(QuantityProductEvent(newQuantity));
+                        },
+                      )
+                    ],
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          widget.pageController.previousPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text("Regresar"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _onSubmit();
+                        },
+                        child: Text("Siguiente"),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else if (state is CategoriesFailure) {
+              return Center(child: Text('Error: ${state.error}'));
+            }
+            return Container();
+          },
         ),
       ),
     );
@@ -187,16 +191,17 @@ class _CategoryPricePageState extends State<CategoryPricePage> {
     // Cierra el teclado si está abierto
     FocusScope.of(context).unfocus();
     // Enviar el evento al BLoC
-    print('object-test-_marcaController.text:${_marcaController.text}');
+    print(
+        'object-test-_marcaController.text:${emptyTextField(_marcaController.text) ? 'No hay Marca' : _marcaController.text}');
     print('object-test-arrayCategory:${arrayCategory[0]}');
-    print('object-test-_priceController.text:${_priceController.text}');
+    print('object-test-_priceController.text:${emptyTextField(_priceController.text) ? '0' : _priceController.text}');
     print('object-test-selectedQuantity:$selectedQuantity');
 
     //todo ahora esta fijo
     final productElement = ProductElement(
-        brand: _marcaController.text,
+        brand: emptyTextField(_marcaController.text) ? 'No hay Marca' : _marcaController.text,
         categoryId: arrayCategory[0],
-        unitPrice: _priceController.text,
+        unitPrice: emptyTextField(_priceController.text) ? '0' : _priceController.text,
         quantity: selectedQuantity
         // image: 'products/1.jpg',
         );

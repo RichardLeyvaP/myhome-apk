@@ -9,7 +9,7 @@ class ProductsRepository {
 
   Future<dynamic> getProduct() async {
     print('dando click en la getProduct');
-    final endpoint = 'http://10.0.2.2:8000/api/products-test';
+    final endpoint = 'http://10.0.2.2:8000/api/products';
 
     try {
       // Llama al servicio y obtiene la respuesta procesada
@@ -32,7 +32,7 @@ class ProductsRepository {
     } catch (e) {
       print('dando click en la imagen-4:$e');
       // Manejo de errores
-      throw Exception('Error al obtener las tareas: $e');
+      throw Exception('getProduct(): $e');
     }
   }
 
@@ -53,8 +53,10 @@ class ProductsRepository {
     final body = {
       'name': product.name,
       'category_id': product.categoryId,
-      'status_id': product.statusId,
-      'quantity': product.quantity,
+      'status_id': 4, //todo valor fijo
+      // 'status_id': product.statusId,
+      'quantity': 1,
+      //'quantity': product.quantity,
       'unit_price': product.unitPrice,
       'purchase_date': product.purchaseDate,
       'purchase_place': product.purchasePlace,
@@ -83,7 +85,7 @@ class ProductsRepository {
 
   Future<dynamic> getCategoriesPriority() async {
     print('dando click en la getProduct');
-    final endpoint = 'http://10.0.2.2:8000/api/productcategory-productstatus-apk-test';
+    final endpoint = 'http://10.0.2.2:8000/api/productcategory-productstatus-apk';
     print('entrando a * - : getCategoriesPriority-2');
     try {
       // Llama al servicio y obtiene la respuesta procesada
@@ -117,7 +119,7 @@ class ProductsRepository {
     } catch (e) {
       print('dando click en la imagen-4:$e');
       // Manejo de errores
-      throw Exception('Error al obtener las tareas: $e');
+      throw Exception('getCategoriesPriority(): $e');
     }
   }
 }

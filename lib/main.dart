@@ -1,32 +1,34 @@
 // ignore_for_file: unused_element, depend_on_referenced_packages
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myhome/data/repository/auth_repository.dart';
+import 'package:myhome/data/repository/configuration_repository.dart';
 import 'package:myhome/data/repository/products_repository.dart';
 import 'package:myhome/data/repository/tasks_repository.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/dependency_injection/app_initializer.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_bloc.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_event.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
 import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/dependency_injection/providers.dart';
-import 'package:myhome/ui/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:myhome/domain/blocs/bloc.dart';
+import 'package:myhome/ui/util/util_class.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   // DependencyInjection.registerDependencies();
   await AppInitializer.initializeApp();
   //initializeDateFormatting('es_ES', null).then((_) {
-  initializeDateFormatting('pt', null).then((_) async {
+  initializeDateFormatting('es', null).then((_) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     runZonedGuarded(() {
@@ -54,10 +56,11 @@ void main() async {
       }
     });
     // Cargar las traducciones iniciales (en este caso, inglés)
-    await TranslationManager.loadDefaultTranslations();
+
     // Cargar las traducciones antes de iniciar la aplicación
     //await _requestPermissions();
     // await Firebase.initializeApp();
+    // TranslationManager.loadDefaultTranslations('es');
   });
 }
 
@@ -82,12 +85,28 @@ class BlocsProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ProductsBloc(productsRepository: ProductsRepository(authService: ApiService())),
+          lazy: false,
           //por defecto es true y solo lo llama cuando lo necesita
         ),
         BlocProvider(
           create: (context) =>
               CategoriesPrioritiesBloc(productsRepository: ProductsRepository(authService: ApiService())),
           //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoriesStatePrioritiesBloc(taskRepository: TasksRepository(authService: ApiService())),
+          //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(authRepository: AuthRepository(authService: ApiService())),
+          //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) =>
+              ConfigurationBloc(configurationRepository: ConfigurationRepository(authService: ApiService()))
+                ..add(ConfigurationRequested(DateTime.now())), // Cargar la configuración inicial
+          lazy: false,
         ),
       ],
       child: Myapp(),

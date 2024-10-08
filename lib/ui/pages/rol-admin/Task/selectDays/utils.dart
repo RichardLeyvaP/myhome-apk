@@ -162,7 +162,12 @@ class _QuantitySelectorState extends State<QuantitySelector> {
 //******************* */
 //sdevuelve un color entrado un String "FF3DBD5D"
 Color getColorConvert(String colorString) {
-  return Color(int.parse(colorString, radix: 16));
+  try {
+    return Color(int.parse(colorString, radix: 16));
+  } catch (e) {
+    print('getColorConvert :$e');
+    return const Color.fromARGB(255, 119, 76, 121); //color por defecto
+  }
 }
 //******************* */
 //sdevuelve un color entrado un String "FF3DBD5D"
@@ -218,7 +223,9 @@ IconData getIconFromString(String iconName) {
   }
 }
 
-
-
 //******************* */
 
+bool emptyTextField(String texto) {
+  //me dice si tiene texto o no true esta vacio y false es que tiene
+  return texto.trim().isEmpty;
+}

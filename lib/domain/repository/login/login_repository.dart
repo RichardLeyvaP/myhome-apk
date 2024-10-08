@@ -10,7 +10,7 @@ class LoginRepository {
       await _loginApi.getUser();
     } catch (e) {
       print(e);
-      throw Exception('Error al devolver el Login');
+      throw Exception('Error al devolver el Login:$e');
     }
   }
 }

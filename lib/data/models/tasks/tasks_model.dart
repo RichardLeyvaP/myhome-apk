@@ -25,6 +25,7 @@ class TaskElement with _$TaskElement {
     required int categoryId,
     required String recurrence,
     required String colorPriority,
+    required String colorCategory,
     required String iconCategory,
     required String namePriority,
     required int estimatedTime,

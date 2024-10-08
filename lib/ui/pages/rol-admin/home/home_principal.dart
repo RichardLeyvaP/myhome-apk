@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myhome/data/models/configuration/configuration_model.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_bloc.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_event.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/bloc.dart';
+import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
 import 'package:myhome/ui/Components/showDialogComp.dart';
 import 'package:myhome/ui/pages/pageMenu/filesPage.dart';
 import 'package:myhome/ui/pages/pageMenu/financePage.dart';
 import 'package:myhome/ui/pages/pageMenu/healthPage.dart';
 import 'package:myhome/ui/pages/pageMenu/product/productPage.dart';
 import 'package:myhome/ui/pages/pageMenu/wishesPage.dart';
+import 'package:myhome/ui/util/util_class.dart';
 
 import '../../pageMenu/task/tasksPage.dart';
 //COLORES
@@ -150,6 +157,10 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
               print('inde = ${_tabController.index}');
               if (_tabController.index == 3) {
                 //agregar tareas
+                //llamo el evento para buscar la scategorias y los estados
+                context.read<CategoriesStatePrioritiesBloc>().add(TaskCategoriesRequested());
+                // context.read<ConfigurationBloc>().add(ConfigurationRequested());
+
                 print('inde =.... ${_tabController.index}');
                 GoRouter.of(context).go(
                   '/TaskCreation',
@@ -157,7 +168,10 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
               } else if (_tabController.index == 4) {
                 //agregar productos
                 print('inde =.... ${_tabController.index}');
+                //llamo el evento para buscar la scategorias y los estados
+                context.read<CategoriesPrioritiesBloc>().add(CategoriesRequested());
                 GoRouter.of(context).go(
+                  //mando a la vista de crear el producto
                   '/ProductCreation',
                 );
               }
@@ -222,7 +236,7 @@ Future<dynamic> dialogComponet(BuildContext context, String name) {
                       child: Text('Cargar formulario de: $name')),
                   //
 
-                  ButtonBar(
+                  OverflowBar(
                     alignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       ElevatedButton(
@@ -304,6 +318,36 @@ Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, Stri
                 children: [
                   IconButton(onPressed: () {}, icon: Badge(isLabelVisible: true, child: Icon(icon1))),
                   IconButton(onPressed: () {}, icon: Icon(icon2)),
+                  IconButton(
+                    onPressed: () {
+                      // Mostrar el LanguageSelector en un diálogo
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          // title: Text('Seleccionar Idioma'),
+                          content: LanguageSelectorNew(
+                            onLocaleChange: (Locale locale) {
+                              print('selecccccccc idioma:${locale.languageCode}');
+                              // Actualiza el locale de la aplicación
+                              // MyApp.setLocale(context, locale);
+                              final config = Configuration(language: locale.languageCode);
+                              context.read<ConfigurationBloc>().add(ConfigurationUpdated(config));
+                              context.read<ConfigurationBloc>().add(ConfigurationSubmitted());
+                              Navigator.of(context).pop(); // Cierra el diálogo
+                            },
+                          ),
+                          // actions: [
+                          //   TextButton(
+                          //     onPressed: () => Navigator.of(context).pop(),
+                          //     child: Text('Cerrar'),
+                          //   ),
+                          // ],
+                        ),
+                      );
+                    },
+                    icon: Icon(MdiIcons.earth),
+                    tooltip: 'Cambiar Idioma',
+                  ),
                   /* CircleAvatar(//avatar del usuario que entra a la apk
                     backgroundImage: NetworkImage(avatar),
                     backgroundColor: Colors.transparent, // Opcional: color de fondo si la imagen no se carga
@@ -358,10 +402,10 @@ Widget searchWidget(setState) {
                   Visibility(
                     visible: search.isEmpty ? true : false,
                     child: RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Qué deseas hacer?\n',
+                            text: '${TranslationManager.translate('searchTitle')}\n',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 32, 32, 32),
@@ -369,7 +413,7 @@ Widget searchWidget(setState) {
                                 height: 1),
                           ),
                           TextSpan(
-                            text: 'Planificar Tareas - Recordatorios - Chat',
+                            text: TranslationManager.translate('searchDescription'),
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(200, 37, 37, 37),
@@ -407,6 +451,14 @@ Widget searchWidget(setState) {
 }
 
 Widget cardMenu(_tabController) {
+  //Nombres del titulo del menu
+  String menuWishesTitle = TranslationManager.translate('menuWishes');
+  String menuFinanceTitle = TranslationManager.translate('menuFinance');
+  String menuHealthTitle = TranslationManager.translate('menuHealth');
+  String menuTasksTitle = TranslationManager.translate('menuTasks');
+  String menuProductsTitle = TranslationManager.translate('menuProducts');
+  String menuArchivesTitle = TranslationManager.translate('menuArchives');
+  //Nombres del titulo del menu
   return Container(
     color: Colors.transparent,
     //alignment: Alignment.center, // Alinea el TabBar en el centro horizontalmente
@@ -421,22 +473,22 @@ Widget cardMenu(_tabController) {
 
       tabs: [
         Tab(
-          child: cardMenuUp(MdiIcons.creationOutline, 'Deseos', _tabController.index == 0), //Deseos
+          child: cardMenuUp(MdiIcons.creationOutline, menuWishesTitle, _tabController.index == 0), //Deseos
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.finance, 'Finanzas', _tabController.index == 1), //Finanzas
+          child: cardMenuUp(MdiIcons.finance, menuFinanceTitle, _tabController.index == 1), //Finanzas
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.hospitalBoxOutline, 'Salud', _tabController.index == 2), //Salud
+          child: cardMenuUp(MdiIcons.hospitalBoxOutline, menuHealthTitle, _tabController.index == 2), //Salud
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.calendarWeekendOutline, 'Tareas', _tabController.index == 3), //Tareas
+          child: cardMenuUp(MdiIcons.calendarWeekendOutline, menuTasksTitle, _tabController.index == 3), //Tareas
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.tagOutline, 'Productos', _tabController.index == 4), //Productos
+          child: cardMenuUp(MdiIcons.tagOutline, menuProductsTitle, _tabController.index == 4), //Productos
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.folderStarOutline, 'Archivos', _tabController.index == 5), //Archivos
+          child: cardMenuUp(MdiIcons.folderStarOutline, menuArchivesTitle, _tabController.index == 5), //Archivos
         ),
       ],
     ),

@@ -5,9 +5,6 @@ import 'package:myhome/data/models/products/product_model.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
 import 'package:provider/provider.dart';
 
 class StatusPage extends StatefulWidget {
@@ -55,6 +52,9 @@ class _StatusPageState extends State<StatusPage> {
                         return GestureDetector(
                           onTap: () {
                             // Disparamos el evento para actualizar el estado seleccionado.
+
+                            selectedState = status.id;
+
                             context.read<CategoriesPrioritiesBloc>().add(StatusSelectedEvent(status.id));
                           },
                           child: Container(
@@ -133,6 +133,7 @@ class _StatusPageState extends State<StatusPage> {
 
   void _onSubmit() {
     // Cierra el teclado si está abierto
+
     FocusScope.of(context).unfocus();
     // Enviar el evento al BLoC
     print('object-test-selectedState:$selectedState');

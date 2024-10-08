@@ -1,12 +1,33 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   String? baseUrl;
-  String? token;
+  String? _token; // Token privado
 
-  ApiService({this.baseUrl, this.token});
+  ApiService({this.baseUrl, String? token}) : _token = token;
+
+  // Método para establecer el token
+  Future<void> setToken(String? token) async {
+    _token = token;
+    print('el token es:$token -setToken');
+    // Guardar el token en shared_preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('auth_token', token ?? '');
+  }
+
+  // Método para obtener el token
+  Future<String?> getToken() async {
+    if (_token != null) {
+      return _token;
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      _token = prefs.getString('auth_token');
+      return _token;
+    }
+  }
 
   // Método general para iniciar sesión
   Future<Map<String, dynamic>> login({
@@ -30,8 +51,9 @@ class ApiService {
   Future<dynamic> get(String endpoint) async {
     final response = await http.get(
       Uri.parse(endpoint),
-      headers: _headers(),
+      headers: await _headers(),
     );
+    print('mandando para el get-empoint:$endpoint');
     return _processResponse(response);
   }
 
@@ -41,7 +63,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(endpoint),
-        headers: _headers(),
+        headers: await _headers(),
         body: jsonEncode(body),
       );
       print('aqui estoy entrando-al metodo-post-task-response.statusCode${response.statusCode}');
@@ -65,11 +87,13 @@ class ApiService {
 
   // Método PUT
   Future<dynamic> put(String endpoint, {required Map<String, dynamic> body}) async {
+    print('_onConfigurationSubmitted entrando Future<dynamic> put:${body}');
     final response = await http.put(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: _headers(),
+      Uri.parse(endpoint),
+      headers: await _headers(),
       body: jsonEncode(body),
     );
+    print('_onConfigurationSubmitted entrando Future<dynamic> response:${response.body}');
     return _processResponse(response);
   }
 
@@ -77,19 +101,20 @@ class ApiService {
   Future<dynamic> delete(String endpoint) async {
     final response = await http.delete(
       Uri.parse('$baseUrl$endpoint'),
-      headers: _headers(),
+      headers: await _headers(),
     );
     return _processResponse(response);
   }
 
   // Método para obtener los encabezados
-  Map<String, String> _headers() {
+  Future<Map<String, String>> _headers() async {
+    //final token = 'ghjhjhkjghjgjh'; //SIMULANDO UN TOKEN MAL
+    final token = await getToken();
     final headers = {
       'Content-Type': 'application/json',
     };
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
+    headers['Authorization'] = 'Bearer $token';
+    print('mandando para el get-geader:${token}');
     return headers;
   }
 
@@ -116,7 +141,8 @@ class ApiService {
 
       default:
         // Otros códigos de estado: Manejo de errores
-        throw Exception('Error ${response.statusCode}: ${response.body}');
+        throw Exception('_processResponse():statusCode:${response.statusCode} llamando a la ruta:${response.request}');
+      // throw Exception('Error ${response.statusCode}: ${response.body}');
     }
   }
 
@@ -137,7 +163,7 @@ class ApiService {
     } catch (e) {
       // Manejo de errores específico para el login
       print('Error en el login: $e');
-      throw Exception('Error en el login');
+      throw Exception('Error en el login:$e');
     }
   }
 
@@ -157,7 +183,7 @@ class ApiService {
 
       // Asignar el token al recibir la respuesta, si es necesario
       if (data.containsKey('token')) {
-        token = data['token'];
+        _token = data['token'];
       } else {
         throw Exception('El token no está presente en la respuesta');
       }
@@ -166,7 +192,7 @@ class ApiService {
     } catch (e) {
       // Manejo de errores específico para el login con Google
       print('Error en el login con Google: $e');
-      throw Exception('Error en el login con Google');
+      throw Exception('Error en el login con Google:$e');
     }
   }
 
@@ -186,7 +212,7 @@ class ApiService {
 
       // Asignar el token al recibir la respuesta, si es necesario
       if (data.containsKey('token')) {
-        token = data['token'];
+        _token = data['token'];
       } else {
         throw Exception('El token no está presente en la respuesta');
       }
@@ -195,11 +221,20 @@ class ApiService {
     } catch (e) {
       // Manejo de errores específico para el login con Facebook
       print('Error en el login con Facebook: $e');
-      throw Exception('Error en el login con Facebook');
+      throw Exception('Error en el login con Facebook:$e');
     }
   }
 
-  logout() {
-    //implementar el logout
+  // Método para hacer logout
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Eliminar el token de SharedPreferences
+    await prefs.remove('auth_token');
+
+    // También puedes limpiar la variable local si lo deseas
+    _token = null;
+
+    print('Sesión cerrada y token eliminado');
   }
 }

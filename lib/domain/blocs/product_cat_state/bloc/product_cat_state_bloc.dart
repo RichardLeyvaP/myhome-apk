@@ -18,8 +18,10 @@ class CategoriesStatusSuccess extends CategoriesPrioritiesState {
   final List<Status> status;
   final int? selectedStatusId;
   final int? selectedCategoryId;
+  final int? quantityProduct;
 
-  CategoriesStatusSuccess(this.categories, this.status, {this.selectedStatusId, this.selectedCategoryId});
+  CategoriesStatusSuccess(this.categories, this.status,
+      {this.selectedStatusId, this.selectedCategoryId, this.quantityProduct});
 }
 
 class CategoriesFailure extends CategoriesPrioritiesState {
@@ -40,6 +42,18 @@ class CategorySelectedEvent extends CategoriesPrioritiesEvent {
   CategorySelectedEvent(this.selectedCategoryId);
 }
 
+class QuantityProductEvent extends CategoriesPrioritiesEvent {
+  final int quantityProduct;
+
+  QuantityProductEvent(this.quantityProduct);
+}
+
+class PriceProductEvent extends CategoriesPrioritiesEvent {
+  final int priceProduct;
+
+  PriceProductEvent(this.priceProduct);
+}
+
 class CategoriesPrioritiesBloc extends Bloc<CategoriesPrioritiesEvent, CategoriesPrioritiesState> {
   final ProductsRepository productsRepository;
 
@@ -50,7 +64,9 @@ class CategoriesPrioritiesBloc extends Bloc<CategoriesPrioritiesEvent, Categorie
         final currentState = state as CategoriesStatusSuccess;
         // Emitimos un nuevo estado con el ID seleccionado actualizado.
         emit(CategoriesStatusSuccess(currentState.categories, currentState.status,
-            selectedStatusId: event.selectedId, selectedCategoryId: currentState.selectedCategoryId));
+            selectedStatusId: event.selectedId,
+            selectedCategoryId: currentState.selectedCategoryId,
+            quantityProduct: currentState.quantityProduct));
       }
     });
     on<CategorySelectedEvent>((event, emit) {
@@ -58,7 +74,19 @@ class CategoriesPrioritiesBloc extends Bloc<CategoriesPrioritiesEvent, Categorie
         final currentState = state as CategoriesStatusSuccess;
         // Emitimos un nuevo estado con el ID seleccionado actualizado.
         emit(CategoriesStatusSuccess(currentState.categories, currentState.status,
-            selectedCategoryId: event.selectedCategoryId, selectedStatusId: currentState.selectedStatusId));
+            selectedCategoryId: event.selectedCategoryId,
+            selectedStatusId: currentState.selectedStatusId,
+            quantityProduct: currentState.quantityProduct));
+      }
+    });
+    on<QuantityProductEvent>((event, emit) {
+      if (state is CategoriesStatusSuccess) {
+        final currentState = state as CategoriesStatusSuccess;
+        // Emitimos un nuevo estado con el ID seleccionado actualizado.
+        emit(CategoriesStatusSuccess(currentState.categories, currentState.status,
+            quantityProduct: event.quantityProduct,
+            selectedStatusId: currentState.selectedStatusId,
+            selectedCategoryId: currentState.selectedCategoryId));
       }
     });
   }

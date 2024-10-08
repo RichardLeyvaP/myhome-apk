@@ -6,9 +6,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myhome/data/models/products/product_model.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
 import 'package:provider/provider.dart';

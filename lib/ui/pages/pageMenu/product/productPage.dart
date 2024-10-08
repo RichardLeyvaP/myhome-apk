@@ -19,7 +19,7 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
     // Inicializamos el primer día con algún contenido
 
-    context.read<ProductsBloc>().add(ProductsRequested());
+    context.read<ProductsBloc>().add(const ProductsRequested());
     //_updateEvents();
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
@@ -35,7 +35,7 @@ class _ProductPageState extends State<ProductPage> {
               // Mostrar un indicador de carga mientras se obtienen las tareas
               return Center(
                   child: CircularProgressIndicator(
-                color: StyleGlobalApk.getCprimary(),
+                color: StyleGlobalApk.getColorPrimary(),
               ));
             } else if (state is ProductFailure) {
               // Mostrar un mensaje de error en caso de falla

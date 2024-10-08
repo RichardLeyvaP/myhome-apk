@@ -17,6 +17,7 @@ class ProductElement with _$ProductElement {
   const factory ProductElement({
     String? name,
     int? categoryId,
+    int? count,
     String? nameCategory,
     int? statusId,
     String? nameStatus,

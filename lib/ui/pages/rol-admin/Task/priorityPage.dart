@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
+import 'package:myhome/domain/blocs/login_bloc/login_state.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/category_widget.dart';
 import 'package:provider/provider.dart';
@@ -57,141 +60,139 @@ class _PriorityPageState extends State<PriorityPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 1;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 1
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 1
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Alta")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 2;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 2
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 2
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Media")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 3;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 3
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 3
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Normal")),
-              ),
-            ),
-            SizedBox(height: 20),
-            CategoryWidget(
-              categories: categories,
-              titleWidget: 'Categoría',
-              selectMultiple: false,
-              onSelectionChanged: (selectedCategories) {
-                setState(() {
-                  arrayCategory = selectedCategories
-                      .asMap()
-                      .entries
-                      .map((entry) => selectedCategories[entry.key].id) // Mapea los IDs de las categorías
-                      .toList();
-                });
-              },
-            ),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    widget.pageController.previousPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
+            // Primera mitad de la pantalla, con scroll si es necesario
+            Expanded(
+              flex: 1,
+              child: BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+                builder: (context, state) {
+                  if (state is CategoriesLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is CategoriesStatusPrioritySuccess) {
+                    return ListView.builder(
+                      itemCount: state.priority.length,
+                      itemBuilder: (context, index) {
+                        final status = state.priority[index];
+                        return GestureDetector(
+                          onTap: () {
+                            // Actualizar el estado seleccionado
+                            selectedLevel = status.id;
+                            context.read<CategoriesStatePrioritiesBloc>().add(SelectedPriorityIdEvent(status.id));
+                          },
+                          child: cardSimpleSelection(state, status),
+                        );
+                      },
                     );
-                  },
-                  child: Text("Regresar"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _onSubmit();
-                  },
-                  child: Text("Siguiente"),
-                ),
-              ],
+                  } else if (state is CategoriesFailure) {
+                    return Center(child: Text('Error: ${state.error}'));
+                  }
+                  return Container();
+                },
+              ),
+            ),
+
+            // Espaciado entre las secciones
+            SizedBox(height: 20),
+
+            // Segunda mitad de la pantalla
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  // El segundo BlocBuilder para mostrar las categorías
+                  BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+                    builder: (context, state) {
+                      if (state is CategoriesLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is CategoriesStatusPrioritySuccess) {
+                        if (state.categories.isNotEmpty && state.selectedCategoryId == null) {
+                          context
+                              .read<CategoriesStatePrioritiesBloc>()
+                              .add(CategoryTaskSelectedEvent(state.categories[0].id));
+                        }
+
+                        return CategoryWidget(
+                          categories: state.categories,
+                          titleWidget: 'Categoría',
+                          selectedCategoryId: state.selectedCategoryId,
+                          selectMultiple: false,
+                          onSelectionChanged: (selectedCategories) {
+                            setState(() {
+                              arrayCategory = selectedCategories
+                                  .asMap()
+                                  .entries
+                                  .map((entry) => selectedCategories[entry.key].id)
+                                  .toList();
+                            });
+                          },
+                        );
+                      } else if (state is CategoriesFailure) {
+                        return Center(child: Text('Error: ${state.error}'));
+                      }
+                      return Container();
+                    },
+                  ),
+
+                  Spacer(),
+
+                  // Botones de navegación
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          widget.pageController.previousPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text("Regresar"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _onSubmit();
+                        },
+                        child: Text("Siguiente"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Container cardSimpleSelection(CategoriesStatusPrioritySuccess state, Priority status) {
+    return Container(
+      height: 60,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: state.selectedPriorityId == status.id ? colorBotoomSel.withOpacity(0.8) : colorBotoom.withOpacity(0.4),
+          width: 2.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color:
+                state.selectedPriorityId == status.id ? colorBotoomSel.withOpacity(0.4) : colorBotoom.withOpacity(0.4),
+            blurRadius: 10,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          status.title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: state.selectedPriorityId == status.id ? Colors.red : Colors.black,
+          ),
         ),
       ),
     );
@@ -201,6 +202,13 @@ class _PriorityPageState extends State<PriorityPage> {
     // Cierra el teclado si está abierto
     FocusScope.of(context).unfocus();
     // Enviar el evento al BLoC
+    final loginState = context.read<LoginBloc>().state;
+
+    String? token;
+    if (loginState is LoginSuccess) {
+      token = loginState.user.token;
+    }
+    print('el token es:$token');
 
     //todo ahora esta fijo
     //mandar la prioridad

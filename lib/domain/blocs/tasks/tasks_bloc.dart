@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/data/repository/tasks_repository.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   final TasksRepository tasksRepository;
@@ -25,6 +25,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     geoLocation: '',
     colorPriority: '',
     iconCategory: '',
+    colorCategory: '',
     parentId: null,
     children: [],
   );

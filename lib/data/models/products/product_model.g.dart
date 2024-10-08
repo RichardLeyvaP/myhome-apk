@@ -22,6 +22,7 @@ _$ProductElementImpl _$$ProductElementImplFromJson(Map<String, dynamic> json) =>
     _$ProductElementImpl(
       name: json['name'] as String?,
       categoryId: (json['categoryId'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
       nameCategory: json['nameCategory'] as String?,
       statusId: (json['statusId'] as num?)?.toInt(),
       nameStatus: json['nameStatus'] as String?,
@@ -43,6 +44,7 @@ Map<String, dynamic> _$$ProductElementImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'categoryId': instance.categoryId,
+      'count': instance.count,
       'nameCategory': instance.nameCategory,
       'statusId': instance.statusId,
       'nameStatus': instance.nameStatus,

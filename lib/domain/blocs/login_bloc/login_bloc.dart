@@ -12,6 +12,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LogoutRequested>(_onLogoutRequested);
   }
 
+  // Future<void> _onLoginRequested(LoginRequested event, Emitter<LoginState> emit) async {
+  //   emit(LoginLoading());
+  //   try {
+  //     final result = await authRepository.login(event.email, event.password);
+
+  //     // Puedes agregar lógica aquí para manejar un estado vacío si la API regresa algo inesperado
+  //     if (result is String) {
+  //       emit(LoginEmpty(result));
+  //     } else if (result is Login) {
+  //       emit(LoginSuccess(result));
+  //     }
+  //   } catch (error) {
+  //     emit(LoginFailure(error.toString()));
+  //   }
+  // }
+  //
   Future<void> _onLoginRequested(LoginRequested event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
     try {

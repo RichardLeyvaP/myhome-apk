@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 
 class CategoryWidget extends StatefulWidget {
@@ -121,6 +122,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
           // Despachar evento al Bloc
           context.read<CategoriesPrioritiesBloc>().add(CategorySelectedEvent(category.id));
+          context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(category.id));
         });
       },
       child: Stack(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:provider/provider.dart';
 

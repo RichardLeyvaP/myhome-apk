@@ -16,3 +16,11 @@ class Status {
 
   Status({required this.title, required this.icon, required this.id});
 }
+
+class Priority {
+  final String title;
+  final String description;
+  final int id;
+
+  Priority({required this.title, required this.description, required this.id});
+}

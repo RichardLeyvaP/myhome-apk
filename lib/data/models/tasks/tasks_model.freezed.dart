@@ -180,6 +180,7 @@ mixin _$TaskElement {
   int get categoryId => throw _privateConstructorUsedError;
   String get recurrence => throw _privateConstructorUsedError;
   String get colorPriority => throw _privateConstructorUsedError;
+  String get colorCategory => throw _privateConstructorUsedError;
   String get iconCategory => throw _privateConstructorUsedError;
   String get namePriority => throw _privateConstructorUsedError;
   int get estimatedTime => throw _privateConstructorUsedError;
@@ -217,6 +218,7 @@ abstract class $TaskElementCopyWith<$Res> {
       int categoryId,
       String recurrence,
       String colorPriority,
+      String colorCategory,
       String iconCategory,
       String namePriority,
       int estimatedTime,
@@ -252,6 +254,7 @@ class _$TaskElementCopyWithImpl<$Res, $Val extends TaskElement>
     Object? categoryId = null,
     Object? recurrence = null,
     Object? colorPriority = null,
+    Object? colorCategory = null,
     Object? iconCategory = null,
     Object? namePriority = null,
     Object? estimatedTime = null,
@@ -301,6 +304,10 @@ class _$TaskElementCopyWithImpl<$Res, $Val extends TaskElement>
       colorPriority: null == colorPriority
           ? _value.colorPriority
           : colorPriority // ignore: cast_nullable_to_non_nullable
+              as String,
+      colorCategory: null == colorCategory
+          ? _value.colorCategory
+          : colorCategory // ignore: cast_nullable_to_non_nullable
               as String,
       iconCategory: null == iconCategory
           ? _value.iconCategory
@@ -357,6 +364,7 @@ abstract class _$$TaskElementImplCopyWith<$Res>
       int categoryId,
       String recurrence,
       String colorPriority,
+      String colorCategory,
       String iconCategory,
       String namePriority,
       int estimatedTime,
@@ -390,6 +398,7 @@ class __$$TaskElementImplCopyWithImpl<$Res>
     Object? categoryId = null,
     Object? recurrence = null,
     Object? colorPriority = null,
+    Object? colorCategory = null,
     Object? iconCategory = null,
     Object? namePriority = null,
     Object? estimatedTime = null,
@@ -439,6 +448,10 @@ class __$$TaskElementImplCopyWithImpl<$Res>
       colorPriority: null == colorPriority
           ? _value.colorPriority
           : colorPriority // ignore: cast_nullable_to_non_nullable
+              as String,
+      colorCategory: null == colorCategory
+          ? _value.colorCategory
+          : colorCategory // ignore: cast_nullable_to_non_nullable
               as String,
       iconCategory: null == iconCategory
           ? _value.iconCategory
@@ -490,6 +503,7 @@ class _$TaskElementImpl implements _TaskElement {
       required this.categoryId,
       required this.recurrence,
       required this.colorPriority,
+      required this.colorCategory,
       required this.iconCategory,
       required this.namePriority,
       required this.estimatedTime,
@@ -524,6 +538,8 @@ class _$TaskElementImpl implements _TaskElement {
   @override
   final String colorPriority;
   @override
+  final String colorCategory;
+  @override
   final String iconCategory;
   @override
   final String namePriority;
@@ -549,7 +565,7 @@ class _$TaskElementImpl implements _TaskElement {
 
   @override
   String toString() {
-    return 'TaskElement(id: $id, title: $title, description: $description, startDate: $startDate, endDate: $endDate, priorityId: $priorityId, statusId: $statusId, categoryId: $categoryId, recurrence: $recurrence, colorPriority: $colorPriority, iconCategory: $iconCategory, namePriority: $namePriority, estimatedTime: $estimatedTime, comments: $comments, attachments: $attachments, geoLocation: $geoLocation, parentId: $parentId, children: $children)';
+    return 'TaskElement(id: $id, title: $title, description: $description, startDate: $startDate, endDate: $endDate, priorityId: $priorityId, statusId: $statusId, categoryId: $categoryId, recurrence: $recurrence, colorPriority: $colorPriority, colorCategory: $colorCategory, iconCategory: $iconCategory, namePriority: $namePriority, estimatedTime: $estimatedTime, comments: $comments, attachments: $attachments, geoLocation: $geoLocation, parentId: $parentId, children: $children)';
   }
 
   @override
@@ -574,6 +590,8 @@ class _$TaskElementImpl implements _TaskElement {
                 other.recurrence == recurrence) &&
             (identical(other.colorPriority, colorPriority) ||
                 other.colorPriority == colorPriority) &&
+            (identical(other.colorCategory, colorCategory) ||
+                other.colorCategory == colorCategory) &&
             (identical(other.iconCategory, iconCategory) ||
                 other.iconCategory == iconCategory) &&
             (identical(other.namePriority, namePriority) ||
@@ -593,26 +611,28 @@ class _$TaskElementImpl implements _TaskElement {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      title,
-      description,
-      startDate,
-      endDate,
-      priorityId,
-      statusId,
-      categoryId,
-      recurrence,
-      colorPriority,
-      iconCategory,
-      namePriority,
-      estimatedTime,
-      comments,
-      attachments,
-      geoLocation,
-      parentId,
-      const DeepCollectionEquality().hash(_children));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        title,
+        description,
+        startDate,
+        endDate,
+        priorityId,
+        statusId,
+        categoryId,
+        recurrence,
+        colorPriority,
+        colorCategory,
+        iconCategory,
+        namePriority,
+        estimatedTime,
+        comments,
+        attachments,
+        geoLocation,
+        parentId,
+        const DeepCollectionEquality().hash(_children)
+      ]);
 
   /// Create a copy of TaskElement
   /// with the given fields replaced by the non-null parameter values.
@@ -642,6 +662,7 @@ abstract class _TaskElement implements TaskElement {
       required final int categoryId,
       required final String recurrence,
       required final String colorPriority,
+      required final String colorCategory,
       required final String iconCategory,
       required final String namePriority,
       required final int estimatedTime,
@@ -674,6 +695,8 @@ abstract class _TaskElement implements TaskElement {
   String get recurrence;
   @override
   String get colorPriority;
+  @override
+  String get colorCategory;
   @override
   String get iconCategory;
   @override

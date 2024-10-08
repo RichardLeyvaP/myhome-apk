@@ -10,11 +10,12 @@ import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_event.dart';
 import 'package:myhome/domain/blocs/login_bloc/login_state.dart'; // Asegúrate de que esté correctamente importado
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
 import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/data/services/authFacebook_service.dart';
 import 'package:myhome/data/services/authGoogle_service.dart';
+import 'package:myhome/ui/util/util_class.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginFormPage extends StatefulWidget {
@@ -189,7 +190,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                   onTap: () {
                                     print('se está trabajndo en ese modulo');
                                   },
-                                  child: const Text('Olvidé mi contraseña'))),
+                                  child: Text(TranslationManager.translate('rememberPassword')))),
                           const SizedBox(height: 10),
                           Row(
                             children: [
@@ -215,8 +216,8 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                         );
                                       }
                                     },
-                                    child: const Text(
-                                      'LOGIN',
+                                    child: Text(
+                                      TranslationManager.translate('loginButton'),
                                       style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w800),
                                     )),
                               ),
@@ -228,7 +229,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                             height: 40,
                             child: SignInButton(
                               Buttons.google,
-                              text: "Entrar con Google",
+                              text: TranslationManager.translate('googleButton'),
                               onPressed: () {
                                 loginWithGoogle(context);
                               },
@@ -240,7 +241,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
                             height: 40,
                             child: SignInButton(
                               Buttons.facebook,
-                              text: "Entrar con facebook",
+                              text: TranslationManager.translate('facebookButton'),
                               onPressed: () {
                                 loginFb(setState, context);
                               },

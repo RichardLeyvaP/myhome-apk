@@ -112,7 +112,8 @@ class _AdditionalDataPageState extends State<AdditionalDataPage> {
       //todo ahora esta fijo
       final productElement = ProductElement(
         //image: image,
-        purchasePlace: _directionController.text,
+        // purchasePlace: _directionController.text,
+        purchasePlace: emptyTextField(_directionController.text) ? 'No hay dirección' : _directionController.text,
         // image: 'products/1.jpg',
       );
       // Dispara el evento para insertar el producto

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
+import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:provider/provider.dart';
 
 class StatusPage extends StatefulWidget {
@@ -37,102 +40,32 @@ class _StatusPageState extends State<StatusPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 1;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 1
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 1
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Pendiente")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 2;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 2
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 2
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Progreso")),
-              ),
-            ),
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedLevel = 3;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white, // Color de fondo del contenedor
-                  borderRadius: BorderRadius.circular(10), // Esquinas redondeadas
-                  border: Border.all(
-                    color: selectedLevel == 3
-                        ? colorBotoomSel.withOpacity(0.8)
-                        : colorBotoom.withOpacity(0.4), // Color del borde
-                    width: 2.0, // Grosor del borde
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: selectedLevel == 3
-                          ? colorBotoomSel.withOpacity(0.4)
-                          : colorBotoom.withOpacity(0.4), // Sombra roja
-                      spreadRadius: 0, // Asegura que la sombra esté en el borde
-                      blurRadius: 10, // Difumina la sombra
-                      offset: Offset(0, 0), // Posiciona la sombra en las 4 partes
-                    ),
-                  ],
-                ),
-                child: Center(child: Text("Completado")),
+            Expanded(
+              flex: 1,
+              child: BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+                builder: (context, state) {
+                  if (state is CategoriesLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is CategoriesStatusPrioritySuccess) {
+                    return ListView.builder(
+                      itemCount: state.status.length,
+                      itemBuilder: (context, index) {
+                        final status = state.status[index];
+                        return GestureDetector(
+                          onTap: () {
+                            // Actualizar el estado seleccionado
+                            selectedLevel = status.id;
+                            context.read<CategoriesStatePrioritiesBloc>().add(SelectStateEvent(status.id));
+                          },
+                          child: cardSimpleSelection(state, status),
+                        );
+                      },
+                    );
+                  } else if (state is CategoriesFailure) {
+                    return Center(child: Text('Error: ${state.error}'));
+                  }
+                  return Container();
+                },
               ),
             ),
             Spacer(),
@@ -157,6 +90,39 @@ class _StatusPageState extends State<StatusPage> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Container cardSimpleSelection(CategoriesStatusPrioritySuccess state, Status status) {
+    return Container(
+      height: 60,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: state.selectStatetask == status.id ? colorBotoomSel.withOpacity(0.8) : colorBotoom.withOpacity(0.4),
+          width: 2.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: state.selectStatetask == status.id ? colorBotoomSel.withOpacity(0.4) : colorBotoom.withOpacity(0.4),
+            blurRadius: 10,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          status.title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: state.selectStatetask == status.id ? Colors.red : Colors.black,
+          ),
         ),
       ),
     );

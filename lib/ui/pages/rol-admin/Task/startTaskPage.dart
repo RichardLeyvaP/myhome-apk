@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:provider/provider.dart';
 
 class StartTaskPage extends StatefulWidget {
@@ -40,89 +40,97 @@ class _StartTaskPageState extends State<StartTaskPage> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _titleController,
-                textCapitalization: TextCapitalization.sentences,
-                textInputAction: TextInputAction.next,
-                maxLength: 30, // Limita el texto a 30 caracteres
-                decoration: InputDecoration(
-                  labelText: 'Título',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.blue, // Borde azul cuando toma foco
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'El título es requerido';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _descriptionController,
-                textCapitalization: TextCapitalization.sentences,
-                textInputAction: TextInputAction.send,
-                onFieldSubmitted: (_) {
-                  _onSubmit();
-                },
-                decoration: InputDecoration(
-                  labelText: 'Descripción',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.blue, // Borde azul cuando toma foco
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0), // Borde redondeado
-                  ),
-                ),
-                maxLines: 5,
-              ),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, state) {
+              if (state is TaskUpdated) {
+                _titleController.text = state.taskElement.title.toString();
+                _descriptionController.text = state.taskElement.description.toString();
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      GoRouter.of(context).go('/HomePrincipal');
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _titleController,
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.next,
+                    maxLength: 30, // Limita el texto a 30 caracteres
+                    decoration: InputDecoration(
+                      labelText: 'Título',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.blue, // Borde azul cuando toma foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'El título es requerido';
+                      }
+                      return null;
                     },
-                    child: Text("Regresar"),
                   ),
-                  ElevatedButton(
-                    onPressed: _onSubmit,
-                    child: Text("Siguiente"),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _descriptionController,
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.send,
+                    onFieldSubmitted: (_) {
+                      _onSubmit();
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Descripción',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade300, // Borde gris claro cuando no tiene foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue, // Borde azul cuando toma foco
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0), // Borde redondeado
+                      ),
+                    ),
+                    maxLines: 5,
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          GoRouter.of(context).go('/HomePrincipal');
+                        },
+                        child: Text("Regresar"),
+                      ),
+                      ElevatedButton(
+                        onPressed: _onSubmit,
+                        child: Text("Siguiente"),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),

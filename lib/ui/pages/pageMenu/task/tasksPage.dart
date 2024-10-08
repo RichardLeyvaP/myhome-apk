@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks_bloc/tasks_state.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:myhome/ui/pages/pageMenu/task/widget/cardTasksW.dart';
+import 'package:myhome/ui/util/util_class.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -202,7 +202,7 @@ class _TasksWidgetState extends State<TasksWidget> {
           },
           onDaySelected: (selectedDay, focusedDay) {
             if (!isSameDay(_selectedDay, selectedDay)) {
-              print('calendario seleccion:${DateFormat('yyyy-MM-dd').format(selectedDay)}');
+              // print('calendario seleccion:${DateFormat('yyyy-MM-dd').format(selectedDay)}');
               setState(() {
                 String date = DateFormat('yyyy-MM-dd').format(selectedDay);
                 _selectedDay = selectedDay;
@@ -265,17 +265,20 @@ class _TasksWidgetState extends State<TasksWidget> {
                 // Mostrar un indicador de carga mientras se obtienen las tareas
                 return Center(
                     child: CircularProgressIndicator(
-                  color: StyleGlobalApk.getCprimary(),
+                  color: StyleGlobalApk.getColorPrimary(),
                 ));
               } else if (state is TasksFailure) {
                 // Mostrar un mensaje de error en caso de falla
-                return Center(child: Text('Error: ${state.error}'));
+                return Center(child: Text(TranslationManager.translate('serverError'))); //serverError
+                //todoMetodoRutaStatusCode este error para la db y guardarlo
+                // return Center(child: Text('Ha ocurrido un Error: ${state.error}'));
               } else if (state is TasksEmpty) {
                 // Mostrar mensaje si no hay tareas para ese día
                 return Column(
                   children: [
-                    const SizedBox(height: 180),
-                    Center(child: Text(state.message)),
+                    const SizedBox(height: 180), //aqui el mensaje cuando esta vacio
+                    Center(child: Text(TranslationManager.translate('noResults'))),
+                    //Center(child: Text(state.message)),
                   ],
                 );
               } else if (state is TasksSuccess) {
@@ -298,7 +301,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                         location: task.geoLocation,
                         schedule: '${extractTime(task.startDate)} - ${extractTime(task.endDate)}', // Horario
                         iconSize: 12.0,
-                        iconColor: getColorConvert(task.colorPriority),
+                        iconColor: getColorConvert(task.colorCategory),
                         //iconColor: Color(int.parse(task.colorPriority, radix: 16)),
                         padding: 8.0,
                         // radius: 30,

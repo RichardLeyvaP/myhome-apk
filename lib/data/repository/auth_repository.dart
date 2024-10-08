@@ -54,6 +54,11 @@ class AuthRepository {
         email: response['email'] as String,
         token: response['token'] as String,
       );
+
+      authService.setToken(response['token']);
+
+      // Crear objeto User a partir de la respuesta
+      //  final user = Login.fromJson(response['user']);//esto no esta probado
       return user;
     } else if (response.containsKey('msg')) {
       return response['msg'] as String;
@@ -85,6 +90,6 @@ class AuthRepository {
 
   Future<void> logout() async {
     // Llama al servicio para cerrar sesión
-    await authService.logout();
+    authService.logout();
   }
 }

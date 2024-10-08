@@ -1,4 +1,3 @@
-import 'package:myhome/data/models/login/login_model.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
 
@@ -7,9 +6,49 @@ class TasksRepository {
 
   TasksRepository({required this.authService});
 
+  Future<dynamic> getCategoriesStatusPriority() async {
+    print('dando click en la getProduct');
+    final endpoint = 'http://10.0.2.2:8000/api/category-status-priority-apk';
+    print('entrando a * - : getCategoriesPriority-2');
+    try {
+      // Llama al servicio y obtiene la respuesta procesada
+      final response = await authService.get(endpoint);
+      print('entrando a * - : getCategoriesPriority-2.1;$response');
+      // Verificamos si response es un JSON válido
+      if (response is Map<String, dynamic>) {
+        print('entrando a * - : getCategoriesPriority-2.2');
+        // Deserializamos la respuesta a nuestro modelo TaskResponse
+        print('entrando a * - : getCategoriesPriority-2.3:${response['productcategories']}');
+
+        // Mapea la lista de categorías desde el JSON
+        /*   final List<ProductCP> categories = (response['productcategories'] as List)
+            .map((category) => ProductCP.fromJson(category as Map<String, dynamic>))
+            .toList();*/
+
+// Verifica el mapeo
+        // print('entrando a * - :-Categorías mapeadas: $categories');
+        final taskResponse = response;
+
+        // Retornamos el modelo deserializado
+        print('entrando a * - : getCategoriesPriority-2.4:$taskResponse');
+        return taskResponse;
+      } else if (response is String) {
+        print('dando click en la imagen-4:$response');
+        return response;
+      } else {
+        print('dando click en la imagen-5:$response');
+        throw Exception('Respuesta inesperada del servidor.Revise su conexión');
+      }
+    } catch (e) {
+      print('dando click en la imagen-4:$e');
+      // Manejo de errores
+      throw Exception('getCategoriesStatusPriority(): $e');
+    }
+  }
+
   Future<dynamic> getTasks(date) async {
     print('dando click en la imagen-2');
-    final endpoint = 'http://10.0.2.2:8000/api/task-date-apk-test?start_date=$date';
+    final endpoint = 'http://10.0.2.2:8000/api/task-date-apk?start_date=$date';
 
     try {
       // Llama al servicio y obtiene la respuesta procesada
@@ -33,7 +72,7 @@ class TasksRepository {
     } catch (e) {
       print('dando click en la imagen-4:$e');
       // Manejo de errores
-      throw Exception('Error al obtener las tareas: $e');
+      throw Exception('getTasks(date): $e');
     }
   }
 
@@ -62,33 +101,17 @@ class TasksRepository {
       'priority_id': task.priorityId,
       'parent_id': task.parentId,
       'status_id': task.statusId,
-      'category_id': task.categoryId,
+      'category_id': 10, //todo valor fijo
+      // 'category_id': task.categoryId,
       'recurrence': task.recurrence,
       'estimated_time': task.estimatedTime,
       'comments': task.comments,
       'attachments': task.attachments,
-      'geo_location': 'task.geoLocation'
+      'geo_location': 'task.geoLocation' //todo valor fijo
     };
     // Llama al servicio que maneja la API de autenticación para login
     final response = await authService.post(endpoint, body: body);
-    // final response = await authService.loginWithCredentials(email, password);
-    // Extrae el token del Map<String, dynamic>
-    // Crea una instancia de `Login` con los datos de la respuesta de la API
 
     print('si estoy devolviendo esto:1-${response}');
-    /*  if (response.containsKey('token')) {
-      final user = Login(
-        id: response['id'] as int,
-        userName: response['userName'] as String,
-        email: response['email'] as String,
-        token: response['token'] as String,
-      );
-      return user;
-    } else if (response.containsKey('msg')) {
-      return response['msg'] as String;
-    } else {
-      print('aqui estoy entrando-error');
-      throw Exception('Token no presente en la respuesta');
-    }*/
   }
 }
