@@ -38,7 +38,7 @@ class ProductsRepository {
 
 //metodo para agregar una tarea
   Future<dynamic> addProduct(ProductElement product) async {
-    const endpoint = 'http://10.0.2.2:8000/api/products-test';
+    const endpoint = 'http://10.0.2.2:8000/api/products';
     print('*****************************************************************');
     print(product.name);
     print(product.categoryId);

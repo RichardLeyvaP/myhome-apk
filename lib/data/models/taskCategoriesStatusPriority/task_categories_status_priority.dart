@@ -9,6 +9,8 @@ class TaskCategoriesStatusPriority with _$TaskCategoriesStatusPriority {
     required List<Category> categories,
     required List<Status> status,
     required List<Priority> priorities,
+    required List<Taskperson> taskperson,
+    required List<String> taskrecurrences,
   }) = _TaskCategoriesStatusPriority;
   factory TaskCategoriesStatusPriority.fromJson(Map<String, Object?> json) =>
       _$TaskCategoriesStatusPriorityFromJson(json);
@@ -50,4 +52,16 @@ class Status with _$Status {
     required dynamic iconStatus,
   }) = _Status;
   factory Status.fromJson(Map<String, Object?> json) => _$StatusFromJson(json);
+}
+
+@freezed
+class Taskperson with _$Taskperson {
+  const factory Taskperson({
+    required int id,
+    required String namePerson,
+    required String imagePerson,
+    required int rolId,
+    required String nameRole,
+  }) = _Taskperson;
+  factory Taskperson.fromJson(Map<String, Object?> json) => _$TaskpersonFromJson(json);
 }

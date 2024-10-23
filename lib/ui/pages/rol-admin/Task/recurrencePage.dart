@@ -47,7 +47,7 @@ class _RecurrencePageState extends State<RecurrencePage> {
                       setState(() {
                         selectedLevel = 1;
                       });
-                      context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(1));
+                      //  context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(1));
                     },
                     child: Container(
                       height: 80,
@@ -82,7 +82,7 @@ class _RecurrencePageState extends State<RecurrencePage> {
                         selectedLevel = 2;
                       });
 
-                      context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(2));
+                      //  context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(2));
                     },
                     child: Container(
                       height: 80,
@@ -117,7 +117,7 @@ class _RecurrencePageState extends State<RecurrencePage> {
                         selectedLevel = 3;
                       });
 
-                      context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(3));
+                      // context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(3));
                     },
                     child: Container(
                       height: 80,
@@ -151,7 +151,7 @@ class _RecurrencePageState extends State<RecurrencePage> {
                       setState(() {
                         selectedLevel = 4;
                       });
-                      context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(4));
+                      //  context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(4));
                     },
                     child: Container(
                       height: 80,

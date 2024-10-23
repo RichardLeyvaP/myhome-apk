@@ -13,6 +13,7 @@ import 'package:myhome/ui/pages/pageMenu/filesPage.dart';
 import 'package:myhome/ui/pages/pageMenu/financePage.dart';
 import 'package:myhome/ui/pages/pageMenu/healthPage.dart';
 import 'package:myhome/ui/pages/pageMenu/product/productPage.dart';
+import 'package:myhome/ui/pages/pageMenu/store/storePage.dart';
 import 'package:myhome/ui/pages/pageMenu/wishesPage.dart';
 import 'package:myhome/ui/util/util_class.dart';
 
@@ -76,7 +77,7 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
     MdiIcons.finance, // Finanzas
     MdiIcons.hospitalBoxOutline, // Salud
     MdiIcons.calendarWeekendOutline, //tareas
-    MdiIcons.tagOutline, //Productos
+    MdiIcons.storeOutline, //Productos
     MdiIcons.folderStarOutline, //Archivos
   ];
   final List<String> _tabTexts = ['Deseos', 'Finanzas', 'Salud', 'Tareas', 'Productos', 'Archivos'];
@@ -141,7 +142,8 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
                     FinancePage(),
                     HealthPage(),
                     TasksWidget(),
-                    ProductPage(),
+                    //ProductPage(),
+                    StorePage(),
                     FilesPage(),
                   ],
                 ),
@@ -150,40 +152,45 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
           ),
         ),
       ),
-      floatingActionButton: StatefulBuilder(
-        builder: (context, setState) {
-          return InkWell(
-            onTap: () {
-              print('inde = ${_tabController.index}');
-              if (_tabController.index == 3) {
-                //agregar tareas
-                //llamo el evento para buscar la scategorias y los estados
-                context.read<CategoriesStatePrioritiesBloc>().add(TaskCategoriesRequested());
-                // context.read<ConfigurationBloc>().add(ConfigurationRequested());
+      floatingActionButton: Visibility(
+        visible:
+            _tabController.index != 4, //porque aqui quiero ocultar el del almacen,porque esta en la tabla de almacen
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            return InkWell(
+              onTap: () {
+                print('inde = ${_tabController.index}');
+                if (_tabController.index == 3) {
+                  //agregar tareas
+                  //llamo el evento para buscar la scategorias y los estados
+                  context.read<CategoriesStatePrioritiesBloc>().add(TaskCategoriesRequested());
+                  // context.read<ConfigurationBloc>().add(ConfigurationRequested());
 
-                print('inde =.... ${_tabController.index}');
-                GoRouter.of(context).go(
-                  '/TaskCreation',
-                );
-              } else if (_tabController.index == 4) {
-                //agregar productos
-                print('inde =.... ${_tabController.index}');
-                //llamo el evento para buscar la scategorias y los estados
-                context.read<CategoriesPrioritiesBloc>().add(CategoriesRequested());
-                GoRouter.of(context).go(
-                  //mando a la vista de crear el producto
-                  '/ProductCreation',
-                );
-              }
-              //  dialogComponet(context, _tabTexts[_tabController.index]);
-            },
-            child: CircleAvatar(
-              child: Icon(
-                _tabIcons[_tabController.index], // Icono que corresponde al Tab seleccionado
+                  print('inde =.... ${_tabController.index}');
+                  GoRouter.of(context).go(
+                    '/TaskCreation',
+                  );
+                } else if (_tabController.index == 4) {
+                  //agregar productos
+                  print('inde =.... ${_tabController.index}');
+                  //llamo el evento para buscar la scategorias y los estados
+                  context.read<CategoriesPrioritiesBloc>().add(CategoriesRequested());
+                  GoRouter.of(context).go(
+                    //mando a la vista de crear el producto
+                    // '/ProductCreation',
+                    '/StoreCreation',
+                  );
+                }
+                //  dialogComponet(context, _tabTexts[_tabController.index]);
+              },
+              child: CircleAvatar(
+                child: Icon(
+                  _tabIcons[_tabController.index], // Icono que corresponde al Tab seleccionado
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -336,12 +343,6 @@ Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, Stri
                               Navigator.of(context).pop(); // Cierra el diálogo
                             },
                           ),
-                          // actions: [
-                          //   TextButton(
-                          //     onPressed: () => Navigator.of(context).pop(),
-                          //     child: Text('Cerrar'),
-                          //   ),
-                          // ],
                         ),
                       );
                     },
@@ -485,7 +486,12 @@ Widget cardMenu(_tabController) {
           child: cardMenuUp(MdiIcons.calendarWeekendOutline, menuTasksTitle, _tabController.index == 3), //Tareas
         ),
         Tab(
-          child: cardMenuUp(MdiIcons.tagOutline, menuProductsTitle, _tabController.index == 4), //Productos
+          // Icon(
+          //       Icons.store_mall_directory, // Ícono que puede representar un almacén
+          //       color: Colors.blueGrey[400],
+          //       size: 25,
+          //     ),
+          child: cardMenuUp(MdiIcons.storeOutline, menuProductsTitle, _tabController.index == 4), //Productos
         ),
         Tab(
           child: cardMenuUp(MdiIcons.folderStarOutline, menuArchivesTitle, _tabController.index == 5), //Archivos

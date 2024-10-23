@@ -8,27 +8,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   final TasksRepository tasksRepository;
 
   // Mantiene el estado de la tarea actual
-  TaskElement _taskElement = const TaskElement(
-    id: 0,
-    title: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    priorityId: 0,
-    namePriority: '',
-    statusId: 0,
-    categoryId: 0,
-    recurrence: '',
-    estimatedTime: 0,
-    comments: '',
-    attachments: '',
-    geoLocation: '',
-    colorPriority: '',
-    iconCategory: '',
-    colorCategory: '',
-    parentId: null,
-    children: [],
-  );
+  TaskElement _taskElement = const TaskElement();
 
   TasksBloc({required this.tasksRepository}) : super(TasksInitial()) {
     on<TasksRequested>(_onTaskRequested);
@@ -40,6 +20,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<TaskDateTimeUpdated>(_onTaskDateTimeUpdated);
     on<TaskRecurrenceUpdated>(_onTaskRecurrenceUpdated);
     on<TaskSubmitted>(_onTaskSubmitted);
+    on<TasksNewUpdated>(_onTasksUpdated);
   }
 
   // Manejar solicitud de tareas
@@ -112,5 +93,32 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     } catch (error) {
       emit(TaskSubmittedFailure(error: error.toString()));
     }
+  }
+
+  //nuevo cambio para una mejor update en task
+  // Manejar actualización de tarea
+  void _onTasksUpdated(TasksNewUpdated event, Emitter<TasksState> emit) {
+    _taskElement = _taskElement.copyWith(
+      title: event.taskElement.title ?? _taskElement.title,
+      description: event.taskElement.description ?? _taskElement.description,
+      startDate: event.taskElement.startDate ?? _taskElement.startDate,
+      endDate: event.taskElement.endDate ?? _taskElement.endDate,
+      priorityId: event.taskElement.priorityId ?? _taskElement.priorityId,
+      namePriority: event.taskElement.namePriority ?? _taskElement.namePriority,
+      statusId: event.taskElement.statusId ?? _taskElement.statusId,
+      categoryId: event.taskElement.categoryId ?? _taskElement.categoryId,
+      recurrence: event.taskElement.recurrence ?? _taskElement.recurrence,
+      estimatedTime: event.taskElement.estimatedTime ?? _taskElement.estimatedTime,
+      comments: event.taskElement.comments ?? _taskElement.comments,
+      attachments: event.taskElement.attachments ?? _taskElement.attachments,
+      geoLocation: event.taskElement.geoLocation ?? _taskElement.geoLocation,
+      colorPriority: event.taskElement.colorPriority ?? _taskElement.colorPriority,
+      iconCategory: event.taskElement.iconCategory ?? _taskElement.iconCategory,
+      parentId: event.taskElement.parentId ?? _taskElement.parentId,
+      children: (event.taskElement.children?.isNotEmpty ?? false) ? event.taskElement.children : _taskElement.children,
+      people: (event.taskElement.people?.isNotEmpty ?? false) ? event.taskElement.people : _taskElement.people,
+    );
+
+    emit(TaskUpdated(_taskElement));
   }
 }

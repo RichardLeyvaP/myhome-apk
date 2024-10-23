@@ -99,7 +99,7 @@ class _PriorityPageState extends State<PriorityPage> {
               child: Column(
                 children: [
                   // El segundo BlocBuilder para mostrar las categorías
-                  BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+                  /*BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
                     builder: (context, state) {
                       if (state is CategoriesLoading) {
                         return Center(child: CircularProgressIndicator());
@@ -130,7 +130,7 @@ class _PriorityPageState extends State<PriorityPage> {
                       }
                       return Container();
                     },
-                  ),
+                  ),*/
 
                   Spacer(),
 

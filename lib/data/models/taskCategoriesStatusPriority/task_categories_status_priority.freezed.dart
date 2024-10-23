@@ -24,6 +24,8 @@ mixin _$TaskCategoriesStatusPriority {
   List<Category> get categories => throw _privateConstructorUsedError;
   List<Status> get status => throw _privateConstructorUsedError;
   List<Priority> get priorities => throw _privateConstructorUsedError;
+  List<Taskperson> get taskperson => throw _privateConstructorUsedError;
+  List<String> get taskrecurrences => throw _privateConstructorUsedError;
 
   /// Serializes this TaskCategoriesStatusPriority to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +48,9 @@ abstract class $TaskCategoriesStatusPriorityCopyWith<$Res> {
   $Res call(
       {List<Category> categories,
       List<Status> status,
-      List<Priority> priorities});
+      List<Priority> priorities,
+      List<Taskperson> taskperson,
+      List<String> taskrecurrences});
 }
 
 /// @nodoc
@@ -68,6 +72,8 @@ class _$TaskCategoriesStatusPriorityCopyWithImpl<$Res,
     Object? categories = null,
     Object? status = null,
     Object? priorities = null,
+    Object? taskperson = null,
+    Object? taskrecurrences = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -82,6 +88,14 @@ class _$TaskCategoriesStatusPriorityCopyWithImpl<$Res,
           ? _value.priorities
           : priorities // ignore: cast_nullable_to_non_nullable
               as List<Priority>,
+      taskperson: null == taskperson
+          ? _value.taskperson
+          : taskperson // ignore: cast_nullable_to_non_nullable
+              as List<Taskperson>,
+      taskrecurrences: null == taskrecurrences
+          ? _value.taskrecurrences
+          : taskrecurrences // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -98,7 +112,9 @@ abstract class _$$TaskCategoriesStatusPriorityImplCopyWith<$Res>
   $Res call(
       {List<Category> categories,
       List<Status> status,
-      List<Priority> priorities});
+      List<Priority> priorities,
+      List<Taskperson> taskperson,
+      List<String> taskrecurrences});
 }
 
 /// @nodoc
@@ -119,6 +135,8 @@ class __$$TaskCategoriesStatusPriorityImplCopyWithImpl<$Res>
     Object? categories = null,
     Object? status = null,
     Object? priorities = null,
+    Object? taskperson = null,
+    Object? taskrecurrences = null,
   }) {
     return _then(_$TaskCategoriesStatusPriorityImpl(
       categories: null == categories
@@ -133,6 +151,14 @@ class __$$TaskCategoriesStatusPriorityImplCopyWithImpl<$Res>
           ? _value._priorities
           : priorities // ignore: cast_nullable_to_non_nullable
               as List<Priority>,
+      taskperson: null == taskperson
+          ? _value._taskperson
+          : taskperson // ignore: cast_nullable_to_non_nullable
+              as List<Taskperson>,
+      taskrecurrences: null == taskrecurrences
+          ? _value._taskrecurrences
+          : taskrecurrences // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -144,10 +170,14 @@ class _$TaskCategoriesStatusPriorityImpl
   const _$TaskCategoriesStatusPriorityImpl(
       {required final List<Category> categories,
       required final List<Status> status,
-      required final List<Priority> priorities})
+      required final List<Priority> priorities,
+      required final List<Taskperson> taskperson,
+      required final List<String> taskrecurrences})
       : _categories = categories,
         _status = status,
-        _priorities = priorities;
+        _priorities = priorities,
+        _taskperson = taskperson,
+        _taskrecurrences = taskrecurrences;
 
   factory _$TaskCategoriesStatusPriorityImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -177,9 +207,25 @@ class _$TaskCategoriesStatusPriorityImpl
     return EqualUnmodifiableListView(_priorities);
   }
 
+  final List<Taskperson> _taskperson;
+  @override
+  List<Taskperson> get taskperson {
+    if (_taskperson is EqualUnmodifiableListView) return _taskperson;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_taskperson);
+  }
+
+  final List<String> _taskrecurrences;
+  @override
+  List<String> get taskrecurrences {
+    if (_taskrecurrences is EqualUnmodifiableListView) return _taskrecurrences;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_taskrecurrences);
+  }
+
   @override
   String toString() {
-    return 'TaskCategoriesStatusPriority(categories: $categories, status: $status, priorities: $priorities)';
+    return 'TaskCategoriesStatusPriority(categories: $categories, status: $status, priorities: $priorities, taskperson: $taskperson, taskrecurrences: $taskrecurrences)';
   }
 
   @override
@@ -191,7 +237,11 @@ class _$TaskCategoriesStatusPriorityImpl
                 .equals(other._categories, _categories) &&
             const DeepCollectionEquality().equals(other._status, _status) &&
             const DeepCollectionEquality()
-                .equals(other._priorities, _priorities));
+                .equals(other._priorities, _priorities) &&
+            const DeepCollectionEquality()
+                .equals(other._taskperson, _taskperson) &&
+            const DeepCollectionEquality()
+                .equals(other._taskrecurrences, _taskrecurrences));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -200,7 +250,9 @@ class _$TaskCategoriesStatusPriorityImpl
       runtimeType,
       const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_status),
-      const DeepCollectionEquality().hash(_priorities));
+      const DeepCollectionEquality().hash(_priorities),
+      const DeepCollectionEquality().hash(_taskperson),
+      const DeepCollectionEquality().hash(_taskrecurrences));
 
   /// Create a copy of TaskCategoriesStatusPriority
   /// with the given fields replaced by the non-null parameter values.
@@ -225,7 +277,9 @@ abstract class _TaskCategoriesStatusPriority
   const factory _TaskCategoriesStatusPriority(
           {required final List<Category> categories,
           required final List<Status> status,
-          required final List<Priority> priorities}) =
+          required final List<Priority> priorities,
+          required final List<Taskperson> taskperson,
+          required final List<String> taskrecurrences}) =
       _$TaskCategoriesStatusPriorityImpl;
 
   factory _TaskCategoriesStatusPriority.fromJson(Map<String, dynamic> json) =
@@ -237,6 +291,10 @@ abstract class _TaskCategoriesStatusPriority
   List<Status> get status;
   @override
   List<Priority> get priorities;
+  @override
+  List<Taskperson> get taskperson;
+  @override
+  List<String> get taskrecurrences;
 
   /// Create a copy of TaskCategoriesStatusPriority
   /// with the given fields replaced by the non-null parameter values.
@@ -1010,5 +1068,242 @@ abstract class _Status implements Status {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatusImplCopyWith<_$StatusImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Taskperson _$TaskpersonFromJson(Map<String, dynamic> json) {
+  return _Taskperson.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Taskperson {
+  int get id => throw _privateConstructorUsedError;
+  String get namePerson => throw _privateConstructorUsedError;
+  String get imagePerson => throw _privateConstructorUsedError;
+  int get rolId => throw _privateConstructorUsedError;
+  String get nameRole => throw _privateConstructorUsedError;
+
+  /// Serializes this Taskperson to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Taskperson
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $TaskpersonCopyWith<Taskperson> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TaskpersonCopyWith<$Res> {
+  factory $TaskpersonCopyWith(
+          Taskperson value, $Res Function(Taskperson) then) =
+      _$TaskpersonCopyWithImpl<$Res, Taskperson>;
+  @useResult
+  $Res call(
+      {int id,
+      String namePerson,
+      String imagePerson,
+      int rolId,
+      String nameRole});
+}
+
+/// @nodoc
+class _$TaskpersonCopyWithImpl<$Res, $Val extends Taskperson>
+    implements $TaskpersonCopyWith<$Res> {
+  _$TaskpersonCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Taskperson
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? namePerson = null,
+    Object? imagePerson = null,
+    Object? rolId = null,
+    Object? nameRole = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      namePerson: null == namePerson
+          ? _value.namePerson
+          : namePerson // ignore: cast_nullable_to_non_nullable
+              as String,
+      imagePerson: null == imagePerson
+          ? _value.imagePerson
+          : imagePerson // ignore: cast_nullable_to_non_nullable
+              as String,
+      rolId: null == rolId
+          ? _value.rolId
+          : rolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      nameRole: null == nameRole
+          ? _value.nameRole
+          : nameRole // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TaskpersonImplCopyWith<$Res>
+    implements $TaskpersonCopyWith<$Res> {
+  factory _$$TaskpersonImplCopyWith(
+          _$TaskpersonImpl value, $Res Function(_$TaskpersonImpl) then) =
+      __$$TaskpersonImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String namePerson,
+      String imagePerson,
+      int rolId,
+      String nameRole});
+}
+
+/// @nodoc
+class __$$TaskpersonImplCopyWithImpl<$Res>
+    extends _$TaskpersonCopyWithImpl<$Res, _$TaskpersonImpl>
+    implements _$$TaskpersonImplCopyWith<$Res> {
+  __$$TaskpersonImplCopyWithImpl(
+      _$TaskpersonImpl _value, $Res Function(_$TaskpersonImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Taskperson
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? namePerson = null,
+    Object? imagePerson = null,
+    Object? rolId = null,
+    Object? nameRole = null,
+  }) {
+    return _then(_$TaskpersonImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      namePerson: null == namePerson
+          ? _value.namePerson
+          : namePerson // ignore: cast_nullable_to_non_nullable
+              as String,
+      imagePerson: null == imagePerson
+          ? _value.imagePerson
+          : imagePerson // ignore: cast_nullable_to_non_nullable
+              as String,
+      rolId: null == rolId
+          ? _value.rolId
+          : rolId // ignore: cast_nullable_to_non_nullable
+              as int,
+      nameRole: null == nameRole
+          ? _value.nameRole
+          : nameRole // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TaskpersonImpl implements _Taskperson {
+  const _$TaskpersonImpl(
+      {required this.id,
+      required this.namePerson,
+      required this.imagePerson,
+      required this.rolId,
+      required this.nameRole});
+
+  factory _$TaskpersonImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TaskpersonImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String namePerson;
+  @override
+  final String imagePerson;
+  @override
+  final int rolId;
+  @override
+  final String nameRole;
+
+  @override
+  String toString() {
+    return 'Taskperson(id: $id, namePerson: $namePerson, imagePerson: $imagePerson, rolId: $rolId, nameRole: $nameRole)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TaskpersonImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.namePerson, namePerson) ||
+                other.namePerson == namePerson) &&
+            (identical(other.imagePerson, imagePerson) ||
+                other.imagePerson == imagePerson) &&
+            (identical(other.rolId, rolId) || other.rolId == rolId) &&
+            (identical(other.nameRole, nameRole) ||
+                other.nameRole == nameRole));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, namePerson, imagePerson, rolId, nameRole);
+
+  /// Create a copy of Taskperson
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TaskpersonImplCopyWith<_$TaskpersonImpl> get copyWith =>
+      __$$TaskpersonImplCopyWithImpl<_$TaskpersonImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TaskpersonImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Taskperson implements Taskperson {
+  const factory _Taskperson(
+      {required final int id,
+      required final String namePerson,
+      required final String imagePerson,
+      required final int rolId,
+      required final String nameRole}) = _$TaskpersonImpl;
+
+  factory _Taskperson.fromJson(Map<String, dynamic> json) =
+      _$TaskpersonImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get namePerson;
+  @override
+  String get imagePerson;
+  @override
+  int get rolId;
+  @override
+  String get nameRole;
+
+  /// Create a copy of Taskperson
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TaskpersonImplCopyWith<_$TaskpersonImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

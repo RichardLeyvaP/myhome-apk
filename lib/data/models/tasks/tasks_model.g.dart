@@ -19,26 +19,29 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
 
 _$TaskElementImpl _$$TaskElementImplFromJson(Map<String, dynamic> json) =>
     _$TaskElementImpl(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      description: json['description'] as String,
-      startDate: json['startDate'] as String,
-      endDate: json['endDate'] as String,
-      priorityId: (json['priorityId'] as num).toInt(),
-      statusId: (json['statusId'] as num).toInt(),
-      categoryId: (json['categoryId'] as num).toInt(),
-      recurrence: json['recurrence'] as String,
-      colorPriority: json['colorPriority'] as String,
-      colorCategory: json['colorCategory'] as String,
-      iconCategory: json['iconCategory'] as String,
-      namePriority: json['namePriority'] as String,
-      estimatedTime: (json['estimatedTime'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      startDate: json['startDate'] as String?,
+      endDate: json['endDate'] as String?,
+      priorityId: (json['priorityId'] as num?)?.toInt(),
+      statusId: (json['statusId'] as num?)?.toInt(),
+      categoryId: (json['categoryId'] as num?)?.toInt(),
+      recurrence: json['recurrence'] as String?,
+      colorPriority: json['colorPriority'] as String?,
+      colorCategory: json['colorCategory'] as String?,
+      iconCategory: json['iconCategory'] as String?,
+      namePriority: json['namePriority'] as String?,
+      estimatedTime: (json['estimatedTime'] as num?)?.toInt(),
       comments: json['comments'] as String?,
       attachments: json['attachments'] as String?,
-      geoLocation: json['geoLocation'] as String,
+      geoLocation: json['geoLocation'] as String?,
       parentId: (json['parentId'] as num?)?.toInt(),
-      children: (json['children'] as List<dynamic>)
-          .map((e) => TaskElement.fromJson(e as Map<String, dynamic>))
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TaskElement.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      people: (json['people'] as List<dynamic>?)
+          ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -63,4 +66,18 @@ Map<String, dynamic> _$$TaskElementImplToJson(_$TaskElementImpl instance) =>
       'geoLocation': instance.geoLocation,
       'parentId': instance.parentId,
       'children': instance.children,
+      'people': instance.people,
+    };
+
+_$PersonImpl _$$PersonImplFromJson(Map<String, dynamic> json) => _$PersonImpl(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      image: json['image'] as String,
+    );
+
+Map<String, dynamic> _$$PersonImplToJson(_$PersonImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'image': instance.image,
     };

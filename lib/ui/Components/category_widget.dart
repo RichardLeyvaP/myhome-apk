@@ -82,7 +82,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           ),
         ),
         SizedBox(
-          height: 112, // Altura total del contenedor (dos filas)
+          height: 118, // Altura total del contenedor (dos filas)
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: (widget.categories.length / 2).ceil(),
@@ -108,7 +108,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   Widget _buildCategoryContainer(int index) {
     final category = widget.categories[index];
     final isSelected = selectedCategories[index];
-
+    print('*** **** *** - ${category.title.length}');
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -121,15 +121,15 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           _notifySelection(); // Notificar cuando se cambie la selección
 
           // Despachar evento al Bloc
-          context.read<CategoriesPrioritiesBloc>().add(CategorySelectedEvent(category.id));
-          context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(category.id));
+          // context.read<CategoriesPrioritiesBloc>().add(CategorySelectedEvent(category.id));
+          // context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(category.id));
         });
       },
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(
-            width: 85, // Tamaño fijo para cada contenedor
+            width: 110, // Tamaño fijo para cada contenedor
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -146,23 +146,26 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 ),
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  category.icon,
-                  size: 20,
-                  color: Colors.grey[700],
-                ),
-                Text(
-                  category.title,
-                  style: TextStyle(
-                    fontSize: 10,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    category.icon,
+                    size: 20,
                     color: Colors.grey[700],
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                  Text(
+                    category.title,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey[700],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
           if (isSelected)

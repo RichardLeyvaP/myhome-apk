@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myhome/data/repository/auth_repository.dart';
 import 'package:myhome/data/repository/configuration_repository.dart';
 import 'package:myhome/data/repository/products_repository.dart';
+import 'package:myhome/data/repository/store_repository.dart';
 import 'package:myhome/data/repository/tasks_repository.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/dependency_injection/app_initializer.dart';
@@ -15,6 +16,7 @@ import 'package:myhome/domain/blocs/configuration_bloc/configuration_event.dart'
 import 'package:myhome/domain/blocs/login_bloc/login_bloc.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
+import 'package:myhome/domain/blocs/store_bloc/store_bloc.dart';
 import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
 import 'package:myhome/ui/myApp.dart';
@@ -100,6 +102,10 @@ class BlocsProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LoginBloc(authRepository: AuthRepository(authService: ApiService())),
+          //por defecto es true y solo lo llama cuando lo necesita
+        ),
+        BlocProvider(
+          create: (context) => StoreBloc(storesRepository: StoreRepository(authService: ApiService())),
           //por defecto es true y solo lo llama cuando lo necesita
         ),
         BlocProvider(

@@ -1,6 +1,7 @@
 // Evento para solicitar las categorías y prioridades
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/data/repository/tasks_repository.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 
@@ -17,13 +18,16 @@ class CategoriesStatusPrioritySuccess extends CategoriesStatePrioritiesState {
   final List<Category> categories;
   final List<Status> status;
   final List<Priority> priority;
+  final List<dynamic> taskrecurrences;
+  final List<Taskperson> taskperson;
   final int? selectedPriorityId;
+  final List<int> selectedPersonIds; // Cambia de un único ID a una lista de IDs
   final int? selectedCategoryId;
   final int? selectStatetask;
-  final int? frequencytask;
+  final String? frequencytask;
 
-  CategoriesStatusPrioritySuccess(this.categories, this.status, this.priority, this.frequencytask,
-      {this.selectedPriorityId, this.selectedCategoryId, this.selectStatetask});
+  CategoriesStatusPrioritySuccess(this.categories, this.status, this.priority, this.frequencytask, this.taskrecurrences,
+      this.taskperson, this.selectedPersonIds, this.selectedPriorityId, this.selectedCategoryId, this.selectStatetask);
 }
 
 class CategoriesFailure extends CategoriesStatePrioritiesState {
@@ -51,9 +55,15 @@ class SelectStateEvent extends CategoriesStatePrioritiesEvent {
 }
 
 class FrequencyEvent extends CategoriesStatePrioritiesEvent {
-  final int frequencytask;
+  final String frequencytask;
 
   FrequencyEvent(this.frequencytask);
+}
+
+class PersonEvent extends CategoriesStatePrioritiesEvent {
+  final int selectedPersonId;
+
+  PersonEvent(this.selectedPersonId);
 }
 
 class CategoriesStatePrioritiesBloc extends Bloc<CategoriesStatePrioritiesEvent, CategoriesStatePrioritiesState> {
@@ -66,32 +76,55 @@ class CategoriesStatePrioritiesBloc extends Bloc<CategoriesStatePrioritiesEvent,
         final currentState = state as CategoriesStatusPrioritySuccess;
         // Emitimos un nuevo estado con el ID seleccionado actualizado.
         emit(CategoriesStatusPrioritySuccess(
-            currentState.categories, currentState.status, currentState.priority, currentState.frequencytask,
-            selectedPriorityId: event.selectedPriorityId,
-            selectedCategoryId: currentState.selectedCategoryId,
-            selectStatetask: currentState.selectStatetask));
+          currentState.categories,
+          currentState.status,
+          currentState.priority,
+          currentState.frequencytask,
+          currentState.taskrecurrences,
+          currentState.taskperson,
+          currentState.selectedPersonIds,
+          event.selectedPriorityId,
+          currentState.selectedCategoryId,
+          currentState.selectStatetask,
+        ));
       }
     });
+
     on<CategoryTaskSelectedEvent>((event, emit) {
       if (state is CategoriesStatusPrioritySuccess) {
         final currentState = state as CategoriesStatusPrioritySuccess;
-        // Emitimos un nuevo estado con el ID seleccionado actualizado.
+        // Emitimos un nuevo estado con el ID de categoría seleccionado actualizado.
         emit(CategoriesStatusPrioritySuccess(
-            currentState.categories, currentState.status, currentState.priority, currentState.frequencytask,
-            selectedCategoryId: event.selectedCategoryId,
-            selectedPriorityId: currentState.selectedPriorityId,
-            selectStatetask: currentState.selectStatetask));
+          currentState.categories,
+          currentState.status,
+          currentState.priority,
+          currentState.frequencytask,
+          currentState.taskrecurrences,
+          currentState.taskperson,
+          currentState.selectedPersonIds,
+          currentState.selectedPriorityId, // Mantiene el selectedPriorityId actual
+          event.selectedCategoryId, // Actualizamos el selectedCategoryId aquí
+          currentState.selectStatetask,
+        ));
       }
     });
+
     on<SelectStateEvent>((event, emit) {
       if (state is CategoriesStatusPrioritySuccess) {
         final currentState = state as CategoriesStatusPrioritySuccess;
         // Emitimos un nuevo estado con el ID seleccionado actualizado.
         emit(CategoriesStatusPrioritySuccess(
-            currentState.categories, currentState.status, currentState.priority, currentState.frequencytask,
-            selectStatetask: event.selectStatetask,
-            selectedPriorityId: currentState.selectedPriorityId,
-            selectedCategoryId: currentState.selectedCategoryId));
+          currentState.categories,
+          currentState.status,
+          currentState.priority,
+          currentState.frequencytask,
+          currentState.taskrecurrences,
+          currentState.taskperson,
+          currentState.selectedPersonIds,
+          currentState.selectedPriorityId, // Mantiene el selectedPriorityId actual
+          currentState.selectedCategoryId, // Actualizamos el selectedCategoryId aquí
+          event.selectStatetask,
+        ));
       }
     });
     on<FrequencyEvent>((event, emit) {
@@ -99,10 +132,37 @@ class CategoriesStatePrioritiesBloc extends Bloc<CategoriesStatePrioritiesEvent,
         final currentState = state as CategoriesStatusPrioritySuccess;
         // Emitimos un nuevo estado con el ID seleccionado actualizado.
         emit(CategoriesStatusPrioritySuccess(
-            currentState.categories, currentState.status, currentState.priority, event.frequencytask,
-            selectStatetask: currentState.selectStatetask,
-            selectedPriorityId: currentState.selectedPriorityId,
-            selectedCategoryId: currentState.selectedCategoryId));
+          currentState.categories,
+          currentState.status,
+          currentState.priority,
+          event.frequencytask,
+          currentState.taskrecurrences,
+          currentState.taskperson,
+          currentState.selectedPersonIds,
+          currentState.selectedPriorityId, // Mantiene el selectedPriorityId actual
+          currentState.selectedCategoryId, // Actualizamos el selectedCategoryId aquí
+          currentState.selectStatetask,
+        ));
+      }
+    });
+    on<PersonEvent>((event, emit) {
+      if (state is CategoriesStatusPrioritySuccess) {
+        final currentState = state as CategoriesStatusPrioritySuccess;
+        // Crear una nueva lista con los IDs seleccionados, incluyendo el nuevo ID.
+        final updatedSelectedPersonIds = List<int>.from(currentState.selectedPersonIds)..add(event.selectedPersonId);
+        // Emitimos un nuevo estado con el ID seleccionado actualizado.
+        emit(CategoriesStatusPrioritySuccess(
+          currentState.categories,
+          currentState.status,
+          currentState.priority,
+          currentState.frequencytask,
+          currentState.taskrecurrences,
+          currentState.taskperson,
+          updatedSelectedPersonIds,
+          currentState.selectedPriorityId, // Mantiene el selectedPriorityId actual
+          currentState.selectedCategoryId, // Actualizamos el selectedCategoryId aquí
+          currentState.selectStatetask,
+        ));
       }
     });
   }
@@ -143,11 +203,26 @@ class CategoriesStatePrioritiesBloc extends Bloc<CategoriesStatePrioritiesEvent,
           id: categoryJson['id'], // Usa el ID real de la categoría
         );
       }).toList();
-      print('1-resultado final entrando a * - : categories:$categories');
+
+      List<Taskperson> taskperson = (jsonResponse['taskpeople'] as List<dynamic>).map((categoryJson) {
+        return Taskperson(
+          id: categoryJson['id'],
+          imagePerson: categoryJson['imagePerson'],
+          rolId: categoryJson['rolId'],
+          namePerson: categoryJson['namePerson'],
+          nameRole: categoryJson['nameRole'],
+        );
+      }).toList();
+      final taskrecurrences = jsonResponse['taskrecurrences'];
+      print('1-resultado final entrando a * - : categories1:${taskrecurrences}');
+      print('1-resultado final entrando a * - : categories2:${taskperson[1].namePerson}');
+      print('1-resultado final entrando a * - : categories3:$categories');
       print('1-resultado final entrando a * - : status:${status[0].title}');
       print('1-resultado final entrando a * - : status:${status[0].icon.toString()}');
+      final List<int> taskpersonIds = taskperson.map((person) => person.id).toList();
 
-      emit(CategoriesStatusPrioritySuccess(categories, status, priority, 1));
+      emit(CategoriesStatusPrioritySuccess(categories, status, priority, taskrecurrences[0], taskrecurrences,
+          taskperson, taskpersonIds, priority[0].id, categories[0].id, status[0].id));
     } catch (error) {
       emit(CategoriesFailure(error.toString()));
     }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myhome/ui/Routes/pages_routes.dart';
 import 'package:myhome/ui/pages/rol-admin/product/productCreationPage.dart';
+import 'package:myhome/ui/pages/rol-admin/store/storeCreationPage.dart';
 import 'package:myhome/ui/util/util_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -181,6 +182,10 @@ final GoRouter _appRouter1 = GoRouter(
     GoRoute(
       path: '/ProductCreation',
       builder: (context, state) => ProductCreation(),
+    ),
+    GoRoute(
+      path: '/StoreCreation',
+      builder: (context, state) => const StoreCreation(),
     ),
     // Agrega más rutas según sea necesario
   ],

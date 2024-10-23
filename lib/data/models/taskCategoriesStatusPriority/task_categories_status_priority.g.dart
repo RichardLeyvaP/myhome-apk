@@ -18,6 +18,12 @@ _$TaskCategoriesStatusPriorityImpl _$$TaskCategoriesStatusPriorityImplFromJson(
       priorities: (json['priorities'] as List<dynamic>)
           .map((e) => Priority.fromJson(e as Map<String, dynamic>))
           .toList(),
+      taskperson: (json['taskperson'] as List<dynamic>)
+          .map((e) => Taskperson.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      taskrecurrences: (json['taskrecurrences'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$TaskCategoriesStatusPriorityImplToJson(
@@ -26,6 +32,8 @@ Map<String, dynamic> _$$TaskCategoriesStatusPriorityImplToJson(
       'categories': instance.categories,
       'status': instance.status,
       'priorities': instance.priorities,
+      'taskperson': instance.taskperson,
+      'taskrecurrences': instance.taskrecurrences,
     };
 
 _$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
@@ -85,4 +93,22 @@ Map<String, dynamic> _$$StatusImplToJson(_$StatusImpl instance) =>
       'descriptionStatus': instance.descriptionStatus,
       'colorStatus': instance.colorStatus,
       'iconStatus': instance.iconStatus,
+    };
+
+_$TaskpersonImpl _$$TaskpersonImplFromJson(Map<String, dynamic> json) =>
+    _$TaskpersonImpl(
+      id: (json['id'] as num).toInt(),
+      namePerson: json['namePerson'] as String,
+      imagePerson: json['imagePerson'] as String,
+      rolId: (json['rolId'] as num).toInt(),
+      nameRole: json['nameRole'] as String,
+    );
+
+Map<String, dynamic> _$$TaskpersonImplToJson(_$TaskpersonImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'namePerson': instance.namePerson,
+      'imagePerson': instance.imagePerson,
+      'rolId': instance.rolId,
+      'nameRole': instance.nameRole,
     };

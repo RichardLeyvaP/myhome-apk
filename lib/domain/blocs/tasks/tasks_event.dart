@@ -91,6 +91,17 @@ class TaskFamilyUpdated extends TasksEvent {
 }
 
 // Evento para enviar la tarea final
+class TasksNewUpdated extends TasksEvent {
+  //este sera el modificar de todos los componentes de la pantalla
+  final TaskElement taskElement;
+
+  const TasksNewUpdated(this.taskElement);
+
+  @override
+  List<Object> get props => [taskElement];
+}
+
+// Evento para enviar la tarea final
 class TaskSubmitted extends TasksEvent {
   final TaskElement taskElement;
 

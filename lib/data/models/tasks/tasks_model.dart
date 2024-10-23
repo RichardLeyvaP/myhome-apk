@@ -15,26 +15,38 @@ class Task with _$Task {
 @freezed
 class TaskElement with _$TaskElement {
   const factory TaskElement({
-    required int id,
-    required String title,
-    required String description,
-    required String startDate,
-    required String endDate,
-    required int priorityId,
-    required int statusId,
-    required int categoryId,
-    required String recurrence,
-    required String colorPriority,
-    required String colorCategory,
-    required String iconCategory,
-    required String namePriority,
-    required int estimatedTime,
-    required String? comments,
-    required String? attachments,
-    required String geoLocation,
-    required int? parentId, // Puede ser nulo si es la tarea principal
-    required List<TaskElement> children, // Aquí es donde ocurre la recursividad
+    int? id,
+    String? title,
+    String? description,
+    String? startDate,
+    String? endDate,
+    int? priorityId,
+    int? statusId,
+    int? categoryId,
+    String? recurrence,
+    String? colorPriority,
+    String? colorCategory,
+    String? iconCategory,
+    String? namePriority,
+    int? estimatedTime,
+    String? comments,
+    String? attachments,
+    String? geoLocation,
+    int? parentId, // Puede ser nulo si es la tarea principal
+    List<TaskElement>? children, // Aquí es donde ocurre la recursividad
+    List<Person>? people, // Aquí es donde ocurre la recursividad
   }) = _TaskElement;
 
   factory TaskElement.fromJson(Map<String, Object?> json) => _$TaskElementFromJson(json);
+}
+
+@freezed
+class Person with _$Person {
+  const factory Person({
+    required int id,
+    required String name,
+    required String image,
+  }) = _Person;
+
+  factory Person.fromJson(Map<String, Object?> json) => _$PersonFromJson(json);
 }

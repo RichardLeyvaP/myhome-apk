@@ -1,9 +1,12 @@
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:avatar_stack/positions.dart';
 import 'package:flutter/material.dart';
+import 'package:myhome/data/models/tasks/tasks_model.dart';
 
 class AvatarMultiple extends StatelessWidget {
-  const AvatarMultiple({super.key});
+  final List<Person> people; // Añadir la lista de personas al widget
+
+  const AvatarMultiple({Key? key, required this.people}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class AvatarMultiple extends StatelessWidget {
         height: 40,
         settings: settings,
         borderWidth: 0.8,
-        avatars: [for (var n = 0; n < 3; n++) NetworkImage(getAvatarUrl(n))],
+        avatars: people.map((person) => NetworkImage(person.image)).toList(),
       ),
     );
   }

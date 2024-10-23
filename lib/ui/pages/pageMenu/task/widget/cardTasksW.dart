@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/ui/Components/avatarMultiples.dart';
 
 class CardTasks extends StatefulWidget {
@@ -16,6 +17,7 @@ class CardTasks extends StatefulWidget {
   final Color iconColor;
   final double? padding;
   final double? radius;
+  final List<Person> people;
 
   const CardTasks({
     Key? key,
@@ -30,6 +32,7 @@ class CardTasks extends StatefulWidget {
     required this.colorPriority,
     required this.iconSize,
     required this.iconColor,
+    required this.people,
     this.padding,
     this.radius,
   }) : super(key: key);
@@ -44,6 +47,7 @@ class _CardTasksState extends State<CardTasks> {
 
   @override
   Widget build(BuildContext context) {
+    print('personas por tarea:${widget.people.length}');
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -185,8 +189,8 @@ class _CardTasksState extends State<CardTasks> {
                       ),
                     ),
                     if (isExpanded)
-                      const Expanded(
-                        child: AvatarMultiple(), // Reemplaza con tu widget de avatares múltiples
+                      Expanded(
+                        child: AvatarMultiple(people: widget.people), // Reemplaza con tu widget de avatares múltiples
                       ),
                   ],
                 ),

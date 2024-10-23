@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/additionalDataPage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/dateTimePage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/familySelecctionPage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/priorityPage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/recurrencePage.dart';
+import 'package:myhome/ui/pages/rol-admin/Task/secondTaskPage.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/startTaskPage.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/statusPage.dart';
 
 class TaskCreation extends StatefulWidget {
   @override
@@ -21,22 +15,24 @@ class _TaskCreationState extends State<TaskCreation> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
-        physics: BouncingScrollPhysics(),
+        // physics: BouncingScrollPhysics(),//activa el deslizamiento con el dedo
+        physics: NeverScrollableScrollPhysics(), // Desactiva el deslizamiento con el dedo
         children: [
           //1 Página
           StartTaskPage(pageController: _pageController),
           //2 Página
-          PriorityPage(pageController: _pageController),
+          SecondTaskPage(pageController: _pageController),
+          // PriorityPage(pageController: _pageController),//ya se paso para la primera pagina
           //3 Página
-          FamilySelectionPage(pageController: _pageController),
+          //  FamilySelectionPage(pageController: _pageController),//ya se paso para la segunda pagina
           //4 Página
-          StatusPage(pageController: _pageController),
+          // StatusPage(pageController: _pageController),//ya se paso para la primera pagina
           //6 Página
-          RecurrencePage(pageController: _pageController),
+          // RecurrencePage(pageController: _pageController),//ya se paso para la segunda pagina
           //7 Página
-          AdditionalDataPage(pageController: _pageController),
+          // AdditionalDataPage(pageController: _pageController),//ya se paso para la primera y segunda pagina
           //7 Página
-          DateTimePage(pageController: _pageController),
+          //  DateTimePage(pageController: _pageController),//ya se paso para la segunda pagina
         ],
       ),
     );

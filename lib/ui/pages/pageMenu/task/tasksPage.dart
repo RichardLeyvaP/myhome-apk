@@ -288,22 +288,24 @@ class _TasksWidgetState extends State<TasksWidget> {
                 return SingleChildScrollView(
                   child: Column(
                     children: tasks.map((task) {
+                      print('personas por tarea:${task.people![0].name}');
                       return CardTasks(
-                        title: task.title, // Aquí usas el título de la tarea
-                        namePriority: task.namePriority,
+                        title: task.title!, // Aquí usas el título de la tarea
+                        namePriority: task.namePriority!,
                         iconPriority:
-                            getIconFromString(task.namePriority), //dado el nombre de la prioridad devuelve el icon
-                        colorPriority: getColorConvert(task.colorPriority),
-                        icon: getIconFromString(task.iconCategory), // Puedes cambiar el ícono
+                            getIconFromString(task.namePriority!), //dado el nombre de la prioridad devuelve el icon
+                        colorPriority: getColorConvert(task.colorPriority!),
+                        icon: getIconFromString(task.iconCategory!), // Puedes cambiar el ícono
                         // icon: MdiIcons.cakeVariantOutline, // Puedes cambiar el ícono
-                        date: formatDate(task.startDate), // Aquí usas la fecha de inicio de la tarea
-                        details: task.description, // Descripción de la tarea
-                        location: task.geoLocation,
-                        schedule: '${extractTime(task.startDate)} - ${extractTime(task.endDate)}', // Horario
+                        date: formatDate(task.startDate!), // Aquí usas la fecha de inicio de la tarea
+                        details: task.description!, // Descripción de la tarea
+                        location: task.geoLocation!,
+                        schedule: '${extractTime(task.startDate!)} - ${extractTime(task.endDate!)}', // Horario
                         iconSize: 12.0,
-                        iconColor: getColorConvert(task.colorCategory),
+                        iconColor: getColorConvert(task.colorCategory!),
                         //iconColor: Color(int.parse(task.colorPriority, radix: 16)),
                         padding: 8.0,
+                        people: task.people!,
                         // radius: 30,
                       );
                     }).toList(),

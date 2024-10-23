@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/products/product_model.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
@@ -14,59 +15,135 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  bool _showProductDetail = false;
+  ProductElement? _selectedProduct;
+
   @override
   void initState() {
     super.initState();
-    // Inicializamos el primer día con algún contenido
-
     context.read<ProductsBloc>().add(const ProductsRequested());
-    //_updateEvents();
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
+  }
+
+  // Función para cambiar a la vista de detalles del producto
+  void _showProductDetails(ProductElement product) {
+    setState(() {
+      _selectedProduct = product;
+      _showProductDetail = true;
+    });
+  }
+
+  // Función para regresar a la lista de productos
+  void _showProductList() {
+    setState(() {
+      _showProductDetail = false;
+      _selectedProduct = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print('entrando aqui pagina productos');
+    print('Entrando en página de productos');
     return Scaffold(
-      body: Expanded(
-        child: BlocBuilder<ProductsBloc, ProductState>(
-          builder: (context, state) {
-            if (state is ProductLoading) {
-              // Mostrar un indicador de carga mientras se obtienen las tareas
-              return Center(
-                  child: CircularProgressIndicator(
-                color: StyleGlobalApk.getColorPrimary(),
-              ));
-            } else if (state is ProductFailure) {
-              // Mostrar un mensaje de error en caso de falla
-              return Center(child: Text('Error: ${state.error}'));
-            } else if (state is ProductEmpty) {
-              // Mostrar mensaje si no hay tareas para ese día
-              return Column(
-                children: [
-                  SizedBox(height: 180),
-                  Center(child: Text('${state.message}')),
-                ],
-              );
-            } else if (state is ProductSuccess) {
-              List<ProductElement> tasks = state.product.products; // Asegúrate que sea una lista de tareas
+      body: _showProductDetail && _selectedProduct != null
+          ? _buildProductListView()
+          // ? _buildProductDetailView(_selectedProduct!)
+          : _buildStoreListView(),
+    );
+  }
 
-              // Construir la lista de `CardTasks` dependiendo de la longitud de las tareas
-              return SingleChildScrollView(
-                child: Column(
-                  children: tasks.map((product) {
-                    return buildProductContainer(
-                        product.name.toString(), product.image.toString(), product.unitPrice.toString());
-                  }).toList(),
-                ),
-              );
-            } else {
-              // Retorna un widget vacío en caso de que no coincida ningún estado
-              return Center(child: const Text('No hay estados de productos'));
-              // return const SizedBox.shrink();
-            }
-          },
-        ),
+  Widget _buildProductListView() {
+    return Expanded(
+      child: BlocBuilder<ProductsBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: StyleGlobalApk.getColorPrimary(),
+              ),
+            );
+          } else if (state is ProductFailure) {
+            return Center(child: Text('Error: ${state.error}'));
+          } else if (state is ProductEmpty) {
+            return Column(
+              children: [
+                SizedBox(height: 180),
+                Center(child: Text('${state.message}')),
+              ],
+            );
+          } else if (state is ProductSuccess) {
+            List<ProductElement> products = state.product.products;
+
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Column(
+                    children: products.map((product) {
+                      return GestureDetector(
+                        onTap: () => _showProductDetails(product),
+                        child: buildProductContainer("RONNN", product.image.toString(), "2450"),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: 100),
+                  ElevatedButton(
+                    onPressed: _showProductList,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(MdiIcons.arrowLeft),
+                        Text('Volver a los Almacenes'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(child: const Text('No hay estados de productos'));
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildStoreListView() {
+    return Expanded(
+      child: BlocBuilder<ProductsBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: StyleGlobalApk.getColorPrimary(),
+              ),
+            );
+          } else if (state is ProductFailure) {
+            return Center(child: Text('Error: ${state.error}'));
+          } else if (state is ProductEmpty) {
+            return Column(
+              children: [
+                SizedBox(height: 180),
+                Center(child: Text('${state.message}')),
+              ],
+            );
+          } else if (state is ProductSuccess) {
+            List<ProductElement> products = state.product.products;
+
+            return SingleChildScrollView(
+              child: Column(
+                children: products.map((product) {
+                  return GestureDetector(
+                    onTap: () => _showProductDetails(product),
+                    child: buildStoreContainer(
+                        product.name.toString(), product.image.toString(), product.unitPrice.toString()),
+                  );
+                }).toList(),
+              ),
+            );
+          } else {
+            return Center(child: const Text('No hay estados de productos'));
+          }
+        },
       ),
     );
   }
@@ -90,15 +167,69 @@ Widget buildProductContainer(String name, String imageUrl, String price) {
     ),
     child: Row(
       children: [
-        // Avatar con la imagen del producto
         CircleAvatar(
           backgroundImage: imageUrl.isNotEmpty
-              ? NetworkImage(imageUrl)
+              // ? NetworkImage(imageUrl)
+              ? NetworkImage('https://thumbs.dreamstime.com/z/productos-alimenticios-venezolanos-50576620.jpg')
               : AssetImage('assets/default_product_image.png') as ImageProvider,
           radius: 30,
         ),
         const SizedBox(width: 10),
-        // Información del producto
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '\$$price',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildStoreContainer(String name, String imageUrl, String price) {
+  return Container(
+    margin: const EdgeInsets.all(10),
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: Colors.grey),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          blurRadius: 4,
+          offset: Offset(2, 2),
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        CircleAvatar(
+          backgroundImage: imageUrl.isNotEmpty
+              // ? NetworkImage(imageUrl)
+              ? NetworkImage('https://thumbs.dreamstime.com/z/productos-alimenticios-venezolanos-50576620.jpg')
+              : AssetImage('assets/default_product_image.png') as ImageProvider,
+          radius: 30,
+        ),
+        const SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

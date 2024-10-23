@@ -91,17 +91,18 @@ class TasksRepository {
 
 //metodo para agregar una tarea
   Future<dynamic> addTasks(TaskElement task) async {
-    const endpoint = 'http://10.0.2.2:8000/api/task-test';
+    const endpoint = 'http://10.0.2.2:8000/api/task';
+    //  const endpoint = 'http://10.0.2.2:8000/api/task-test';
     final body = {
       //'task': task,
       'title': task.title,
       'description': task.description,
       'start_date': task.startDate,
       'end_date': task.endDate,
-      'priority_id': task.priorityId,
+      'priority_id': task.priorityId, //llegando null
       'parent_id': task.parentId,
       'status_id': task.statusId,
-      'category_id': 10, //todo valor fijo
+      'category_id': task.categoryId, //todo valor fijo
       // 'category_id': task.categoryId,
       'recurrence': task.recurrence,
       'estimated_time': task.estimatedTime,
@@ -109,6 +110,7 @@ class TasksRepository {
       'attachments': task.attachments,
       'geo_location': 'task.geoLocation' //todo valor fijo
     };
+    print('si estoy devolviendo esto:1-BODY-${body}');
     // Llama al servicio que maneja la API de autenticación para login
     final response = await authService.post(endpoint, body: body);
 
