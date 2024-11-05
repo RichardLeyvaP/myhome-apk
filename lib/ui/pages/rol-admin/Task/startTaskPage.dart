@@ -9,6 +9,8 @@ import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/category_widget.dart';
+import 'package:myhome/ui/Components/priority_widget.dart';
+import 'package:myhome/ui/Components/state_widget.dart';
 
 class StartTaskPage extends StatefulWidget {
   final PageController pageController;
@@ -29,6 +31,31 @@ class _StartTaskPageState extends State<StartTaskPage> {
   int selectedStatus = 0;
   final Color colorBotoom = const Color.fromARGB(255, 61, 189, 93);
   final Color colorBotoomSel = const Color.fromARGB(255, 199, 64, 59);
+
+  // Variable para manejar las prioridades seleccionadas
+  List<Priority> selectedPriorities = [];
+
+  // Método que será llamado cuando se seleccionen o deseleccionen prioridades
+  void _onSelectionChanged(List<Priority> selectedPrioritiesList) {
+    selectedPriorities = selectedPrioritiesList;
+
+    // Aquí manejas los estados seleccionados
+    // print('Estados seleccionados: ${selectedStatuses.map((e) => e.id)}');
+    print('Estados seleccionados: ${selectedPrioritiesList.map((e) => e.id).join(', ')}');
+    selectedPriority = selectedPrioritiesList.isNotEmpty ? selectedPrioritiesList.first.id : 0;
+    print('Estados seleccionados: $selectedStatus');
+
+    context
+        .read<CategoriesStatePrioritiesBloc>()
+        .add(SelectedPriorityIdEvent(selectedPriority)); //aqui para que mantenga la ultima que seleccionó
+    TaskElement newTaskElement = TaskElement(
+      priorityId: selectedPriorities.first.id, // Ajusta el ID de estado según sea necesario
+    );
+    print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.priorityId}');
+    context
+        .read<TasksBloc>()
+        .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +103,11 @@ class _StartTaskPageState extends State<StartTaskPage> {
                   child: SingleChildScrollView(
                     child: BlocBuilder<TasksBloc, TasksState>(
                       builder: (context, state) {
-                        if (state is TaskUpdated) {
+                        if (state is TaskTitleUpdated) {
+                          //  WidgetsBinding.instance.addPostFrameCallback((_) {
                           _titleController.text = state.taskElement.title.toString();
                           _descriptionController.text = state.taskElement.description.toString();
+                          // });
                         }
 
                         return Column(
@@ -92,7 +121,7 @@ class _StartTaskPageState extends State<StartTaskPage> {
                               validator: (value) => (value == null || value.isEmpty) ? 'El título es requerido' : null,
                             ),
                             const SizedBox(height: 10),
-                            _buildCategoryWidget(),
+                            _buildCategorySection(),
                             const SizedBox(height: 10),
                             _buildPrioritySection(),
                             const SizedBox(height: 10),
@@ -163,13 +192,15 @@ class _StartTaskPageState extends State<StartTaskPage> {
     );
   }
 
-  Widget _buildCategoryWidget() {
+  Widget _buildCategorySection() {
     return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
       builder: (context, state) {
         if (state is CategoriesLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is CategoriesStatusPrioritySuccess) {
           return CategoryWidget(
+            eventDetails: false,
+            fitTextContainer: false,
             categories: state.categories,
             titleWidget: 'Categoría',
             selectedCategoryId: state.selectedCategoryId,
@@ -179,7 +210,14 @@ class _StartTaskPageState extends State<StartTaskPage> {
                 FocusScope.of(context).unfocus();
                 arrayCategory = selectedCategories.map((category) => category.id).toList();
                 if (arrayCategory.isNotEmpty) {
-                  context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(arrayCategory[0]));
+                  context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(arrayCategory.first));
+                  TaskElement newTaskElement = TaskElement(
+                    categoryId: arrayCategory.first, // Ajusta el ID de estado según sea necesario
+                  );
+                  print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.statusId}');
+                  context
+                      .read<TasksBloc>()
+                      .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
                 }
               });
             },
@@ -193,95 +231,79 @@ class _StartTaskPageState extends State<StartTaskPage> {
   }
 
   Widget _buildPrioritySection() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Prioridad', style: Theme.of(context).textTheme.bodyLarge),
-          BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-            builder: (context, state) {
-              if (state is CategoriesStatusPrioritySuccess) {
-                return SizedBox(
-                  height: 70,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.priority.length,
-                    itemBuilder: (context, index) {
-                      final priority = state.priority[index];
-                      return GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedPriority = priority.id;
-                          context.read<CategoriesStatePrioritiesBloc>().add(SelectedPriorityIdEvent(priority.id));
-                        },
-                        child: cardSimpleSelection(state, priority),
-                      );
-                    },
-                  ),
-                );
-              } else if (state is CategoriesFailure) {
-                return Center(child: Text('Error: ${state.error}'));
-              }
-              return Container();
-            },
-          ),
-        ],
-      ),
+    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+      builder: (context, state) {
+        if (state is CategoriesStatusPrioritySuccess) {
+          int? _selectPrioritytask = state.selectedPriorityId;
+          return PriorityWidget(
+            priorities: state.priority,
+            titleWidget: 'Prioridad',
+            selectMultiple: false, // Cambia a false si solo quieres una selección
+            selectedPriorityId: _selectPrioritytask,
+            onSelectionChanged: _onSelectionChanged,
+          );
+        } else if (state is CategoriesFailure) {
+          return Center(child: Text('Error: ${state.error}'));
+        }
+        return Container();
+      },
     );
   }
 
   Widget _buildStatusSection() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Estado', style: Theme.of(context).textTheme.bodyLarge),
-          BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-            builder: (context, state) {
-              if (state is CategoriesStatusPrioritySuccess) {
-                return SizedBox(
-                  height: 70,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.status.length,
-                    itemBuilder: (context, index) {
-                      final status = state.status[index];
-                      return GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedStatus = status.id;
-                          context.read<CategoriesStatePrioritiesBloc>().add(SelectStateEvent(status.id));
-                        },
-                        child: cardSimpleSelectionStatus(state, status),
-                      );
-                    },
-                  ),
-                );
-              } else if (state is CategoriesFailure) {
-                return Center(child: Text('Error: ${state.error}'));
-              }
-              return Container();
+    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
+      builder: (context, state) {
+        if (state is CategoriesStatusPrioritySuccess) {
+          int? _selectStatetask = state.selectStatetask;
+          return StatusWidget(
+            status: state.status,
+            fitTextContainer: false,
+            eventDetails: true,
+            titleWidget: 'Estado',
+            selectMultiple: false, // Permite seleccionar solo un estado
+            selectedStatusId: _selectStatetask, // Estado preseleccionado
+            onSelectionChanged: (List<Status> selectedStatuses) {
+              // Aquí manejas los estados seleccionados
+              print('Estados seleccionados: ${selectedStatuses.map((e) => e.id).join(', ')}');
+              selectedStatus = selectedStatuses.isNotEmpty ? selectedStatuses.first.id : 0;
+              print('Estados seleccionados: $selectedStatus');
+
+              context
+                  .read<CategoriesStatePrioritiesBloc>()
+                  .add(SelectStateEvent(selectedStatus)); //aqui para que mantenga la ultima que seleccionó
+              TaskElement newTaskElement = TaskElement(
+                statusId: selectedStatus, // Ajusta el ID de estado según sea necesario
+              );
+              print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.statusId}');
+              context
+                  .read<TasksBloc>()
+                  .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
             },
-          ),
-        ],
-      ),
+          );
+        } else if (state is CategoriesFailure) {
+          return Center(child: Text('Error: ${state.error}'));
+        }
+        return Container();
+      },
     );
   }
 
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       // Crea un nuevo TaskElement
-      /*  TaskElement newTaskElement = TaskElement(
-          title: title, // Agrega el título deseado
-          description: description, // Agrega la descripción deseada
-          priorityId: 1, // Ajusta el ID de prioridad según sea necesario
-          statusId: selectedStatus, // Ajusta el ID de estado según sea necesario
-          categoryId: arrayCategory.first, // Usa la primera categoría seleccionada como ejemplo
-        );
-        print('elementos de la primera pagina:$newTaskElement');
-        context.read<TasksBloc>().add(TasksNewUpdated(newTaskElement));*/
+
+      TaskElement newTaskElement = TaskElement(
+        title: _titleController.text, // Agrega el título deseado
+        description: _descriptionController.text, // Agrega la descripción deseada
+      );
+      context
+          .read<TasksBloc>()
+          .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+
+      context.read<TasksBloc>().add(TaskTitleDescriptionUpdated(
+          _titleController.text,
+          _descriptionController
+              .text)); //aqui para guardar independientemente el titulo y la descripcion para que si da para atras cargue
 
       // final currentState = context.read<CategoriesStatePrioritiesBloc>().state;
 

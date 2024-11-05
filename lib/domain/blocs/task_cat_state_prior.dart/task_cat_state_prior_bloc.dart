@@ -1,7 +1,6 @@
 // Evento para solicitar las categorías y prioridades
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/data/repository/tasks_repository.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 
@@ -220,9 +219,23 @@ class CategoriesStatePrioritiesBloc extends Bloc<CategoriesStatePrioritiesEvent,
       print('1-resultado final entrando a * - : status:${status[0].title}');
       print('1-resultado final entrando a * - : status:${status[0].icon.toString()}');
       final List<int> taskpersonIds = taskperson.map((person) => person.id).toList();
+//*Garantizando que si fueran null no de error al acceder a la propiedad id
+      int? categoryId;
+      if (categories.isNotEmpty) {
+        categoryId = categories[0].id;
+      }
+      int? statusId;
+      if (status.isNotEmpty) {
+        statusId = status[0].id;
+      }
+      int? priorityId;
+      if (priority.isNotEmpty) {
+        priorityId = priority[0].id;
+      }
+      //*Garantizando que si fueran null no de error al acceder a la propiedad id
 
       emit(CategoriesStatusPrioritySuccess(categories, status, priority, taskrecurrences[0], taskrecurrences,
-          taskperson, taskpersonIds, priority[0].id, categories[0].id, status[0].id));
+          taskperson, taskpersonIds, priorityId, categoryId, statusId));
     } catch (error) {
       emit(CategoriesFailure(error.toString()));
     }

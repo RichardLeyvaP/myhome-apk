@@ -9,6 +9,8 @@ import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
+import 'package:myhome/ui/Components/family_widget.dart';
+import 'package:myhome/ui/Components/frequency_widget.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:geolocator/geolocator.dart';
@@ -66,7 +68,38 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
     });
   }
 
+  List<Person> convertToPersonList(List<Taskperson> taskpersons) {
+    return taskpersons.map((taskperson) {
+      return Person(
+        id: taskperson.id,
+        name: taskperson.namePerson, // Mapear namePerson a name
+        image: taskperson.imagePerson, // Mapear imagePerson a image
+      );
+    }).toList();
+  }
+
   //**esto es para la localizacion */
+
+  List<Taskperson> selectedTaskpersons = [];
+  List<String>? selectedRoles; // Para almacenar los roles seleccionados
+
+  void _onSelectionChanged(List<Taskperson> selected, List<String>? roles) {
+    setState(() {
+      selectedTaskpersons = selected; // Guarda la lista de personas seleccionadas
+      selectedRoles = roles; // Guarda la lista de roles seleccionados
+    });
+    // Función para convertir List<Taskperson> a List<Person>
+
+    List<Person> persons = convertToPersonList(selectedTaskpersons);
+    context
+        .read<TasksBloc>()
+        .add(TaskFamilyUpdated(persons)); //aqui va agregando a TaskElement para luego crear la tarea
+    // Aquí puedes hacer algo con los datos seleccionados
+    print("Estados seleccionados-Personas seleccionadas: ${selectedTaskpersons.length}");
+    print("Estados seleccionados-Personas seleccionadas: ${selectedTaskpersons.map((p) => p.namePerson)}");
+    print("Estados seleccionados-Roles seleccionados: $selectedRoles");
+  }
+
   final _formKey = GlobalKey<FormState>();
   List<int> arrayCategory = [1]; // Inicializamos la cantidad seleccionada
   String selectedFrequency = ''; // Para seleccionar el nivel
@@ -204,22 +237,8 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'Familiares',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ),
                             _buildFamilySection(),
                             const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'Frecuencia',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ),
                             _buildRecurrenceSection(),
                             const SizedBox(height: 10),
                             _buildLocationSection(),
@@ -262,22 +281,15 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
     return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
       builder: (context, state) {
         if (state is CategoriesStatusPrioritySuccess) {
-          return SizedBox(
-            height: 80, // Ajusta esta altura según tus necesidades
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: state.taskperson.length,
-              itemBuilder: (context, index) {
-                final taskperson = state.taskperson[index];
-                return GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    context.read<CategoriesStatePrioritiesBloc>().add(PersonEvent(taskperson.id));
-                  },
-                  child: cardSimpleSelectionFamily(state, taskperson),
-                );
-              },
-            ),
+          final taskpersons = state.taskperson;
+          return TaskpersonWidget(
+            taskpersons: taskpersons,
+            titleWidget: 'Selecciona un Familiar',
+            selectMultiple: true, // Permitir selección múltiple
+            enableRoleSelection: true, // Habilitar selección de rol
+            selectedPersonId: null,
+            rolesList: ['Responsable', 'Participante', 'Invitado'],
+            onSelectionChanged: _onSelectionChanged, // Manejar cambios de selección
           );
         } else if (state is CategoriesFailure) {
           return Center(child: Text('Error: ${state.error}'));
@@ -433,24 +445,36 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
                               } else 
                               */
         if (state is CategoriesStatusPrioritySuccess) {
-          return SizedBox(
-            height: 70, // Ajusta esta altura según tus necesidades
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: state.taskrecurrences.length,
-              itemBuilder: (context, index) {
-                String status = state.taskrecurrences[index];
-                return GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    // Actualizar el estado seleccionado
-                    selectedFrequency = status;
-                    context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(selectedFrequency));
-                  },
-                  child: cardSimpleSelectionFrecuncy(state, status),
-                );
-              },
-            ),
+          // Supongamos que 'frequencies' es una lista de nombres de frecuencias.[Diaria, Semanal, Mensual, Anual]
+          final frequenciesData = state.taskrecurrences; // Cambia según tu fuente de datos
+          int frecuencyId = 1;
+
+          List<Frequency> frequencies = frequenciesData.map((item) {
+            final title = item as String; // Asegúrate de que item sea un String
+            if (title == state.frequencytask) {
+              frecuencyId = frequenciesData.indexOf(item) + 1;
+            }
+            return Frequency(
+              id: frequenciesData.indexOf(item) +
+                  1, // Asigna un id basado en el índice, puedes cambiar esto si tienes otra lógica
+              title: title,
+              description: '', // Si no tienes descripción, puedes dejarlo vacío o manejarlo de otra manera
+            );
+          }).toList();
+
+          return FrequencyWidget(
+            frequencies: frequencies,
+            titleWidget: 'Frecuencia',
+            selectMultiple: false, // Permite seleccionar solo una frecuencia
+            selectedFrequencyId: frecuencyId, // Frecuencia preseleccionada (Opcional)
+            onSelectionChanged: (List<Frequency> selectedFrequencies) {
+              // Aquí manejas las frecuencias seleccionadas
+              print('Estados seleccionados-Frecuencias seleccionadas: ${selectedFrequencies.map((e) => e.title)}');
+              print('Estados seleccionados-Frecuencias seleccionadas2: ${selectedFrequencies.first.title}');
+              if (selectedFrequencies.isNotEmpty) {
+                context.read<CategoriesStatePrioritiesBloc>().add(FrequencyEvent(selectedFrequencies.first.title));
+              }
+            },
           );
         } else if (state is CategoriesFailure) {
           return Center(child: Text('Error: ${state.error}'));
@@ -486,7 +510,7 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
         // Crear el objeto TaskElement a partir del estado actual
         final taskElement = TaskElement(); //aqui creo el objeto con tds los datos
         context.read<TasksBloc>().add(
-              TaskSubmitted(taskElement),
+              TaskSubmitted(),
             );
       }
 
@@ -526,7 +550,7 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
     }
   }
 
-  Widget cardSimpleSelectionFamily(CategoriesStatusPrioritySuccess state, Taskperson status) {
+  /* Widget cardSimpleSelectionFamily(CategoriesStatusPrioritySuccess state, Taskperson status) {
     bool isSelected = state.selectedPersonIds.contains(1);
 
     return Padding(
@@ -579,7 +603,7 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
         ),
       ),
     );
-  }
+  }*/
 
   cardSimpleSelectionFrecuncy(CategoriesStatusPrioritySuccess state, String status) {
     return Padding(

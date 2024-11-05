@@ -45,7 +45,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       title: event.title,
       description: event.description,
     );
-    emit(TaskUpdated(_taskElement));
+    emit(TaskTitleUpdated(_taskElement));
   }
 
   // Manejar actualización de prioridad
@@ -56,7 +56,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   // Manejar actualización de familiares
   void _onTaskFamilyUpdated(TaskFamilyUpdated event, Emitter<TasksState> emit) {
-    _taskElement = _taskElement.copyWith(children: event.familyMembers);
+    _taskElement = _taskElement.copyWith(people: event.familyMembers);
     emit(TaskUpdated(_taskElement));
   }
 

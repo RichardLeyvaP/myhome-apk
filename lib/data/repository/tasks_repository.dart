@@ -102,7 +102,7 @@ class TasksRepository {
       'priority_id': task.priorityId, //llegando null
       'parent_id': task.parentId,
       'status_id': task.statusId,
-      'category_id': task.categoryId, //todo valor fijo
+      'category_id': task.categoryId,
       // 'category_id': task.categoryId,
       'recurrence': task.recurrence,
       'estimated_time': task.estimatedTime,

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
+import 'package:myhome/domain/modelos/category_model.dart';
 
 abstract class TasksEvent extends Equatable {
   const TasksEvent();
@@ -82,7 +83,7 @@ class TaskDateTimeUpdated extends TasksEvent {
 
 // Evento para actualizar los familiares (children) de la tarea
 class TaskFamilyUpdated extends TasksEvent {
-  final List<TaskElement> familyMembers;
+  final List<Person> familyMembers;
 
   const TaskFamilyUpdated(this.familyMembers);
 
@@ -103,10 +104,10 @@ class TasksNewUpdated extends TasksEvent {
 
 // Evento para enviar la tarea final
 class TaskSubmitted extends TasksEvent {
-  final TaskElement taskElement;
+  //final TaskElement taskElement;
 
-  const TaskSubmitted(this.taskElement);
+  const TaskSubmitted();
 
   @override
-  List<Object> get props => [taskElement];
+  List<Object> get props => [];
 }

@@ -1,60 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 
-class CategoryWidget extends StatefulWidget {
-  final List<Category> categories; //la lista de categorias
-  final String titleWidget; //el titulo del widget
-  final bool selectMultiple; //si se desea seleccionar uno o varios
+class StatusWidget extends StatefulWidget {
+  final List<Status> status;
+  final String titleWidget;
+  final bool selectMultiple;
   final bool fitTextContainer; //Permite controlar si el titulo es muy grande que se ajuste o no al container
   final bool eventDetails; //Permite activar o no el doble click y mostrar detalle
-  final Function(List<Category>) onSelectionChanged; // Callback para devolver categorías seleccionadas
-  final int? selectedCategoryId; // Agregar el ID de categoría seleccionada
+  final Function(List<Status>) onSelectionChanged; // Callback para devolver estados seleccionados
+  final int? selectedStatusId; // ID del estado seleccionado
 
-  const CategoryWidget({
-    super.key,
-    required this.categories,
+  const StatusWidget({
+    Key? key,
+    required this.status,
     required this.titleWidget,
     this.selectMultiple = true,
     this.fitTextContainer = false,
     this.eventDetails = false,
     required this.onSelectionChanged,
-    this.selectedCategoryId, // Recibir el ID de categoría seleccionada
-  });
+    this.selectedStatusId, // ID del estado seleccionado
+  }) : super(key: key);
 
   @override
-  _CategoryWidgetState createState() => _CategoryWidgetState();
+  _StatusWidgetState createState() => _StatusWidgetState();
 }
 
-class _CategoryWidgetState extends State<CategoryWidget> {
-  List<bool> selectedCategories = [];
+class _StatusWidgetState extends State<StatusWidget> {
+  List<bool> selectedStatuses = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCategories = List<bool>.filled(widget.categories.length, false);
+    selectedStatuses = List<bool>.filled(widget.status.length, false);
 
-    // Establecer el estado inicial con el ID de categoría seleccionada
-    if (widget.selectedCategoryId != null) {
-      int selectedIndex = widget.categories.indexWhere((category) => category.id == widget.selectedCategoryId);
+    // Establecer el estado inicial con el ID de estado seleccionado
+    if (widget.selectedStatusId != null) {
+      int selectedIndex = widget.status.indexWhere((status) => status.id == widget.selectedStatusId);
       if (selectedIndex != -1) {
-        selectedCategories[selectedIndex] = true; // Marcar la categoría como seleccionada
+        selectedStatuses[selectedIndex] = true; // Marcar el estado como seleccionado
       }
     }
   }
 
   void _notifySelection() {
-    List<Category> selected = [];
-    for (int i = 0; i < selectedCategories.length; i++) {
-      if (selectedCategories[i]) {
-        selected.add(widget.categories[i]);
+    List<Status> selected = [];
+    for (int i = 0; i < selectedStatuses.length; i++) {
+      if (selectedStatuses[i]) {
+        selected.add(widget.status[i]);
       }
     }
-    widget.onSelectionChanged(selected); // Llamar al callback con las categorías seleccionadas
-  }
-
-  // Función para mostrar el modal
-  void _showAddCategoryDialog() {
-    // (El código del diálogo se mantiene igual)
+    widget.onSelectionChanged(selected); // Llamar al callback con los estados seleccionados
   }
 
   @override
@@ -63,7 +58,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(0.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -71,34 +66,16 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 widget.titleWidget,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: _showAddCategoryDialog, // Muestra el modal al hacer clic
-                child: const CircleAvatar(
-                  radius: 15,
-                  child: Icon(Icons.add),
-                ),
-              ),
             ],
           ),
         ),
         SizedBox(
-          height: 118, // Altura total del contenedor (dos filas)
+          height: 70,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: (widget.categories.length / 2).ceil(),
+            itemCount: widget.status.length,
             itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: _buildCategoryContainer(index * 2),
-                  ),
-                  if ((index * 2) + 1 < widget.categories.length)
-                    Expanded(
-                      child: _buildCategoryContainer((index * 2) + 1),
-                    ),
-                ],
-              );
+              return _buildStatusContainer(index);
             },
           ),
         ),
@@ -106,10 +83,9 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     );
   }
 
-  Widget _buildCategoryContainer(int index) {
-    final category = widget.categories[index];
-    final isSelected = selectedCategories[index];
-    print('*** **** *** - ${category.title.length}');
+  Widget _buildStatusContainer(int index) {
+    final status = widget.status[index];
+    final isSelected = selectedStatuses[index];
     return GestureDetector(
       onLongPress: () {
         widget.eventDetails == true
@@ -121,7 +97,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.titleWidget, style: const TextStyle(fontWeight: FontWeight.w900)),
-                      Text(category.title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                      Text(status.title, style: const TextStyle(fontWeight: FontWeight.w700)),
                     ],
                   ),
                   duration: const Duration(milliseconds: 3000),
@@ -132,16 +108,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
       onTap: () {
         setState(() {
           if (widget.selectMultiple) {
-            selectedCategories[index] = !isSelected;
+            selectedStatuses[index] = !isSelected;
           } else {
-            selectedCategories = List<bool>.filled(selectedCategories.length, false);
-            selectedCategories[index] = true;
+            selectedStatuses = List<bool>.filled(selectedStatuses.length, false);
+            selectedStatuses[index] = true;
           }
           _notifySelection(); // Notificar cuando se cambie la selección
-
-          // Despachar evento al Bloc
-          // context.read<CategoriesPrioritiesBloc>().add(CategorySelectedEvent(category.id));
-          // context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(category.id));
         });
       },
       child: Stack(
@@ -166,22 +138,23 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
+              padding: const EdgeInsets.all(2.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    category.icon,
+                    status.icon,
                     size: 20,
-                    color: Colors.grey[700],
+                    color: isSelected ? Colors.green : Colors.grey[700],
                   ),
+                  const SizedBox(height: 4),
                   Text(
-                    category.title,
+                    status.title,
                     maxLines: widget.fitTextContainer == true ? null : 1, // Limitar a una línea
                     overflow:
                         widget.fitTextContainer == true ? null : TextOverflow.ellipsis, // Añadir puntos suspensivos
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 12,
                       color: Colors.grey[700],
                     ),
                     textAlign: TextAlign.center,
@@ -204,11 +177,4 @@ class _CategoryWidgetState extends State<CategoryWidget> {
       ),
     );
   }
-}
-
-class IconItem {
-  final IconData iconData;
-  final String iconName;
-
-  IconItem(this.iconData, this.iconName);
 }

@@ -163,8 +163,9 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
                 if (_tabController.index == 3) {
                   //agregar tareas
                   //llamo el evento para buscar la scategorias y los estados
-                  context.read<CategoriesStatePrioritiesBloc>().add(TaskCategoriesRequested());
-                  // context.read<ConfigurationBloc>().add(ConfigurationRequested());
+
+                  context.read<CategoriesStatePrioritiesBloc>().add(
+                      TaskCategoriesRequested()); //aqui reinicio al crear la tarea con todos los campos por defecto inicialmente
 
                   print('inde =.... ${_tabController.index}');
                   GoRouter.of(context).go(

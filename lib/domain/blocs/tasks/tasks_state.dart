@@ -66,6 +66,15 @@ class TaskUpdated extends TasksState {
   List<Object> get props => [taskElement];
 }
 
+class TaskTitleUpdated extends TasksState {
+  final TaskElement taskElement;
+
+  const TaskTitleUpdated(this.taskElement);
+
+  @override
+  List<Object> get props => [taskElement];
+}
+
 // Estado mientras se envía la tarea a la API
 class TaskSubmitting extends TasksState {}
 

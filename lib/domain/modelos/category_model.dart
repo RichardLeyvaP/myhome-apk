@@ -25,6 +25,14 @@ class Priority {
   Priority({required this.title, required this.description, required this.id});
 }
 
+class Frequency {
+  final String title;
+  final String description;
+  final int id;
+
+  Frequency({required this.title, required this.description, required this.id});
+}
+
 class Taskperson {
   final int id;
   final String namePerson;

@@ -22,17 +22,6 @@ class _TaskCreationState extends State<TaskCreation> {
           StartTaskPage(pageController: _pageController),
           //2 Página
           SecondTaskPage(pageController: _pageController),
-          // PriorityPage(pageController: _pageController),//ya se paso para la primera pagina
-          //3 Página
-          //  FamilySelectionPage(pageController: _pageController),//ya se paso para la segunda pagina
-          //4 Página
-          // StatusPage(pageController: _pageController),//ya se paso para la primera pagina
-          //6 Página
-          // RecurrencePage(pageController: _pageController),//ya se paso para la segunda pagina
-          //7 Página
-          // AdditionalDataPage(pageController: _pageController),//ya se paso para la primera y segunda pagina
-          //7 Página
-          //  DateTimePage(pageController: _pageController),//ya se paso para la segunda pagina
         ],
       ),
     );
