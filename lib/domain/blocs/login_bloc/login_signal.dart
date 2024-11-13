@@ -2,7 +2,8 @@ import 'package:signals/signals.dart';
 import 'package:myhome/data/models/login/login_model.dart';
 
 // Definimos las señales
-final Signal<bool> isLoggedIn = Signal<bool>(false);
-final Signal<String> loginMessage = Signal<String>(""); // Mensaje de error o éxito
-final Signal<Login?> currentUser = Signal<Login?>(null); // Usuario actual
-final Signal<bool> isLoading = Signal<bool>(false); // Estado de carga
+final Signal<bool?> isLoggedInLG = Signal<bool?>(null);
+final Signal<String> loginMessageLG = Signal<String>(""); // Mensaje de error o éxito
+final Signal<Login?> currentUserLG = Signal<Login?>(null); // Usuario actual
+final Signal<bool> isLoadingLG = Signal<bool>(false); // Estado de carga
+final Signal<bool> isLoginErrorLG = Signal<bool>(false); // Estado de carga

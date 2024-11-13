@@ -13,7 +13,6 @@ import 'package:myhome/ui/Components/family_widget.dart';
 import 'package:myhome/ui/Components/frequency_widget.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:geolocator/geolocator.dart';
 
 class SecondTaskPage extends StatefulWidget {
   final PageController pageController;
@@ -27,46 +26,6 @@ class SecondTaskPage extends StatefulWidget {
 class _SecondTaskPageState extends State<SecondTaskPage> {
   //**esto es para la localizacion */
   String _locationMessage = "Sin Ubicación";
-
-  Future<void> _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Verificar si el servicio de ubicación está habilitado
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      setState(() {
-        _locationMessage = "El servicio de ubicación está desactivado.";
-      });
-      return;
-    }
-
-    // Verificar permisos de ubicación
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        setState(() {
-          _locationMessage = "Los permisos de ubicación están denegados.";
-        });
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      setState(() {
-        _locationMessage = "Los permisos de ubicación están permanentemente denegados.";
-      });
-      return;
-    }
-
-    // Obtener la posición actual
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-    setState(() {
-      _locationMessage = 'Latitud: ${position.latitude}, Longitud: ${position.longitude}';
-    });
-  }
 
   List<Person> convertToPersonList(List<Taskperson> taskpersons) {
     return taskpersons.map((taskperson) {

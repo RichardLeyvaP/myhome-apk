@@ -1,63 +1,80 @@
-// ignore_for_file: file_names
-
-import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myhome/ui/Routes/pages_routes.dart';
+import 'package:myhome/data/services/auth/auth_check.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_signal.dart';
+import 'package:myhome/ui/Qr/CodeQrPage.dart';
+import 'package:myhome/ui/Qr/loadingPage.dart';
+import 'package:myhome/ui/pages/loginFb.dart';
+import 'package:myhome/ui/pages/loginFormPage.dart';
+import 'package:myhome/ui/pages/rol-admin/Task/TaskCreationPage.dart';
+import 'package:myhome/ui/pages/rol-admin/home/home_principal.dart';
 import 'package:myhome/ui/pages/rol-admin/product/productCreationPage.dart';
 import 'package:myhome/ui/pages/rol-admin/store/storeCreationPage.dart';
 import 'package:myhome/ui/util/util_class.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:myhome/ui/pages/rol-admin/Task/TaskCreationPage.dart';
-import 'package:myhome/ui/pages/loginFb.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
+import 'package:signals/signals_flutter.dart';
+// TranslationManager.loadDefaultTranslations(languageCode);
 
-// lib/ui/myapp.dart
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
-import 'package:myhome/domain/blocs/configuration_bloc/configuration_bloc.dart';
-import 'package:myhome/domain/blocs/configuration_bloc/configuration_state.dart';
+  // Configuración de rutas con GoRouter
+  final GoRouter _appRouter = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        redirect: (context, state) => '/LoginFormPage',
+      ),
+      GoRoute(
+        path: '/LoginFbPage',
+        builder: (context, state) => LoginFbPage(),
+      ),
+      GoRoute(
+        path: '/LoginFormPage',
+        builder: (context, state) => LoginFormPage(),
+      ),
+      GoRoute(
+        path: '/HomePrincipal',
+        builder: (context, state) {
+          final Map<String, dynamic> extra = state.extra as Map<String, dynamic>? ?? {};
+          return HomePrincipal(
+            name: extra['name'] ?? '',
+            email: extra['email'] ?? '',
+            avatarUrl: extra['avatarUrl'] ?? '',
+          );
+        },
+      ),
+      GoRoute(
+        path: '/LoadingPage',
+        builder: (context, state) => LoadingPage(),
+      ),
+      GoRoute(
+        path: '/QRViewExample',
+        builder: (context, state) => const QRViewPage(),
+      ),
+      GoRoute(
+        path: '/AuthCheck',
+        builder: (context, state) => const AuthCheck(),
+      ),
+      GoRoute(
+        path: '/TaskCreation',
+        builder: (context, state) => TaskCreation(),
+      ),
+      GoRoute(
+        path: '/ProductCreation',
+        builder: (context, state) => ProductCreation(),
+      ),
+      GoRoute(
+        path: '/StoreCreation',
+        builder: (context, state) => const StoreCreation(),
+      ),
+      // Agrega más rutas según sea necesario
+    ],
+  );
 
-class Myapp extends StatelessWidget {
-  Myapp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ConfigurationBloc, ConfigurationState>(
-      builder: (context, state) {
-        String languageCode = 'es'; // Valor por defecto
-        print('Obteniendo configuraciones123:Entrando y el estate es :$state');
-        if (state is ConfigurationSuccess) {
-          print(
-              'Obteniendo configuraciones123:Entrando y el estate es ConfigurationSuccess:${state.configuration.language}');
-          languageCode = state.configuration.language ?? 'es';
-          TranslationManager.loadDefaultTranslations(languageCode);
-          //aqui actualizar la variable de SharPreferents del movil con el idioma que carga
-          print('Obteniendo configuraciones123:Entrando y el estate es locale:$languageCode');
-        }
-        if (state is ConfigurationSubmittedUpdated) {
-          languageCode = state.configurationElement.language.toString();
-          TranslationManager.loadDefaultTranslations(languageCode);
-        }
-
-        return MaterialApp.router(
-          locale: TranslationManager.getCurrentApi(languageCode),
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate, // Para soportar los componentes Cupertino
-          ],
-          supportedLocales: TranslationManager.supportedLocales,
-          debugShowCheckedModeBanner: false,
-          theme: themeDataInitialSmall(),
-          routerConfig: context.watch<RoutesCubit>().state,
-        );
-      },
-    );
-  }
-
+  // Configuración del tema
   ThemeData themeDataInitialSmall() {
-    print('themeDataProfessional');
     return ThemeData(
       fontFamily: StyleGlobalApk.globalTextStyle.fontFamily,
       primaryColor: const Color.fromARGB(255, 67, 162, 240),
@@ -131,89 +148,25 @@ class Myapp extends StatelessWidget {
       ),
     );
   }
-}
 
-class AppColors {
-  static const Color customColor1 = Color(0xFFFFA726); // Naranja
-  static const Color customColor2 = Color(0xFF66BB6A); // Verde
-}
-
-final GoRouter _appRouter1 = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      redirect: (context, state) => '/LoginFormPage',
-    ),
-    GoRoute(
-      path: '/LoginFbPage',
-      builder: (context, state) => LoginFbPage(),
-    ),
-    GoRoute(
-      path: '/LoginFormPage',
-      builder: (context, state) => LoginFormPage(),
-    ),
-    GoRoute(
-      path: '/HomePrincipal',
-      builder: (context, state) {
-        final Map<String, dynamic> extra = state.extra as Map<String, dynamic>? ?? {};
-        return HomePrincipal(
-          name: extra['name'] ?? '',
-          email: extra['email'] ?? '',
-          avatarUrl: extra['avatarUrl'] ?? '',
-        );
-      },
-    ),
-    GoRoute(
-      path: '/LoadingPage',
-      builder: (context, state) => LoadingPage(),
-    ),
-    GoRoute(
-      path: '/QRViewExample',
-      builder: (context, state) => const QRViewPage(),
-    ),
-    GoRoute(
-      path: '/AuthCheck',
-      builder: (context, state) => const AuthCheck(),
-    ),
-    GoRoute(
-      path: '/TaskCreation',
-      builder: (context, state) => TaskCreation(),
-    ),
-    GoRoute(
-      path: '/ProductCreation',
-      builder: (context, state) => ProductCreation(),
-    ),
-    GoRoute(
-      path: '/StoreCreation',
-      builder: (context, state) => const StoreCreation(),
-    ),
-    // Agrega más rutas según sea necesario
-  ],
-);
-
-class RoutesCubit extends Cubit<GoRouter> {
-  RoutesCubit() : super(_appRouter1);
-
-  void goBack() {
-    state.pop();
-  }
-
-  void goHome() {
-    print('navegando con cubit');
-    state.go('/HomePrincipal');
-  }
-
-  void goHomeFb({required String name, required String email, required String avatarUrl}) {
-    print('Navegando con cubit');
-    state.go('/HomePrincipal', extra: {
-      'name': name,
-      'email': email,
-      'avatarUrl': avatarUrl,
-    });
-  }
-
-  void goAuthCheck() {
-    print('navegando con cubit');
-    state.go('/AuthCheck');
+  @override
+  Widget build(BuildContext context) {
+    if (updateConfigurationCF.watch(context) == true) {
+      String languageCode = configurationCF.value!.language.toString();
+      TranslationManager.loadDefaultTranslations(languageCode);
+    }
+    String languageCode = 'es'; // Valor por defecto
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: themeDataInitialSmall(),
+      routerConfig: _appRouter,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: TranslationManager.supportedLocales,
+      locale: TranslationManager.getCurrentApi(languageCode),
+    );
   }
 }

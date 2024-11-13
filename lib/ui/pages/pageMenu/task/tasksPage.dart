@@ -4,11 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_service.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_signal.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
+import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
 import 'package:myhome/ui/pages/pageMenu/task/widget/cardTasksW.dart';
 import 'package:myhome/ui/util/util_class.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
+import 'package:signals/signals_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TasksWidget extends StatefulWidget {
@@ -180,7 +184,8 @@ class _TasksWidgetState extends State<TasksWidget> {
     // Inicializamos el primer día con algún contenido
     _selectedDay = DateTime.now();
     String date = DateFormat('yyyy-MM-dd').format(_selectedDay!);
-    context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+    // context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+    fetchTasks(date);
 
     //_updateEvents();
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
@@ -208,7 +213,8 @@ class _TasksWidgetState extends State<TasksWidget> {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
                 //  String date = '2024-09-09'; // La fecha puede ser dinámica
-                context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+                // context.read<TasksBloc>().add(TasksRequested(date)); // Pasar la fecha al evento
+                fetchTasks(date);
                 //  _updateEvents();
               });
             }
@@ -259,20 +265,20 @@ class _TasksWidgetState extends State<TasksWidget> {
 
         //todo el que estaba estatico
         Expanded(
-          child: BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, state) {
-              if (state is TasksLoading) {
+          child: Builder(
+            builder: (context) {
+              if (isLoadingTA.watch(context) == true) {
                 // Mostrar un indicador de carga mientras se obtienen las tareas
                 return Center(
                     child: CircularProgressIndicator(
                   color: StyleGlobalApk.getColorPrimary(),
                 ));
-              } else if (state is TasksFailure) {
+              } else if (errorMessageTA.watch(context) != null) {
                 // Mostrar un mensaje de error en caso de falla
                 return Center(child: Text(TranslationManager.translate('serverError'))); //serverError
                 //todoMetodoRutaStatusCode este error para la db y guardarlo
                 // return Center(child: Text('Ha ocurrido un Error: ${state.error}'));
-              } else if (state is TasksEmpty) {
+              } else if (empyMessageTA.watch(context) != null) {
                 // Mostrar mensaje si no hay tareas para ese día
                 return Column(
                   children: [
@@ -281,8 +287,8 @@ class _TasksWidgetState extends State<TasksWidget> {
                     //Center(child: Text(state.message)),
                   ],
                 );
-              } else if (state is TasksSuccess) {
-                List<TaskElement> tasks = state.tasks.tasks; // Asegúrate que sea una lista de tareas
+              } else if (taskDataTA.watch(context) != null) {
+                List<TaskElement> tasks = taskDataTA.value!.tasks; // Asegúrate que sea una lista de tareas
 
                 // Construir la lista de `CardTasks` dependiendo de la longitud de las tareas
                 return SingleChildScrollView(

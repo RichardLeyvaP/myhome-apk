@@ -5,6 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myhome/data/models/configuration/configuration_model.dart';
 import 'package:myhome/domain/blocs/configuration_bloc/configuration_bloc.dart';
 import 'package:myhome/domain/blocs/configuration_bloc/configuration_event.dart';
+import 'package:myhome/domain/blocs/configuration_bloc/configuration_service.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/bloc.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
@@ -339,8 +340,9 @@ Widget appBarWidget(context, IconData icon1, IconData icon2, String avatar, Stri
                               // Actualiza el locale de la aplicación
                               // MyApp.setLocale(context, locale);
                               final config = Configuration(language: locale.languageCode);
-                              context.read<ConfigurationBloc>().add(ConfigurationUpdated(config));
-                              context.read<ConfigurationBloc>().add(ConfigurationSubmitted());
+                              updateConfiguration(config);
+                              // context.read<ConfigurationBloc>().add(ConfigurationUpdated(config));
+                              // context.read<ConfigurationBloc>().add(ConfigurationSubmitted());
                               Navigator.of(context).pop(); // Cierra el diálogo
                             },
                           ),
