@@ -5,8 +5,8 @@ import 'package:myhome/domain/modelos/category_model.dart'; // Asegúrate de imp
 
 // Método para cargar las categorías y prioridades
 Future<void> loadCategories(ProductsRepository productsRepository) async {
-  isLoadingSignal.value = true; // Iniciamos la carga
-  isErrorSignal.value = false; // Reseteamos el error
+  isLoadingSignalPCS.value = true; // Iniciamos la carga
+  isErrorSignalPCS.value = false; // Reseteamos el error
 
   try {
     final jsonResponse = await productsRepository.getCategoriesPriority();
@@ -27,14 +27,14 @@ Future<void> loadCategories(ProductsRepository productsRepository) async {
     }).toList();
 
     // Actualizamos las señales con los datos obtenidos
-    categoriesSignal.value = categories;
-    statusSignal.value = status;
+    categoriesSignalPCS.value = categories;
+    statusSignalPCS.value = status;
 
-    isLoadingSignal.value = false; // Finaliza la carga
+    isLoadingSignalPCS.value = false; // Finaliza la carga
   } catch (error) {
-    isErrorSignal.value = true;
-    categoriesErrorSignal.value = error.toString();
-    isLoadingSignal.value = false;
+    isErrorSignalPCS.value = true;
+    categoriesErrorSignalPCS.value = error.toString();
+    isLoadingSignalPCS.value = false;
   }
 }
 
@@ -54,13 +54,13 @@ IconData _getCategoryIcon(String categoryName) {
 
 // Funciones para manejar la selección de status y categoría
 void selectStatus(int selectedId) {
-  selectedStatusIdSignal.value = selectedId;
+  selectedStatusIdSignalPCS.value = selectedId;
 }
 
 void selectCategory(int selectedCategoryId) {
-  selectedCategoryIdSignal.value = selectedCategoryId;
+  selectedCategoryIdSignalPCS.value = selectedCategoryId;
 }
 
 void setQuantityProduct(int quantity) {
-  quantityProductSignal.value = quantity;
+  quantityProductSignalPCS.value = quantity;
 }

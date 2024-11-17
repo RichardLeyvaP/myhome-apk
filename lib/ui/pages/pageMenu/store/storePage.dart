@@ -7,11 +7,17 @@ import 'package:myhome/data/models/store/store_model.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_bloc.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_event.dart';
+import 'package:myhome/domain/blocs/products_bloc/products_service.dart';
+import 'package:myhome/domain/blocs/products_bloc/products_signal.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_state.dart';
 import 'package:myhome/domain/blocs/store_bloc/store_bloc.dart';
 import 'package:myhome/domain/blocs/store_bloc/store_event.dart';
+import 'package:myhome/domain/blocs/store_bloc/store_service.dart';
+import 'package:myhome/domain/blocs/store_bloc/store_signal.dart';
 import 'package:myhome/domain/blocs/store_bloc/store_state.dart';
+import 'package:myhome/ui/myApp.dart';
 import 'package:myhome/ui/util/utils_class_apk.dart';
+import 'package:signals/signals_flutter.dart';
 
 class StorePage extends StatefulWidget {
   const StorePage({super.key});
@@ -27,8 +33,10 @@ class _StorePageState extends State<StorePage> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductsBloc>().add(const ProductsRequested()); //cargo los productos
-    context.read<StoreBloc>().add(const StoreRequested()); //cargo los almacenes
+    //context.read<ProductsBloc>().add(const ProductsRequested()); //cargo los productos
+    // context.read<StoreBloc>().add(const StoreRequested()); //cargo los almacenes
+    loadProduct();
+    requestStore();
     WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
@@ -133,25 +141,25 @@ class _StorePageState extends State<StorePage> {
         )),
         Expanded(
           flex: 4,
-          child: BlocBuilder<ProductsBloc, ProductState>(
-            builder: (context, state) {
-              if (state is ProductLoading) {
+          child: Builder(
+            builder: (context) {
+              if (isLoadingSignalPR.watch(context) == true) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: StyleGlobalApk.getColorPrimary(),
                   ),
                 );
-              } else if (state is ProductFailure) {
-                return Center(child: Text('Error: ${state.error}'));
-              } else if (state is ProductEmpty) {
+              } else if (productErrorSignal.watch(context) != null) {
+                return Center(child: Text('Error: ${productErrorSignal.value}'));
+              } else if (productEmpySignal.watch(context) != null) {
                 return Column(
                   children: [
                     SizedBox(height: 180),
-                    Center(child: Text('${state.message}')),
+                    Center(child: Text('${productEmpySignal.value}')),
                   ],
                 );
-              } else if (state is ProductSuccess) {
-                List<ProductElement> products = state.product.products;
+              } else if (productSignal.watch(context) != null) {
+                List<ProductElement> products = productSignal.value!.products;
 
                 return SingleChildScrollView(
                   child: Column(
@@ -177,26 +185,25 @@ class _StorePageState extends State<StorePage> {
 
   Widget _buildStoreListView() {
     return Expanded(
-      child: BlocBuilder<StoreBloc, StoreState>(
-        builder: (context, state) {
-          print('Entrando en página de-tengo etsado:$state');
-          if (state is StoreLoading) {
+      child: Builder(
+        builder: (context) {
+          if (isStoreLoadingST.watch(context) == true) {
             return Center(
               child: CircularProgressIndicator(
                 color: StyleGlobalApk.getColorPrimary(),
               ),
             );
-          } else if (state is StoreFailure) {
-            return Center(child: Text('Error: ${state.error}'));
-          } else if (state is StoreEmpty) {
+          } else if (storeErrorST.watch(context) != null) {
+            return Center(child: Text('Error: ${storeErrorST.value}'));
+          } else if (storeEmpyST.watch(context) != null) {
             return Column(
               children: [
                 SizedBox(height: 180),
-                Center(child: Text('${state.message}')),
+                Center(child: Text('${storeEmpyST.value}')),
               ],
             );
-          } else if (state is StoreSuccess) {
-            List<StoreElement> stores = state.store.store;
+          } else if (storeDataST.watch(context) != null) {
+            List<StoreElement> stores = storeDataST.value!.store;
 
             return SingleChildScrollView(
               child: Column(

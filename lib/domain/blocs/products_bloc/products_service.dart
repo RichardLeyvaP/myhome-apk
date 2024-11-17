@@ -1,24 +1,31 @@
 import 'package:myhome/data/models/products/product_model.dart';
 import 'package:myhome/data/repository/products_repository.dart';
+import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/domain/blocs/products_bloc/products_signal.dart';
 
+// Repositorio de configuración (se asume que ya está inicializado en otro lugar)
+final ProductsRepository productsRepository = ProductsRepository(authService: ApiService());
+
 // Método para cargar productos
-Future<void> loadProduct(ProductsRepository productsRepository) async {
-  isLoadingSignal.value = true;
-  productErrorSignal.value = "";
+Future<void> loadProduct() async {
+  isLoadingSignalPR.value = true;
+  productErrorSignal.value = null;
+  productEmpySignal.value = null;
 
   try {
     final result = await productsRepository.getProduct();
 
     if (result is String) {
-      productErrorSignal.value = result;
+      //está vacio
+      productEmpySignal.value = result;
     } else if (result is Product) {
+      //hay producto
       productSignal.value = result;
     }
   } catch (error) {
     productErrorSignal.value = error.toString();
   } finally {
-    isLoadingSignal.value = false;
+    isLoadingSignalPR.value = false;
   }
 }
 

@@ -1,65 +1,66 @@
 // store_signal.dart
+import 'package:myhome/data/services/globalCallApi/apiService.dart';
 import 'package:myhome/domain/blocs/store_bloc/store_signal.dart';
 import 'package:myhome/data/models/store/store_model.dart';
 import 'package:myhome/data/repository/store_repository.dart';
 
-class StoreService {
-  final StoreRepository storeRepository;
+// Repositorio de configuración (se asume que ya está inicializado en otro lugar)
+final StoreRepository storeRepository = StoreRepository(authService: ApiService());
 
-  StoreService({required this.storeRepository});
+// Método para obtener tiendas
+Future<void> requestStore() async {
+  isStoreLoadingST.value = true;
+  storeErrorST.value = null;
+  storeEmpyST.value = null;
+  storeDataST.value = null;
 
-  // Método para obtener tiendas
-  Future<void> requestStore() async {
-    isStoreLoading.value = true;
-    try {
-      final result = await storeRepository.getStore();
-      isStoreLoading.value = false;
+  try {
+    final result = await storeRepository.getStore();
 
-      if (result is String) {
-        storeMessage.value = result;
-        storeData.value = null;
-      } else if (result is Store) {
-        storeData.value = result;
-        storeMessage.value = "Stores loaded successfully";
-      }
-    } catch (error) {
-      isStoreLoading.value = false;
-      storeMessage.value = "Error: ${error.toString()}";
+    if (result is String) {
+      storeEmpyST.value = result;
+      storeDataST.value = null;
+    } else if (result is Store) {
+      storeDataST.value = result;
     }
+  } catch (error) {
+    storeErrorST.value = "Error: ${error.toString()}";
+  } finally {
+    isStoreLoadingST.value = false;
   }
+}
 
-  // Método para actualizar datos de la tienda
-  void updateStoreData(StoreElement updatedStoreElement) {
-    currentStoreElement.value = (currentStoreElement.value ?? const StoreElement()).copyWith(
-      name: updatedStoreElement.name ?? currentStoreElement.value?.name,
-      description: updatedStoreElement.description ?? currentStoreElement.value?.description,
-      location: updatedStoreElement.location ?? currentStoreElement.value?.location,
-    );
+// Método para actualizar datos de la tienda
+void updateStoreData(StoreElement updatedStoreElement) {
+  currentStoreElementST.value = (currentStoreElementST.value ?? const StoreElement()).copyWith(
+    name: updatedStoreElement.name ?? currentStoreElementST.value?.name,
+    description: updatedStoreElement.description ?? currentStoreElementST.value?.description,
+    location: updatedStoreElement.location ?? currentStoreElementST.value?.location,
+  );
+}
+
+// Método para enviar tienda a la API
+Future<void> submitStore() async {
+  isSubmittingST.value = true;
+  try {
+    await storeRepository.addStore(currentStoreElementST.value!);
+    isSubmittingST.value = false;
+    submitSuccessST.value = true;
+    submitErrorST.value = null;
+  } catch (error) {
+    isSubmittingST.value = false;
+    submitSuccessST.value = false;
+    submitErrorST.value = error.toString();
   }
+}
 
-  // Método para enviar tienda a la API
-  Future<void> submitStore() async {
-    isSubmitting.value = true;
-    try {
-      await storeRepository.addStore(currentStoreElement.value!);
-      isSubmitting.value = false;
-      submitSuccess.value = true;
-      submitError.value = null;
-    } catch (error) {
-      isSubmitting.value = false;
-      submitSuccess.value = false;
-      submitError.value = error.toString();
-    }
-  }
+// Métodos para incrementar y disminuir la cantidad
+void increaseStoreQuantity() {
+  storeQuantityST.value = storeQuantityST.value + 1;
+}
 
-  // Métodos para incrementar y disminuir la cantidad
-  void increaseStoreQuantity() {
-    storeQuantity.value = storeQuantity.value + 1;
-  }
-
-  void decreaseStoreQuantity() {
-    if (storeQuantity.value > 1) {
-      storeQuantity.value = storeQuantity.value - 1;
-    }
+void decreaseStoreQuantity() {
+  if (storeQuantityST.value > 1) {
+    storeQuantityST.value = storeQuantityST.value - 1;
   }
 }

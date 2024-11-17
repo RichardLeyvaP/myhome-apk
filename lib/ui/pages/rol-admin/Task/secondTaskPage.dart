@@ -5,13 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_signal.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
 import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_service.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/family_widget.dart';
 import 'package:myhome/ui/Components/frequency_widget.dart';
 import 'package:myhome/ui/pages/rol-admin/Task/selectDays/utils.dart';
+import 'package:signals/signals_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SecondTaskPage extends StatefulWidget {
@@ -50,9 +52,12 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
     // Función para convertir List<Taskperson> a List<Person>
 
     List<Person> persons = convertToPersonList(selectedTaskpersons);
-    context
-        .read<TasksBloc>()
-        .add(TaskFamilyUpdated(persons)); //aqui va agregando a TaskElement para luego crear la tarea
+    // context
+    //     .read<TasksBloc>()
+    //     .add(TaskFamilyUpdated(persons)); //aqui va agregando a TaskElement para luego crear la tarea
+
+    // aqui se agregan los familiares
+    updateTaskFamily(persons);
     // Aquí puedes hacer algo con los datos seleccionados
     print("Estados seleccionados-Personas seleccionadas: ${selectedTaskpersons.length}");
     print("Estados seleccionados-Personas seleccionadas: ${selectedTaskpersons.map((p) => p.namePerson)}");
@@ -188,25 +193,18 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    child: BlocBuilder<TasksBloc, TasksState>(
-                      builder: (context, state) {
-                        if (state is TaskUpdated) {
-                          //  _locationController.text = state.taskElement.description.toString();
-                        }
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _buildFamilySection(),
-                            const SizedBox(height: 10),
-                            _buildRecurrenceSection(),
-                            const SizedBox(height: 10),
-                            _buildLocationSection(),
-                            const SizedBox(height: 10),
-                            FilePickerButton(),
-                            _buildCalendarSection(context),
-                          ],
-                        );
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildFamilySection(),
+                        const SizedBox(height: 10),
+                        //  _buildRecurrenceSection(),//todo revisar este
+                        //  const SizedBox(height: 10),
+                        _buildLocationSection(),
+                        const SizedBox(height: 10),
+                        FilePickerButton(),
+                        _buildCalendarSection(context),
+                      ],
                     ),
                   ),
                 ),
@@ -237,21 +235,21 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
   }
 
   _buildFamilySection() {
-    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-      builder: (context, state) {
-        if (state is CategoriesStatusPrioritySuccess) {
-          final taskpersons = state.taskperson;
+    return Builder(
+      builder: (context) {
+        if (taskPersonsCSP.watch(context) != null) {
+          final taskpersons = taskPersonsCSP.value;
           return TaskpersonWidget(
-            taskpersons: taskpersons,
+            taskpersons: taskpersons!,
             titleWidget: 'Selecciona un Familiar',
             selectMultiple: true, // Permitir selección múltiple
             enableRoleSelection: true, // Habilitar selección de rol
-            selectedPersonId: null,
+            selectedPersonId: selectedPersonIdsCSP.value.first,
             rolesList: ['Responsable', 'Participante', 'Invitado'],
             onSelectionChanged: _onSelectionChanged, // Manejar cambios de selección
           );
-        } else if (state is CategoriesFailure) {
-          return Center(child: Text('Error: ${state.error}'));
+        } else if (errorMessageCSP.watch(context) != null) {
+          return Center(child: Text('Error: ${errorMessageCSP.value}'));
         }
         return Container();
       },
@@ -435,8 +433,8 @@ class _SecondTaskPageState extends State<SecondTaskPage> {
               }
             },
           );
-        } else if (state is CategoriesFailure) {
-          return Center(child: Text('Error: ${state.error}'));
+        } else if (errorMessageCSP.watch(context) != null) {
+          return Center(child: Text('Error: ${errorMessageCSP.value}'));
         }
         return Container();
       },

@@ -1,16 +1,17 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myhome/data/models/tasks/tasks_model.dart';
 import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
-import 'package:myhome/domain/blocs/tasks/tasks_bloc.dart';
-import 'package:myhome/domain/blocs/tasks/tasks_event.dart';
-import 'package:myhome/domain/blocs/tasks/tasks_state.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_service.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_signal.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_service.dart';
+import 'package:myhome/domain/blocs/tasks/tasks_signal.dart';
 import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:myhome/ui/Components/category_widget.dart';
 import 'package:myhome/ui/Components/priority_widget.dart';
 import 'package:myhome/ui/Components/state_widget.dart';
+import 'package:signals/signals_flutter.dart';
 
 class StartTaskPage extends StatefulWidget {
   final PageController pageController;
@@ -26,6 +27,7 @@ class _StartTaskPageState extends State<StartTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   List<int> arrayCategory = [1];
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   int selectedPriority = 0;
   int selectedStatus = 0;
@@ -40,21 +42,11 @@ class _StartTaskPageState extends State<StartTaskPage> {
     selectedPriorities = selectedPrioritiesList;
 
     // Aquí manejas los estados seleccionados
-    // print('Estados seleccionados: ${selectedStatuses.map((e) => e.id)}');
     print('Estados seleccionados: ${selectedPrioritiesList.map((e) => e.id).join(', ')}');
     selectedPriority = selectedPrioritiesList.isNotEmpty ? selectedPrioritiesList.first.id : 0;
     print('Estados seleccionados: $selectedStatus');
-
-    context
-        .read<CategoriesStatePrioritiesBloc>()
-        .add(SelectedPriorityIdEvent(selectedPriority)); //aqui para que mantenga la ultima que seleccionó
-    TaskElement newTaskElement = TaskElement(
-      priorityId: selectedPriorities.first.id, // Ajusta el ID de estado según sea necesario
-    );
-    print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.priorityId}');
-    context
-        .read<TasksBloc>()
-        .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+    //seleccionando la prioridad
+    onPrioritySelected(selectedPriority);
   }
 
   @override
@@ -93,70 +85,94 @@ class _StartTaskPageState extends State<StartTaskPage> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: BlocBuilder<TasksBloc, TasksState>(
-                      builder: (context, state) {
-                        if (state is TaskTitleUpdated) {
-                          //  WidgetsBinding.instance.addPostFrameCallback((_) {
-                          _titleController.text = state.taskElement.title.toString();
-                          _descriptionController.text = state.taskElement.description.toString();
-                          // });
-                        }
+        body: isLoadingCSP.watch(context) == true
+            ?
+            //cargando
+            const Center(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text('Cargando datos...')
+                ],
+              ))
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Builder(
+                            builder: (context) {
+                              // Ejecuta la acción después de construir el widget
+                              // WidgetsBinding.instance.addPostFrameCallback((_) {
+                              // Acción que quieres ejecutar
+                              // Guardando el estado del titulo y la descripcion
+                              if (taskElementUpdateTA.watch(context) == true) {
+                                _titleController.text =
+                                    taskElementTA.value.title == null ? '' : taskElementTA.value.title.toString();
+                                _descriptionController.text = taskElementTA.value.description == null
+                                    ? ''
+                                    : taskElementTA.value.description.toString();
+                              }
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SizedBox(height: 10),
-                            _buildTextFormField(
-                              controller: _titleController,
-                              labelText: 'Título',
-                              maxLength: 30,
-                              validator: (value) => (value == null || value.isEmpty) ? 'El título es requerido' : null,
-                            ),
-                            const SizedBox(height: 10),
-                            _buildCategorySection(),
-                            const SizedBox(height: 10),
-                            _buildPrioritySection(),
-                            const SizedBox(height: 10),
-                            _buildStatusSection(),
-                            const SizedBox(height: 20),
-                            _buildTextFormField(
-                              controller: _descriptionController,
-                              labelText: 'Descripción',
-                              maxLines: 2,
-                              onFieldSubmitted: (_) => _onSubmit(),
-                            ),
-                            SizedBox(height: 10),
-                          ],
-                        );
-                      },
-                    ),
+                              // Puedes realizar otras acciones como llamadas a APIs, actualizaciones de estado, etc.
+                              // });
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(height: 10),
+                                  _buildTextFormField(
+                                    controller: _titleController,
+                                    labelText: 'Título',
+                                    maxLength: 30,
+                                    validator: (value) =>
+                                        (value == null || value.isEmpty) ? 'El título es requerido' : null,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  _buildCategorySection(),
+                                  const SizedBox(height: 10),
+                                  _buildPrioritySection(),
+                                  const SizedBox(height: 10),
+                                  _buildStatusSection(),
+                                  const SizedBox(height: 20),
+                                  _buildTextFormField(
+                                    controller: _descriptionController,
+                                    labelText: 'Descripción',
+                                    maxLines: 2,
+                                    onFieldSubmitted: (_) => _onSubmit(),
+                                  ),
+                                  SizedBox(height: 10),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => GoRouter.of(context).go('/HomePrincipal'),
+                            child: Text("Regresar"),
+                          ),
+                          ElevatedButton(
+                            onPressed: _onSubmit,
+                            child: Text("Siguiente"),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => GoRouter.of(context).go('/HomePrincipal'),
-                      child: Text("Regresar"),
-                    ),
-                    ElevatedButton(
-                      onPressed: _onSubmit,
-                      child: Text("Siguiente"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -193,37 +209,56 @@ class _StartTaskPageState extends State<StartTaskPage> {
   }
 
   Widget _buildCategorySection() {
-    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-      builder: (context, state) {
-        if (state is CategoriesLoading) {
-          return Center(child: CircularProgressIndicator());
-        } else if (state is CategoriesStatusPrioritySuccess) {
+    return Builder(
+      builder: (context) {
+        if (categoriesCSP.watch(context) != null) {
+          bool selectMultiple = false;
           return CategoryWidget(
             eventDetails: false,
             fitTextContainer: false,
-            categories: state.categories,
+            categories: categoriesCSP.value!,
             titleWidget: 'Categoría',
-            selectedCategoryId: state.selectedCategoryId,
-            selectMultiple: false,
-            onSelectionChanged: (selectedCategories) {
+            selectedCategoryId: selectedCategoryIdCSP.value,
+            selectMultiple: selectMultiple,
+            onSelectionChanged: (selectedCategories) async {
+              // Registrar un evento cuando el usuario navega a una pantalla
+              // analytics.logEvent(
+              //   name: 'screen_view_Select_category',
+              //   parameters: <String, String>{
+              //     'screen_name': 'ScreenInsertTask',
+              //   },
+              // );
+              // await FirebaseAnalytics.instance.logBeginCheckout(
+              //     value: 10.0,
+              //     currency: 'USD',
+              //     items: [
+              //       AnalyticsEventItem(itemName: 'Socks', itemId: 'xjw73ndnw', price: 10),
+              //     ],
+              //     coupon: '10PERCENTOFF');
+
+              analytics.logEvent(
+                name: 'screen_view_Select_category',
+                parameters: <String, String>{
+                  'screen_name': 'ScreenInsertTask',
+                },
+              ).then((_) {
+                print("firebase-Evento enviado correctamente.");
+              }).catchError((error) {
+                print("firebase-Evento Error al enviar evento: $error");
+              });
+
               setState(() {
                 FocusScope.of(context).unfocus();
                 arrayCategory = selectedCategories.map((category) => category.id).toList();
                 if (arrayCategory.isNotEmpty) {
-                  context.read<CategoriesStatePrioritiesBloc>().add(CategoryTaskSelectedEvent(arrayCategory.first));
-                  TaskElement newTaskElement = TaskElement(
-                    categoryId: arrayCategory.first, // Ajusta el ID de estado según sea necesario
-                  );
-                  print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.statusId}');
-                  context
-                      .read<TasksBloc>()
-                      .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+                  onCategorySelected(arrayCategory.first);
+                  print('Estados seleccionados-elementos de la primera pagina:${arrayCategory}');
                 }
               });
             },
           );
-        } else if (state is CategoriesFailure) {
-          return Center(child: Text('Error: ${state.error}'));
+        } else if (errorMessageCSP.watch(context) != null) {
+          return Center(child: Text('Error: ${errorMessageCSP.value}'));
         }
         return Container();
       },
@@ -231,19 +266,19 @@ class _StartTaskPageState extends State<StartTaskPage> {
   }
 
   Widget _buildPrioritySection() {
-    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-      builder: (context, state) {
-        if (state is CategoriesStatusPrioritySuccess) {
-          int? _selectPrioritytask = state.selectedPriorityId;
+    return Builder(
+      builder: (context) {
+        if (prioritiesCSP.watch(context) != null) {
+          int? _selectPrioritytask = selectedPriorityIdCSP.value;
           return PriorityWidget(
-            priorities: state.priority,
+            priorities: prioritiesCSP.value!,
             titleWidget: 'Prioridad',
             selectMultiple: false, // Cambia a false si solo quieres una selección
             selectedPriorityId: _selectPrioritytask,
             onSelectionChanged: _onSelectionChanged,
           );
-        } else if (state is CategoriesFailure) {
-          return Center(child: Text('Error: ${state.error}'));
+        } else if (errorMessageCSP.watch(context) != null) {
+          return Center(child: Text('Error: ${errorMessageCSP.value}'));
         }
         return Container();
       },
@@ -251,12 +286,12 @@ class _StartTaskPageState extends State<StartTaskPage> {
   }
 
   Widget _buildStatusSection() {
-    return BlocBuilder<CategoriesStatePrioritiesBloc, CategoriesStatePrioritiesState>(
-      builder: (context, state) {
-        if (state is CategoriesStatusPrioritySuccess) {
-          int? _selectStatetask = state.selectStatetask;
+    return Builder(
+      builder: (context) {
+        if (loadDataCSP.watch(context) == true) {
+          int? _selectStatetask = selectStateTaskCSP.value;
           return StatusWidget(
-            status: state.status,
+            status: statusCSP.value!,
             fitTextContainer: false,
             eventDetails: true,
             titleWidget: 'Estado',
@@ -268,20 +303,12 @@ class _StartTaskPageState extends State<StartTaskPage> {
               selectedStatus = selectedStatuses.isNotEmpty ? selectedStatuses.first.id : 0;
               print('Estados seleccionados: $selectedStatus');
 
-              context
-                  .read<CategoriesStatePrioritiesBloc>()
-                  .add(SelectStateEvent(selectedStatus)); //aqui para que mantenga la ultima que seleccionó
-              TaskElement newTaskElement = TaskElement(
-                statusId: selectedStatus, // Ajusta el ID de estado según sea necesario
-              );
-              print('Estados seleccionados-elementos de la primera pagina:${newTaskElement.statusId}');
-              context
-                  .read<TasksBloc>()
-                  .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+              //seleccionando el estado
+              onTaskStateSelected(selectedStatus);
             },
           );
-        } else if (state is CategoriesFailure) {
-          return Center(child: Text('Error: ${state.error}'));
+        } else if (errorMessageCSP.watch(context) != null) {
+          return Center(child: Text('Error: ${errorMessageCSP.value}'));
         }
         return Container();
       },
@@ -292,18 +319,20 @@ class _StartTaskPageState extends State<StartTaskPage> {
     if (_formKey.currentState!.validate()) {
       // Crea un nuevo TaskElement
 
-      TaskElement newTaskElement = TaskElement(
-        title: _titleController.text, // Agrega el título deseado
-        description: _descriptionController.text, // Agrega la descripción deseada
-      );
-      context
-          .read<TasksBloc>()
-          .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+      // TaskElement newTaskElement = TaskElement(
+      //   title: _titleController.text, // Agrega el título deseado
+      //   description: _descriptionController.text, // Agrega la descripción deseada
+      // );
 
-      context.read<TasksBloc>().add(TaskTitleDescriptionUpdated(
-          _titleController.text,
-          _descriptionController
-              .text)); //aqui para guardar independientemente el titulo y la descripcion para que si da para atras cargue
+      updateTaskTitleDescription(_titleController.text, _descriptionController.text);
+      // context
+      //     .read<TasksBloc>()
+      //     .add(TasksNewUpdated(newTaskElement)); //aqui va agregando a TaskElement para luego crear la tarea
+
+      // context.read<TasksBloc>().add(TaskTitleDescriptionUpdated(
+      //     _titleController.text,
+      //     _descriptionController
+      //         .text)); //aqui para guardar independientemente el titulo y la descripcion para que si da para atras cargue
 
       // final currentState = context.read<CategoriesStatePrioritiesBloc>().state;
 

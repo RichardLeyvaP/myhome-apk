@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, depend_on_referenced_packages
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
@@ -35,6 +36,7 @@ class _LoginFormPageState extends State<LoginFormPage> {
     super.initState();
   }
 
+  //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   loginFuntion() {
     if (isLoadingLG.watch(context) == true) {
       // Muestra un mensaje de carga
@@ -199,6 +201,16 @@ class _LoginFormPageState extends State<LoginFormPage> {
                                     backgroundColor: WidgetStateProperty.all<Color>(Colors.black),
                                   ),
                                   onPressed: () async {
+                                    // analytics.logEvent(
+                                    //   name: 'screen_view_Select_category',
+                                    //   parameters: <String, String>{
+                                    //     'screen_name': 'ScreenInsertTask',
+                                    //   },
+                                    // ).then((_) {
+                                    //   print("firebase-Evento enviado correctamente.");
+                                    // }).catchError((error) {
+                                    //   print("firebase-Evento Error al enviar evento: $error");
+                                    // });
                                     if (_usserController.text.isEmpty || _passController.text.isEmpty) {
                                       _passController.clear();
                                       _usserController.clear();

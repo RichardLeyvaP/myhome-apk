@@ -2,14 +2,15 @@ import 'package:myhome/domain/modelos/category_model.dart';
 import 'package:signals/signals.dart';
 
 // Definir las señales
-final Signal<List<Category>> categories = Signal<List<Category>>([]);
-final Signal<List<Status>> status = Signal<List<Status>>([]);
-final Signal<List<Priority>> priorities = Signal<List<Priority>>([]);
-final Signal<List<Taskperson>> taskPersons = Signal<List<Taskperson>>([]);
-final Signal<List<int>> selectedPersonIds = Signal<List<int>>([]);
-final Signal<int?> selectedCategoryId = Signal<int?>(null);
-final Signal<int?> selectedPriorityId = Signal<int?>(null);
-final Signal<int?> selectStateTask = Signal<int?>(null);
-final Signal<String> frequencyTask = Signal<String>("");
-final Signal<bool> isLoading = Signal<bool>(false); // Estado de carga
-final Signal<String> errorMessage = Signal<String>(""); // Mensaje de error
+final Signal<List<Category>?> categoriesCSP = Signal<List<Category>?>(null);
+final Signal<List<Status>?> statusCSP = Signal<List<Status>?>(null);
+final Signal<List<Priority>?> prioritiesCSP = Signal<List<Priority>?>(null);
+final Signal<List<Taskperson>?> taskPersonsCSP = Signal<List<Taskperson>?>(null);
+final Signal<List<int>> selectedPersonIdsCSP = Signal<List<int>>([]);
+final Signal<int?> selectedCategoryIdCSP = Signal<int?>(null);
+final Signal<int?> selectedPriorityIdCSP = Signal<int?>(null);
+final Signal<int?> selectStateTaskCSP = Signal<int?>(null);
+final Signal<String> frequencyTaskCSP = Signal<String>("");
+final Signal<bool> isLoadingCSP = Signal<bool>(false); // Estado de carga
+final Signal<bool> loadDataCSP = Signal<bool>(false); // Estado de carga
+final Signal<String?> errorMessageCSP = Signal<String?>(null); // Mensaje de error

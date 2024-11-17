@@ -9,6 +9,7 @@ import 'package:myhome/domain/blocs/configuration_bloc/configuration_service.dar
 import 'package:myhome/domain/blocs/product_cat_state/bloc/bloc.dart';
 import 'package:myhome/domain/blocs/product_cat_state/bloc/product_cat_state_bloc.dart';
 import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_bloc.dart';
+import 'package:myhome/domain/blocs/task_cat_state_prior.dart/task_cat_state_prior_service.dart';
 import 'package:myhome/ui/Components/showDialogComp.dart';
 import 'package:myhome/ui/pages/pageMenu/filesPage.dart';
 import 'package:myhome/ui/pages/pageMenu/financePage.dart';
@@ -165,8 +166,10 @@ class _HomePrincipalState extends State<HomePrincipal> with SingleTickerProvider
                   //agregar tareas
                   //llamo el evento para buscar la scategorias y los estados
 
-                  context.read<CategoriesStatePrioritiesBloc>().add(
-                      TaskCategoriesRequested()); //aqui reinicio al crear la tarea con todos los campos por defecto inicialmente
+                  // context.read<CategoriesStatePrioritiesBloc>().add(
+                  //     TaskCategoriesRequested());
+                  fetchCategoriesStatusPriority();
+                  //aqui reinicio al crear la tarea con todos los campos por defecto inicialmente
 
                   print('inde =.... ${_tabController.index}');
                   GoRouter.of(context).go(
