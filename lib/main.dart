@@ -1,6 +1,5 @@
 // ignore_for_file: unused_element, depend_on_referenced_packages
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:myhome/data/repository/configuration_repository.dart';
 import 'package:myhome/data/services/globalCallApi/apiService.dart';
@@ -19,6 +18,7 @@ void main() async {
   // await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
   await Firebase.initializeApp(
+    name: "huoon-app-flutter",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initializeDateFormatting('es', null);

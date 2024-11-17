@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-lt_values-lt.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-lt_values-lt.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-lt\\values-lt.xml",
@@ -125,7 +125,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-pl_values-pl.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-pl_values-pl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-pl\\values.xml",
@@ -283,7 +283,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-am_values-am.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-am_values-am.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-am\\values-am.xml",
@@ -407,7 +407,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-pt-rPT_values-pt-rPT.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-pt-rPT_values-pt-rPT.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-pt-rPT\\values-pt-rPT.xml",
@@ -548,7 +548,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-kk_values-kk.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-kk_values-kk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-kk\\values.xml",
@@ -672,7 +672,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ko_values-ko.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ko_values-ko.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-ko\\values-ko.xml",
@@ -830,7 +830,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-de_values-de.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-de_values-de.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-de\\values.xml",
@@ -988,7 +988,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v23_values-v23.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v23_values-v23.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v23\\values-v23.xml",
@@ -1031,7 +1031,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-en-rGB_values-en-rGB.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-en-rGB_values-en-rGB.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-en-rGB\\values-en-rGB.xml",
@@ -1172,7 +1172,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ur_values-ur.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ur_values-ur.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-ur\\values-ur.xml",
@@ -1296,7 +1296,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-my_values-my.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-my_values-my.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-my\\values.xml",
@@ -1420,7 +1420,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-fa_values-fa.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-fa_values-fa.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-fa\\values-fa.xml",
@@ -1544,7 +1544,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ru_values-ru.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ru_values-ru.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-ru\\values.xml",
@@ -1702,7 +1702,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-th_values-th.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-th_values-th.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-th\\values-th.xml",
@@ -1860,7 +1860,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-land_values-land.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-land_values-land.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-land\\values-land.xml",
@@ -1875,7 +1875,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-uz_values-uz.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-uz_values-uz.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-uz\\values-uz.xml",
@@ -1999,7 +1999,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-lo_values-lo.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-lo_values-lo.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-lo\\values-lo.xml",
@@ -2123,7 +2123,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-fr_values-fr.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-fr_values-fr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-fr\\values-fr.xml",
@@ -2281,7 +2281,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-nl_values-nl.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-nl_values-nl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-nl\\values-nl.xml",
@@ -2439,7 +2439,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ml_values-ml.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ml_values-ml.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-ml\\values-ml.xml",
@@ -2580,7 +2580,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-fi_values-fi.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-fi_values-fi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-fi\\values-fi.xml",
@@ -2738,7 +2738,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-watch-v20_values-watch-v20.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-watch-v20_values-watch-v20.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\a5949afb281309e12c81d541d0b8135d\\transformed\\jetified-play-services-auth-21.0.0\\res\\values-watch-v20\\values.xml",
@@ -2779,7 +2779,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-tr_values-tr.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-tr_values-tr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-tr\\values-tr.xml",
@@ -2937,7 +2937,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-is_values-is.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-is_values-is.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-is\\values-is.xml",
@@ -3061,7 +3061,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-in_values-in.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-in_values-in.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-in\\values.xml",
@@ -3202,7 +3202,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sr_values-sr.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sr_values-sr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-sr\\values-sr.xml",
@@ -3326,7 +3326,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-fr-rCA_values-fr-rCA.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-fr-rCA_values-fr-rCA.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-fr-rCA\\values.xml",
@@ -3467,7 +3467,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
@@ -3482,7 +3482,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ca_values-ca.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ca_values-ca.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-ca\\values-ca.xml",
@@ -3623,7 +3623,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-da_values-da.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-da_values-da.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-da\\values-da.xml",
@@ -3781,7 +3781,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-pt_values-pt.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-pt_values-pt.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-pt\\values-pt.xml",
@@ -3905,7 +3905,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-vi_values-vi.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-vi_values-vi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-vi\\values-vi.xml",
@@ -4046,7 +4046,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-zh-rHK_values-zh-rHK.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-zh-rHK_values-zh-rHK.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-zh-rHK\\values-zh-rHK.xml",
@@ -4204,7 +4204,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-cs_values-cs.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-cs_values-cs.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-cs\\values-cs.xml",
@@ -4362,7 +4362,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ta_values-ta.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ta_values-ta.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-ta\\values-ta.xml",
@@ -4503,7 +4503,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-h720dp-v13_values-h720dp-v13.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-h720dp-v13_values-h720dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
@@ -4518,7 +4518,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-hr_values-hr.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-hr_values-hr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-hr\\values-hr.xml",
@@ -4659,7 +4659,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ar_values-ar.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ar_values-ar.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-ar\\values.xml",
@@ -4817,7 +4817,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-hdpi-v4_values-hdpi-v4.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-hdpi-v4_values-hdpi-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
@@ -4833,7 +4833,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-as_values-as.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-as_values-as.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-as\\values.xml",
@@ -4957,7 +4957,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ldltr-v21_values-ldltr-v21.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ldltr-v21_values-ldltr-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
@@ -4972,7 +4972,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-es_values-es.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-es_values-es.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-es\\values-es.xml",
@@ -5130,7 +5130,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v17_values-v17.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v17_values-v17.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v17\\values-v17.xml",
@@ -5146,7 +5146,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-bg_values-bg.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-bg_values-bg.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-bg\\values-bg.xml",
@@ -5287,7 +5287,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sv_values-sv.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sv_values-sv.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-sv\\values.xml",
@@ -5445,7 +5445,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-zh-rCN_values-zh-rCN.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-zh-rCN_values-zh-rCN.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-zh-rCN\\values.xml",
@@ -5603,7 +5603,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-es-rES_values-es-rES.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-es-rES_values-es-rES.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-es-rES\\values-es-rES.xml",
@@ -5618,7 +5618,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-mk_values-mk.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-mk_values-mk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-mk\\values-mk.xml",
@@ -5742,7 +5742,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ky_values-ky.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ky_values-ky.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-ky\\values.xml",
@@ -5866,7 +5866,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ka_values-ka.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ka_values-ka.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-ka\\values.xml",
@@ -5990,7 +5990,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values_values.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values_values.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\8de579a6b3c05f0f7fe32997b098807f\\transformed\\jetified-startup-runtime-1.1.1\\res\\values\\values.xml",
@@ -6488,7 +6488,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sq_values-sq.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sq_values-sq.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-sq\\values-sq.xml",
@@ -6612,7 +6612,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-it_values-it.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-it_values-it.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-it\\values-it.xml",
@@ -6770,7 +6770,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sl_values-sl.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sl_values-sl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-sl\\values-sl.xml",
@@ -6911,7 +6911,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-te_values-te.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-te_values-te.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-te\\values-te.xml",
@@ -7052,7 +7052,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-xlarge-v4_values-xlarge-v4.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-xlarge-v4_values-xlarge-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
@@ -7067,7 +7067,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-b+sr+Latn\\values-b+sr+Latn.xml",
@@ -7191,7 +7191,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-mr_values-mr.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-mr_values-mr.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-mr\\values.xml",
@@ -7332,7 +7332,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-en-rAU_values-en-rAU.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-en-rAU_values-en-rAU.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-en-rAU\\values-en-rAU.xml",
@@ -7422,7 +7422,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-gu_values-gu.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-gu_values-gu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-gu\\values.xml",
@@ -7563,7 +7563,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-km_values-km.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-km_values-km.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-km\\values-km.xml",
@@ -7687,7 +7687,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-zu_values-zu.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-zu_values-zu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-zu\\values-zu.xml",
@@ -7811,7 +7811,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-gl_values-gl.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-gl_values-gl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-gl\\values-gl.xml",
@@ -7935,7 +7935,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ne_values-ne.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ne_values-ne.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-ne\\values-ne.xml",
@@ -8059,7 +8059,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-pa_values-pa.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-pa_values-pa.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-pa\\values-pa.xml",
@@ -8200,7 +8200,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-lv_values-lv.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-lv_values-lv.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-lv\\values-lv.xml",
@@ -8324,7 +8324,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-uk_values-uk.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-uk_values-uk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-uk\\values-uk.xml",
@@ -8482,7 +8482,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v25_values-v25.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v25_values-v25.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v25\\values-v25.xml",
@@ -8498,7 +8498,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-night-v8_values-night-v8.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\Documents\\GitHub\\myhome_apk\\myhome-apk\\android\\app\\src\\main\\res\\values-night\\styles.xml",
@@ -8539,7 +8539,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-es-rUS_values-es-rUS.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-es-rUS_values-es-rUS.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-es-rUS\\values-es-rUS.xml",
@@ -8663,7 +8663,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-af_values-af.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-af_values-af.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-af\\values-af.xml",
@@ -8804,7 +8804,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ro_values-ro.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ro_values-ro.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-ro\\values-ro.xml",
@@ -8962,7 +8962,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-id_values-id.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-id_values-id.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\003f0c099e405db12d2c885f16efdd48\\transformed\\jetified-facebook-common-17.0.1\\res\\values-id\\values-id.xml",
@@ -8994,7 +8994,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-eu_values-eu.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-eu_values-eu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-eu\\values.xml",
@@ -9135,7 +9135,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-mn_values-mn.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-mn_values-mn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-mn\\values-mn.xml",
@@ -9259,7 +9259,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v21_values-v21.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v21_values-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v21\\values-v21.xml",
@@ -9340,7 +9340,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-or_values-or.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-or_values-or.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-or\\values-or.xml",
@@ -9464,7 +9464,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sk_values-sk.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sk_values-sk.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-sk\\values-sk.xml",
@@ -9622,7 +9622,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-et_values-et.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-et_values-et.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-et\\values-et.xml",
@@ -9746,7 +9746,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-large-v4_values-large-v4.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-large-v4_values-large-v4.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-large-v4\\values-large-v4.xml",
@@ -9761,7 +9761,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-hu_values-hu.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-hu_values-hu.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-hu\\values.xml",
@@ -9919,7 +9919,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-sw_values-sw.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-sw_values-sw.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-sw\\values-sw.xml",
@@ -10043,7 +10043,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-zh-rTW_values-zh-rTW.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-zh-rTW_values-zh-rTW.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-zh-rTW\\values-zh-rTW.xml",
@@ -10201,7 +10201,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-hi_values-hi.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-hi_values-hi.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-hi\\values-hi.xml",
@@ -10359,7 +10359,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v28_values-v28.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v28_values-v28.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v28\\values-v28.xml",
@@ -10383,7 +10383,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ms_values-ms.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ms_values-ms.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\42c156ecbf9105fb48a92ee436564ca8\\transformed\\jetified-facebook-login-17.0.1\\res\\values-ms\\values-ms.xml",
@@ -10524,7 +10524,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-watch-v21_values-watch-v21.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-watch-v21_values-watch-v21.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-watch-v21\\values-watch-v21.xml",
@@ -10540,7 +10540,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v24_values-v24.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v24_values-v24.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\c6ccb29f7d34e967e29bcc9b4d5b8a3f\\transformed\\media-1.0.0\\res\\values-v24\\values-v24.xml",
@@ -10572,7 +10572,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-en-rIN_values-en-rIN.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-en-rIN_values-en-rIN.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-en-rIN\\values-en-rIN.xml",
@@ -10662,7 +10662,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v26_values-v26.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v26_values-v26.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v26\\values-v26.xml",
@@ -10686,7 +10686,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-bs_values-bs.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-bs_values-bs.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-bs\\values-bs.xml",
@@ -10810,7 +10810,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-kn_values-kn.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-kn_values-kn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-kn\\values-kn.xml",
@@ -10951,7 +10951,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-tl_values-tl.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-tl_values-tl.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-tl\\values-tl.xml",
@@ -11092,7 +11092,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v22_values-v22.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v22_values-v22.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v22\\values-v22.xml",
@@ -11116,7 +11116,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-en-rXC_values-en-rXC.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-en-rXC_values-en-rXC.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-en-rXC\\values-en-rXC.xml",
@@ -11206,7 +11206,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-si_values-si.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-si_values-si.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-si\\values-si.xml",
@@ -11330,7 +11330,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-hy_values-hy.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-hy_values-hy.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-hy\\values-hy.xml",
@@ -11454,7 +11454,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-be_values-be.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-be_values-be.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\95e356560c5c1ac19c5774d2645fa902\\transformed\\biometric-1.1.0\\res\\values-be\\values-be.xml",
@@ -11578,7 +11578,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-iw_values-iw.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-iw_values-iw.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-iw\\values.xml",
@@ -11736,7 +11736,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-nb_values-nb.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-nb_values-nb.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-nb\\values.xml",
@@ -11877,7 +11877,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-en-rCA_values-en-rCA.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-en-rCA_values-en-rCA.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-en-rCA\\values-en-rCA.xml",
@@ -11967,7 +11967,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v18_values-v18.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v18_values-v18.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v18\\values-v18.xml",
@@ -11982,7 +11982,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-pt-rBR_values-pt-rBR.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-pt-rBR_values-pt-rBR.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-pt-rBR\\values-pt-rBR.xml",
@@ -12106,7 +12106,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-v16_values-v16.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-v16_values-v16.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-v16\\values-v16.xml",
@@ -12122,7 +12122,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-he_values-he.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-he_values-he.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\13ada1d7388094830d95d76e576cd9d1\\transformed\\jetified-zxing-android-embedded-4.3.0\\res\\values-he\\values-he.xml",
@@ -12137,7 +12137,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-port_values-port.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-port_values-port.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\3831b2c21236b25ee7422fe264fc4be6\\transformed\\appcompat-1.4.2\\res\\values-port\\values-port.xml",
@@ -12152,7 +12152,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-az_values-az.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-az_values-az.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\98754411cd88d47793a844f5373ab02a\\transformed\\jetified-play-services-base-18.0.1\\res\\values-az\\values.xml",
@@ -12276,7 +12276,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-bn_values-bn.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-bn_values-bn.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\f41476b6df1d004d92c59b9e1ffb379a\\transformed\\core-1.13.1\\res\\values-bn\\values-bn.xml",
@@ -12417,7 +12417,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-ja_values-ja.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-ja_values-ja.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\fb62b4d2851ea9575151680bf7f1d2e1\\transformed\\browser-1.4.0\\res\\values-ja\\values-ja.xml",
@@ -12575,7 +12575,7 @@
             ]
         },
         {
-            "outputFile": "com.example.myapp-merged_res-59:/values-el_values-el.arsc.flat",
+            "outputFile": "com.huoon.app-merged_res-59:/values-el_values-el.arsc.flat",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\be7f94af917da364eaf769326b162494\\transformed\\jetified-credentials-1.2.0-rc01\\res\\values-el\\values-el.xml",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.myapp-mergeDebugResources-57:/values-ky/values-ky.xml",
+            "outputFile": "com.huoon.app-mergeDebugResources-57:/values-ky/values-ky.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Richard\\.gradle\\caches\\transforms-3\\eaab88a4b8116195037bc89f38300c22\\transformed\\jetified-play-services-basement-18.3.0\\res\\values-ky\\values.xml",
